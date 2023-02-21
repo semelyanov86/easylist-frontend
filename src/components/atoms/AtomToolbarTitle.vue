@@ -1,15 +1,11 @@
 <template>
-  <v-toolbar-title
-    v-bind="$attrs"
-  />
+    <v-toolbar-title v-bind="$attrs" />
 </template>
 
 <script>
 export default {
-  name: "AtomToolbarTitle"
+    name: 'AtomToolbarTitle',
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

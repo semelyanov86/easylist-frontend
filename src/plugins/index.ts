@@ -14,11 +14,7 @@ import router from '../router'
 // Types
 import type { App } from 'vue'
 
-export function registerPlugins (app: App) {
-  loadFonts()
-  app
-    .use(VueCookies, { expires: '7d'})
-    .use(pinia)
-    .use(vuetify)
-    .use(router)
+export function registerPlugins(app: App) {
+    loadFonts()
+    app.use(VueCookies, { expires: '7d' }).use(pinia).use(vuetify).use(router)
 }

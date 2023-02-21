@@ -1,15 +1,11 @@
 <template>
-  <v-icon
-    v-bind="$attrs"
-  />
+    <v-icon v-bind="$attrs" />
 </template>
 
 <script>
 export default {
-  name: "AtomIcon"
+    name: 'AtomIcon',
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

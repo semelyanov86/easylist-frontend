@@ -1,17 +1,13 @@
 <template>
-  <v-btn
-    v-bind="$attrs"
-  >
-    <slot></slot>
-  </v-btn>
+    <v-btn v-bind="$attrs">
+        <slot></slot>
+    </v-btn>
 </template>
 
 <script>
 export default {
-  name: "AtomBtn"
+    name: 'AtomBtn',
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

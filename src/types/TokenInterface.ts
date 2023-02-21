@@ -1,4 +1,4 @@
 export default interface TokenInterface {
-  token: string
-  expiry: number
+    token: string
+    expiry: number
 }
