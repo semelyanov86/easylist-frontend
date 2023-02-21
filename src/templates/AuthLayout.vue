@@ -1,6 +1,9 @@
 <template>
   <v-layout>
     <v-row no-gutters :style="{ height: height + 'px', overflow: 'hidden' }">
+      <v-container>
+        <error-alert v-if="storage.error" :text="storage.error" @click="storage.removeError()" v-model="alert" />
+      </v-container>
       <v-col
         lg="7"
         xl="6"
@@ -8,22 +11,7 @@
         class="bg-primary d-none d-md-flex align-center justify-center"
       >
         <v-container>
-          <v-row justify="center">
-            <v-col xl="5" cols="8">
-              <div>
-                <h2 class="text-h4 text-white font-weight-medium">
-                  EasyList App
-                </h2>
-                <h6
-                  class="text-subtitle-1 text-high-emphasis mt-4 text-white font-weight-regular"
-                >
-                  Wrappixel helps developers to build organized and well-coded
-                  admin dashboards full of beautiful and feature rich modules.
-                </h6>
-                <v-btn> Learn More </v-btn>
-              </div>
-            </v-col>
-          </v-row>
+          <registration-banner></registration-banner>
         </v-container>
       </v-col>
       <v-col
@@ -42,16 +30,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import {defineComponent, ref} from 'vue'
+import ErrorAlert from "@/components/molecules/ErrorAlert.vue";
 import { useWindowSize } from '@vueuse/core'
+import RegistrationBanner from "@/components/molecules/RegistrationBanner.vue";
+import {useAppStore} from "@/store/app";
 
 export default {
   name: "AuthLayout",
+  components: {
+    RegistrationBanner,
+    ErrorAlert
+  },
   setup() {
+    const storage = useAppStore()
     const { height } = useWindowSize()
 
     return {
-      height
+      storage,
+      height,
+       alert
     }
   }
 }

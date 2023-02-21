@@ -1,4 +1,4 @@
-# essentials
+# EasyList Frontend Application
 
 ## Project setup
 

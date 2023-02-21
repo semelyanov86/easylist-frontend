@@ -12,8 +12,9 @@ import { createApp } from 'vue'
 
 // Plugins
 import { registerPlugins } from '@/plugins'
+import {createPinia} from "pinia";
 
-const app = createApp(App)
+const app = createApp(App).use(createPinia())
 
 registerPlugins(app)
 
