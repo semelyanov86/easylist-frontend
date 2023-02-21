@@ -1,16 +1,16 @@
 <template>
-  <HelloWorld />
+  <HomeLayout />
 </template>
 
 <script lang="ts">
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import HomeLayout from '@/templates/HomeLayout.vue'
   import { defineComponent } from 'vue'
   import {useAppStore} from "@/store/app";
 
   export default defineComponent({
     name: 'Home',
     components: {
-      HelloWorld,
+      HomeLayout,
     },
     setup() {
       const storage = useAppStore
