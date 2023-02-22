@@ -1,63 +1,87 @@
 <template>
-    <v-container class="fill-height">
-        <v-responsive class="d-flex align-center text-center fill-height">
-            <v-img contain height="300" src="@/assets/logo.svg" />
-
-            <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
-
-            <h1 class="text-h2 font-weight-bold">Vuetify</h1>
-
-            <div class="py-14" />
-
-            <v-row class="d-flex align-center justify-center">
-                <v-col cols="auto">
-                    <v-btn
-                        href="https://next.vuetifyjs.com/components/all/"
-                        min-width="164"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        variant="text"
-                    >
-                        <v-icon icon="mdi-view-dashboard" size="large" start />
-
-                        Components
-                    </v-btn>
+    <v-container>
+        <v-responsive>
+            <v-row>
+                <v-col cols="12" lg="4">
+                  <lists-and-folders-index :folders="folders" :lists="files"></lists-and-folders-index>
                 </v-col>
 
-                <v-col cols="auto">
-                    <v-btn
-                        color="primary"
-                        href="https://next.vuetifyjs.com/introduction/why-vuetify/#feature-guides"
-                        min-width="228"
-                        rel="noopener noreferrer"
-                        size="x-large"
-                        target="_blank"
-                        variant="flat"
-                    >
-                        <v-icon icon="mdi-speedometer" size="large" start />
-
-                        Get Started
-                    </v-btn>
-                </v-col>
-
-                <v-col cols="auto">
-                    <v-btn
-                        href="https://community.vuetifyjs.com/"
-                        min-width="164"
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        variant="text"
-                    >
-                        <v-icon icon="mdi-account-group" size="large" start />
-
-                        Community
-                    </v-btn>
+                <v-col cols="12" md="6">
+                  <items-index :items="items" />
                 </v-col>
             </v-row>
         </v-responsive>
     </v-container>
 </template>
 
-<script lang="ts" setup>
-//
+<script lang="ts">
+import ListsAndFoldersIndex from "@/components/organisms/ListsAndFoldersIndex.vue";
+import ItemsIndex from "@/components/organisms/ItemsIndex.vue";
+
+export default {
+  components: {ListsAndFoldersIndex, ItemsIndex},
+    data: () => ({
+        files: [
+            {
+                id: 1,
+                icon: 'mdi-clipboard-text',
+                created_at: 'Jan 20, 2014',
+                name: 'Vacation itinerary',
+            },
+            {
+                id: 2,
+                icon: 'mdi-gesture-tap-button',
+              created_at: 'Jan 10, 2014',
+                name: 'Kitchen remodel',
+            },
+        ],
+        folders: [
+            {
+              id: 1,
+                created_at: 'Jan 9, 2014',
+                name: 'Photos',
+              icon: 'mdi-folder',
+            },
+            {
+              id: 2,
+              created_at: 'Jan 17, 2014',
+              name: 'Recipes',
+              icon: 'mdi-folder',
+            },
+            {
+              id: 3,
+              created_at: 'Jan 28, 2014',
+              name: 'Work',
+              icon: 'mdi-folder',
+            },
+        ],
+        items: [
+            {
+                id: 1,
+                name: 'Brunch this weekend?',
+                description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+            },
+          {
+            id: 2,
+            name: 'Second Test',
+            description: 'Second Description',
+          },
+          {
+            id: 3,
+            name: 'Brunch this weekend?',
+            description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+          },
+          {
+            id: 4,
+            name: 'Brunch this weekend?',
+            description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+          },
+          {
+            id: 1,
+            name: 'Brunch this weekend?',
+            description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+          },
+        ],
+    }),
+}
 </script>

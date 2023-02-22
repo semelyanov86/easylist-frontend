@@ -1,10 +1,10 @@
 <template>
-  <v-toolbar-title v-bind="$attrs"><slot></slot></v-toolbar-title>
+    <v-list-subheader inset v-bind="$attrs">{{ text }}</v-list-subheader>
 </template>
 
 <script lang="ts">
 export default {
-    name: 'AtomToolbarTitle',
+    name: 'AtomSubheader',
     props: {
         text: String,
     },
