@@ -2,8 +2,7 @@
     <v-app-bar id="app-bar" absolute app color="transparent" flat height="75">
         <atom-toolbar-title
             class="hidden-sm-and-down font-weight-light"
-            text="EasyList"
-        />
+        >EasyList</atom-toolbar-title>
 
         <atom-spacer />
         <app-bar-menu></app-bar-menu>

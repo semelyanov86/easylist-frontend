@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="450">
+  <v-card class="mx-auto">
     <toolbar :showBackButton="true">List of items</toolbar>
 
     <items-list :items="items" />

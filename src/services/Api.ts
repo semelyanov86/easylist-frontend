@@ -26,6 +26,11 @@ export function doAuth(login: SignInInterface): Promise<AxiosResponse<any>> {
     )
 }
 
+export function doUserInfo(): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.get(import.meta.env.VITE_API_URL + '/my')
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

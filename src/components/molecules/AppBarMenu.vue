@@ -24,7 +24,7 @@
 
             Account
         </atom-btn>
-        <atom-icon
+        <atom-btn
             href="https://community.vuetifyjs.com/"
             min-width="164"
             rel="noopener noreferrer"
@@ -34,7 +34,7 @@
             <atom-icon icon="mdi-lock" size="large" start />
 
             Sign Out
-        </atom-icon>
+        </atom-btn>
     </div>
 </template>
 
