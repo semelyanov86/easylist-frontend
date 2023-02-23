@@ -6,7 +6,7 @@
             v-for="folder in folders"
             :key="folder.id"
             :title="folder.name"
-            :subtitle="folder.created_at"
+            :subtitle="folder.created_at.toDateString()"
         >
             <template v-slot:prepend>
                 <v-avatar color="grey-lighten-1">

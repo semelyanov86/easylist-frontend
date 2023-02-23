@@ -10,7 +10,7 @@
         <v-responsive>
             <v-row>
                 <v-col cols="12" lg="4">
-                  <lists-and-folders-index :folders="folders" :lists="files"></lists-and-folders-index>
+                  <lists-and-folders-index :lists="files"></lists-and-folders-index>
                 </v-col>
 
                 <v-col cols="12" md="6" lg="8">
@@ -47,27 +47,6 @@ export default {
       },
     ])
 
-    const folders = ref([
-      {
-        id: 1,
-        created_at: 'Jan 9, 2014',
-        name: 'Photos',
-        icon: 'mdi-folder',
-      },
-      {
-        id: 2,
-        created_at: 'Jan 17, 2014',
-        name: 'Recipes',
-        icon: 'mdi-folder',
-      },
-      {
-        id: 3,
-        created_at: 'Jan 28, 2014',
-        name: 'Work',
-        icon: 'mdi-folder',
-      },
-    ])
-
     const items = ref([
       {
         id: 1,
@@ -97,7 +76,7 @@ export default {
     ])
 
     return {
-      storage, files, folders, items
+      storage, files, items
     }
   },
 }

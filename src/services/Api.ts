@@ -31,6 +31,14 @@ export function doUserInfo(): Promise<AxiosResponse<any>> {
     return http.get(import.meta.env.VITE_API_URL + '/my')
 }
 
+export function foldersFetch(page: number): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    const pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    return http.get(
+        import.meta.env.VITE_API_URL + '/folders?page[number]=1&page[size]=10'
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({
