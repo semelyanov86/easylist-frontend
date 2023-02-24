@@ -18,6 +18,9 @@
                 <folder-submenu></folder-submenu>
             </template>
         </v-list-item>
+        <atom-load-more v-if="nextFolder" @click="loadMoreFolders"
+            >Load More</atom-load-more
+        >
 
         <atom-divider inset></atom-divider>
 
@@ -39,6 +42,9 @@
                 <list-submenu></list-submenu>
             </template>
         </v-list-item>
+        <atom-load-more v-if="nextList" @click="loadMoreLists"
+            >Load More</atom-load-more
+        >
     </v-list>
 </template>
 
@@ -51,8 +57,11 @@ import AtomIcon from '@/components/atoms/AtomIcon.vue'
 import AtomSubheader from '@/components/atoms/AtomSubheader.vue'
 import AtomDivider from '@/components/atoms/AtomDivider.vue'
 import ListSubmenu from '@/components/molecules/ListSubmenu.vue'
+import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
+    emits: ['loadMoreFolders', 'loadMoreLists'],
     name: 'ListsAndFoldersList',
     components: {
         AtomIcon,
@@ -60,20 +69,31 @@ export default {
         AtomDivider,
         FolderSubmenu,
         ListSubmenu,
+        AtomLoadMore,
     },
     props: {
         folders: Array as PropType<FolderInterface[]>,
         lists: Array as PropType<ListInterface[]>,
+        nextFolder: Boolean,
+        nextList: Boolean,
     },
-    setup() {
+    setup(props, { emit }) {
         function listSubtitle(list: ListInterface): string {
             return list.items_count + ' items'
         }
+        function loadMoreFolders() {
+            emit('loadMoreFolders')
+        }
+        function loadMoreLists() {
+            emit('loadMoreLists')
+        }
         return {
             listSubtitle,
+            loadMoreFolders,
+            loadMoreLists,
         }
     },
-}
+})
 </script>
 
 <style scoped></style>

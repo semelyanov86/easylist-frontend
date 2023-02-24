@@ -1,9 +1,15 @@
 <template>
     <v-card class="mx-auto" max-width="600">
-        <toolbar>Choose a list to display items</toolbar>
+        <toolbar @search="searchWithFilter"
+            >Choose a list to display items</toolbar
+        >
         <lists-and-folders-list
             :folders="folders"
             :lists="lists"
+            :nextFolder="nextFolderExists"
+            :nextList="nextListExists"
+            @load-more-folders="receiveFolders"
+            @load-more-lists="receiveLists"
         ></lists-and-folders-list>
     </v-card>
 </template>
@@ -31,6 +37,8 @@ export default {
         const lists = ref<ListInterface[]>([])
         const page = ref(1)
         const listPage = ref(1)
+        const nextFolderExists = ref(false)
+        const nextListExists = ref(false)
 
         onMounted(() => {
             receiveFolders()
@@ -38,9 +46,12 @@ export default {
         })
 
         function receiveFolders() {
-            foldersFetch(page.value).then((response: any) => {
-                response.data.data
-                    .forEach(function (result: any) {
+            storage.loading = true
+            foldersFetch(page.value)
+                .then(function (response: any) {
+                    nextFolderExists.value = !!response.data.links.next
+                    page.value++
+                    response.data.data.forEach(function (result: any) {
                         const folder: FolderInterface = {
                             id: result.id,
                             name: result.attributes.name,
@@ -52,21 +63,26 @@ export default {
                         if (folder.name != 'default') {
                             folders.value.push(folder)
                         }
+                        storage.loading = false
                     })
-                    .catch((error: AxiosError) => {
-                        if (error.response?.status == 401) {
-                            router.push('/login')
-                        }
-                        console.log(error)
-                        storage.setErrorFromAxios(error)
-                    })
-            })
+                })
+                .catch((error: AxiosError) => {
+                    if (error.response?.status == 401) {
+                        router.push('/login')
+                    }
+                    console.log(error)
+                    storage.setErrorFromAxios(error)
+                    storage.loading = false
+                })
         }
 
         function receiveLists() {
-            listsFromFolder(listPage.value).then((response: any) => {
-                response.data.data
-                    .forEach(function (result: any) {
+            storage.loading = true
+            listsFromFolder(listPage.value)
+                .then(function (response: any) {
+                    nextListExists.value = !!response.data.links.next
+                    listPage.value++
+                    response.data.data.forEach(function (result: any) {
                         const list: ListInterface = {
                             id: result.id,
                             name: result.attributes.name,
@@ -82,16 +98,34 @@ export default {
                         }
                         lists.value.push(list)
                     })
-                    .catch((error: AxiosError) => {
-                        if (error.response?.status == 401) {
-                            router.push('/login')
-                        }
-                        console.log(error)
-                        storage.setErrorFromAxios(error)
-                    })
-            })
+                    storage.loading = false
+                })
+                .catch((error: AxiosError) => {
+                    if (error.response?.status == 401) {
+                        router.push('/login')
+                    }
+                    console.log(error)
+                    storage.setErrorFromAxios(error)
+                    storage.loading = false
+                })
         }
-        return { folders, lists }
+
+        function searchWithFilter(value: string) {
+            if (value.length < 3) {
+                return
+            }
+            console.log(value)
+        }
+
+        return {
+            folders,
+            lists,
+            nextListExists,
+            nextFolderExists,
+            receiveFolders,
+            receiveLists,
+            searchWithFilter,
+        }
     },
 }
 </script>

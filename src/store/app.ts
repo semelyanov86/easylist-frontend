@@ -12,6 +12,7 @@ export const useAppStore = defineStore('app', {
         user: <UserInterface>{},
         selectedFolder: 1,
         selectedList: <ListInterface>{},
+        loading: false,
     }),
     actions: {
         setToken(token: string) {

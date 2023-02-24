@@ -7,6 +7,7 @@
                 v-model="alert"
             />
         </v-container>
+        <atom-loading-indicator></atom-loading-indicator>
         <v-responsive>
             <v-row>
                 <v-col cols="12" lg="4">
@@ -27,9 +28,15 @@ import ItemsIndex from '@/components/organisms/ItemsIndex.vue'
 import { useAppStore } from '@/store/app'
 import { ref } from 'vue'
 import ErrorAlert from '@/components/molecules/ErrorAlert.vue'
+import AtomLoadingIndicator from '@/components/atoms/AtomLoadingIndicator.vue'
 
 export default {
-    components: { ListsAndFoldersIndex, ItemsIndex, ErrorAlert },
+    components: {
+        ListsAndFoldersIndex,
+        ItemsIndex,
+        ErrorAlert,
+        AtomLoadingIndicator,
+    },
     setup() {
         const storage = useAppStore()
 
