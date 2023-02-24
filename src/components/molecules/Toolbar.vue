@@ -1,7 +1,11 @@
 <template>
     <v-toolbar color="secondary">
-      <v-btn variant="text" icon="mdi-arrow-left" v-if="showBackButton"></v-btn>
-      <atom-toolbar-title><slot></slot></atom-toolbar-title>
+        <v-btn
+            variant="text"
+            icon="mdi-arrow-left"
+            v-if="showBackButton"
+        ></v-btn>
+        <atom-toolbar-title><slot></slot></atom-toolbar-title>
 
         <atom-spacer />
 
@@ -9,7 +13,6 @@
 
         <v-btn variant="text" icon="mdi-plus"></v-btn>
     </v-toolbar>
-
 </template>
 
 <script lang="ts">
@@ -22,9 +25,9 @@ export default {
         AtomToolbarTitle,
         AtomSpacer,
     },
-  props: {
-      showBackButton: Boolean
-  }
+    props: {
+        showBackButton: Boolean,
+    },
 }
 </script>
 

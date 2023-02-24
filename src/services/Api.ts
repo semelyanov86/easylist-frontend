@@ -35,7 +35,28 @@ export function foldersFetch(page: number): Promise<AxiosResponse<any>> {
     const http = createHttp()
     const pageSize = import.meta.env.VITE_API_PAGE_SIZE
     return http.get(
-        import.meta.env.VITE_API_URL + '/folders?page[number]=1&page[size]=10'
+        import.meta.env.VITE_API_URL +
+            '/folders?page[number]=' +
+            page +
+            '&page[size]=' +
+            pageSize
+    )
+}
+
+export function listsFromFolder(page: number): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    const pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    const storage = useAppStore()
+    const folderId = storage.selectedFolder
+    return http.get(
+        import.meta.env.VITE_API_URL +
+            '/folders/' +
+            folderId +
+            '/lists' +
+            '?page[number]=' +
+            page +
+            '&page[size]=' +
+            pageSize
     )
 }
 

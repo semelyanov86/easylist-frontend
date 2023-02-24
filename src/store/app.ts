@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia'
 import UserInterface from '@/types/UserInterface'
 import { AxiosError } from 'axios'
+import ListInterface from '@/types/ListInterface'
 
 export const useAppStore = defineStore('app', {
     state: () => ({
@@ -9,6 +10,8 @@ export const useAppStore = defineStore('app', {
         error: <string>'',
         errorAlert: <boolean>false,
         user: <UserInterface>{},
+        selectedFolder: 1,
+        selectedList: <ListInterface>{},
     }),
     actions: {
         setToken(token: string) {

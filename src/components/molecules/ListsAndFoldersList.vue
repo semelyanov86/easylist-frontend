@@ -15,11 +15,7 @@
             </template>
 
             <template v-slot:append>
-                <v-btn
-                    color="grey-lighten-1"
-                    icon="mdi-information"
-                    variant="text"
-                ></v-btn>
+                <folder-submenu></folder-submenu>
             </template>
         </v-list-item>
 
@@ -31,7 +27,7 @@
             v-for="list in lists"
             :key="list.id"
             :title="list.name"
-            :subtitle="list.created_at"
+            :subtitle="listSubtitle(list)"
         >
             <template v-slot:prepend>
                 <v-avatar color="default">
@@ -40,11 +36,7 @@
             </template>
 
             <template v-slot:append>
-                <v-btn
-                    color="grey-lighten-1"
-                    icon="mdi-information"
-                    variant="text"
-                ></v-btn>
+                <list-submenu></list-submenu>
             </template>
         </v-list-item>
     </v-list>
@@ -54,22 +46,32 @@
 import FolderInterface from '@/types/FolderInterface'
 import ListInterface from '@/types/ListInterface'
 import { PropType } from 'vue'
-import AtomBtn from '@/components/atoms/AtomBtn.vue'
+import FolderSubmenu from '@/components/molecules/FolderSubmenu.vue'
 import AtomIcon from '@/components/atoms/AtomIcon.vue'
 import AtomSubheader from '@/components/atoms/AtomSubheader.vue'
 import AtomDivider from '@/components/atoms/AtomDivider.vue'
+import ListSubmenu from '@/components/molecules/ListSubmenu.vue'
 
 export default {
     name: 'ListsAndFoldersList',
     components: {
-        AtomBtn,
         AtomIcon,
         AtomSubheader,
         AtomDivider,
+        FolderSubmenu,
+        ListSubmenu,
     },
     props: {
         folders: Array as PropType<FolderInterface[]>,
         lists: Array as PropType<ListInterface[]>,
+    },
+    setup() {
+        function listSubtitle(list: ListInterface): string {
+            return list.items_count + ' items'
+        }
+        return {
+            listSubtitle,
+        }
     },
 }
 </script>
