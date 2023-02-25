@@ -31,21 +31,38 @@ export function doUserInfo(): Promise<AxiosResponse<any>> {
     return http.get(import.meta.env.VITE_API_URL + '/my')
 }
 
-export function foldersFetch(page: number): Promise<AxiosResponse<any>> {
+export function foldersFetch(
+    page: number,
+    search: string
+): Promise<AxiosResponse<any>> {
     const http = createHttp()
-    const pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    let pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    let postQuery = ''
+    if (search) {
+        pageSize = import.meta.env.VITE_API_PAGE_SIZE_IN_SEARCH
+        postQuery = '&filter[name]=' + search
+    }
     return http.get(
         import.meta.env.VITE_API_URL +
             '/folders?page[number]=' +
             page +
             '&page[size]=' +
-            pageSize
+            pageSize +
+            postQuery
     )
 }
 
-export function listsFromFolder(page: number): Promise<AxiosResponse<any>> {
+export function listsFromFolder(
+    page: number,
+    search: string
+): Promise<AxiosResponse<any>> {
     const http = createHttp()
-    const pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    let pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    let postQuery = ''
+    if (search) {
+        pageSize = import.meta.env.VITE_API_PAGE_SIZE_IN_SEARCH
+        postQuery = '&filter[name]=' + search
+    }
     const storage = useAppStore()
     const folderId = storage.selectedFolder
     return http.get(
@@ -56,7 +73,8 @@ export function listsFromFolder(page: number): Promise<AxiosResponse<any>> {
             '?page[number]=' +
             page +
             '&page[size]=' +
-            pageSize
+            pageSize +
+            postQuery
     )
 }
 

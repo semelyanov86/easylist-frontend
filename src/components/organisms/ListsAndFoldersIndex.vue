@@ -39,15 +39,25 @@ export default {
         const listPage = ref(1)
         const nextFolderExists = ref(false)
         const nextListExists = ref(false)
+      const searchTerm = ref('')
 
         onMounted(() => {
             receiveFolders()
             receiveLists()
         })
 
+      function setDefaultValues() {
+        folders.value = []
+        lists.value = []
+        page.value = 1
+        listPage.value = 1
+        nextListExists.value = false
+        nextFolderExists.value = false
+      }
+
         function receiveFolders() {
             storage.loading = true
-            foldersFetch(page.value)
+            foldersFetch(page.value, searchTerm.value)
                 .then(function (response: any) {
                     nextFolderExists.value = !!response.data.links.next
                     page.value++
@@ -78,7 +88,7 @@ export default {
 
         function receiveLists() {
             storage.loading = true
-            listsFromFolder(listPage.value)
+            listsFromFolder(listPage.value, searchTerm.value)
                 .then(function (response: any) {
                     nextListExists.value = !!response.data.links.next
                     listPage.value++
@@ -110,11 +120,14 @@ export default {
                 })
         }
 
-        function searchWithFilter(value: string) {
-            if (value.length < 3) {
+        function searchWithFilter(value: string | null) {
+            if (value != null && value.length < 4) {
                 return
             }
-            console.log(value)
+            setDefaultValues()
+            searchTerm.value = value
+          receiveLists()
+          receiveFolders()
         }
 
         return {

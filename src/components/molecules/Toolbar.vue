@@ -16,6 +16,8 @@
             v-if="searchActive"
             variant="solo"
             v-model="searchValue"
+            persistent-clear
+            @click:clear="onClear"
         ></v-text-field>
 
         <v-btn
@@ -49,10 +51,19 @@ export default defineComponent({
 
         const searchValue = computed({
             get: () => searchInput.value,
-            set: (value) => emit('search', value),
+            set: function (value) {
+              searchInput.value = value
+              emit('search', value)
+            },
         })
 
-        return { searchActive, searchInput, searchValue }
+      function onClear() {
+          console.log('clear')
+        searchInput.value = ''
+        emit('search', '')
+      }
+
+        return { searchActive, searchInput, searchValue, onClear }
     },
 })
 </script>
