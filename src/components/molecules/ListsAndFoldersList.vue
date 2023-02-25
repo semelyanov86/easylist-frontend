@@ -3,7 +3,7 @@
         <atom-subheader text="Folders" />
 
         <v-list-item
-            v-for="folder in folders"
+            v-for="folder in storage.folders"
             :key="folder.id"
             :title="folder.name"
             :subtitle="folder.created_at.toDateString()"
@@ -29,7 +29,7 @@
         <atom-subheader text="Lists" />
 
         <v-list-item
-            v-for="list in lists"
+            v-for="list in storage.lists"
             :key="list.id"
             :title="list.name"
             :subtitle="listSubtitle(list)"
@@ -61,6 +61,7 @@ import AtomDivider from '@/components/atoms/AtomDivider.vue'
 import ListSubmenu from '@/components/molecules/ListSubmenu.vue'
 import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 import { defineComponent } from 'vue'
+import { useAppStore } from '@/store/app'
 
 export default defineComponent({
     emits: ['loadMoreFolders', 'loadMoreLists', 'editFolder'],
@@ -74,12 +75,12 @@ export default defineComponent({
         AtomLoadMore,
     },
     props: {
-        folders: Array as PropType<FolderInterface[]>,
-        lists: Array as PropType<ListInterface[]>,
         nextFolder: Boolean,
         nextList: Boolean,
     },
     setup(props, { emit }) {
+        const storage = useAppStore()
+
         function listSubtitle(list: ListInterface): string {
             return list.items_count + ' items'
         }
@@ -97,6 +98,7 @@ export default defineComponent({
             loadMoreFolders,
             loadMoreLists,
             editFolder,
+            storage,
         }
     },
 })

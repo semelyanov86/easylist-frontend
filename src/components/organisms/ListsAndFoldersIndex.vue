@@ -7,8 +7,6 @@
             >Choose a list to display items
         </toolbar>
         <lists-and-folders-list
-            :folders="folders"
-            :lists="lists"
             :nextFolder="nextFolderExists"
             :nextList="nextListExists"
             @load-more-folders="receiveFolders"
@@ -39,8 +37,6 @@ export default defineComponent({
     emits: ['createFolder', 'createList', 'editFolder'],
     setup(props, { emit }) {
         const storage = useAppStore()
-        const folders = ref<FolderInterface[]>([])
-        const lists = ref<ListInterface[]>([])
         const page = ref(1)
         const listPage = ref(1)
         const nextFolderExists = ref(false)
@@ -53,8 +49,7 @@ export default defineComponent({
         })
 
         function setDefaultValues() {
-            folders.value = []
-            lists.value = []
+            storage.setDefaultsForData()
             page.value = 1
             listPage.value = 1
             nextListExists.value = false
@@ -76,9 +71,7 @@ export default defineComponent({
                             created_at: new Date(result.attributes.created_at),
                             updated_at: new Date(result.attributes.updated_at),
                         }
-                        if (folder.name != 'default') {
-                            folders.value.push(folder)
-                        }
+                        storage.addFolder(folder)
                         storage.loading = false
                     })
                 })
@@ -112,7 +105,7 @@ export default defineComponent({
                             created_at: new Date(result.attributes.created_at),
                             updated_at: new Date(result.attributes.updated_at),
                         }
-                        lists.value.push(list)
+                        storage.addList(list)
                     })
                     storage.loading = false
                 })
@@ -152,8 +145,6 @@ export default defineComponent({
         }
 
         return {
-            folders,
-            lists,
             nextListExists,
             nextFolderExists,
             receiveFolders,

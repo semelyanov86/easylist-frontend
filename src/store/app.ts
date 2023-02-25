@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import UserInterface from '@/types/UserInterface'
 import { AxiosError } from 'axios'
 import ListInterface from '@/types/ListInterface'
+import FolderInterface from '@/types/FolderInterface'
 
 export const useAppStore = defineStore('app', {
     state: () => ({
@@ -13,6 +14,8 @@ export const useAppStore = defineStore('app', {
         selectedFolder: 1,
         selectedList: <ListInterface>{},
         loading: false,
+        folders: [] as FolderInterface[],
+        lists: [] as ListInterface[],
     }),
     actions: {
         setToken(token: string) {
@@ -39,6 +42,18 @@ export const useAppStore = defineStore('app', {
                 return
             }
             this.error = err.message
+        },
+        addFolder(folder: FolderInterface) {
+            if (folder.name != 'default') {
+                this.folders.push(folder)
+            }
+        },
+        addList(list: ListInterface) {
+            this.lists.push(list)
+        },
+        setDefaultsForData() {
+            this.folders = []
+            this.lists = []
         },
     },
 })
