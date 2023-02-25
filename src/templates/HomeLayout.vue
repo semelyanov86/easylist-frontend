@@ -9,8 +9,8 @@
         </v-container>
         <atom-loading-indicator></atom-loading-indicator>
         <create-list-or-folder
-            :dialog="createFolderMode"
-            @close-dialog="onCloseDialog"
+            :folder-dialog="createFolderMode"
+            @close-folder-dialog="onCloseFolderDialog"
             :folder-id="folderId"
         ></create-list-or-folder>
         <v-responsive>
@@ -91,8 +91,8 @@ export default {
             createListMode.value = true
         }
 
-        function onCloseDialog(value: boolean) {
-            createFolderMode.value = value
+        function onCloseFolderDialog(value: boolean) {
+            createFolderMode.value = false
         }
 
         function onEditFolder(id: number) {
@@ -105,7 +105,7 @@ export default {
             items,
             onCreateFolder,
             onCreateList,
-            onCloseDialog,
+            onCloseFolderDialog,
             createFolderMode,
             folderId,
             onEditFolder,

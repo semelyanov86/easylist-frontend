@@ -1,61 +1,41 @@
 <template>
-    <v-dialog v-model="isOpen" activator="parent" width="auto">
-        <v-card>
-            <v-card-title>
-                <span class="text-h5">Create New Folder</span>
-            </v-card-title>
-            <v-card-text>
-                <v-container>
-                    <v-row>
-                        <v-col cols="12">
-                            <v-text-field label="Name*" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field label="Icon*" required></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-container>
-                <small>*indicates required field</small>
-            </v-card-text>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="blue-darken-1"
-                    variant="text"
-                    @click="isOpen = false"
-                >
-                    Close
-                </v-btn>
-                <v-btn
-                    color="blue-darken-1"
-                    variant="text"
-                    @click="isOpen = false"
-                >
-                    Save
-                </v-btn>
-            </v-card-actions>
-        </v-card>
+    <v-dialog v-model="isFolderOpen" activator="parent" width="auto">
+        <edit-folder-card
+            @save-folder="saveFolder"
+            @close-folder="closeFolder"
+        ></edit-folder-card>
     </v-dialog>
 </template>
 
 <script lang="ts">
 import { computed, ref } from 'vue'
 import { defineComponent } from 'vue'
+import EditFolderCard from '@/components/organisms/EditFolderCard.vue'
+import FolderInterface from '@/types/FolderInterface'
 
 export default defineComponent({
     name: 'CreateListOrFolder',
-    emits: ['closeDialog'],
+    components: { EditFolderCard },
+    emits: ['closeFolderDialog'],
     props: {
-        dialog: Boolean,
+        folderDialog: Boolean,
         folderId: Number,
     },
     setup(props, { emit }) {
-        const isOpen = computed({
-            get: () => props.dialog,
-            set: (value) => emit('closeDialog', value),
+        const isFolderOpen = computed({
+            get: () => props.folderDialog,
+            set: (value) => emit('closeFolderDialog', value),
         })
 
-        return { isOpen }
+        function saveFolder(folder: FolderInterface) {
+            emit('closeFolderDialog', false)
+        }
+
+        function closeFolder() {
+            emit('closeFolderDialog', false)
+        }
+
+        return { isFolderOpen, saveFolder, closeFolder }
     },
 })
 </script>

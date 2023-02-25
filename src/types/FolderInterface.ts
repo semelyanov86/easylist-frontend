@@ -1,5 +1,5 @@
 export default interface FolderInterface {
-    id: bigint
+    id: number
     name: string
     icon: string
     order: number
