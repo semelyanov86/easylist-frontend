@@ -1,8 +1,11 @@
 <template>
     <v-card class="mx-auto" max-width="600">
-        <toolbar @search="searchWithFilter"
-            >Choose a list to display items</toolbar
-        >
+        <toolbar
+            @search="searchWithFilter"
+            @create-folder="onCreateFolder"
+            @create-list="onCreateList"
+            >Choose a list to display items
+        </toolbar>
         <lists-and-folders-list
             :folders="folders"
             :lists="lists"
@@ -10,6 +13,7 @@
             :nextList="nextListExists"
             @load-more-folders="receiveFolders"
             @load-more-lists="receiveLists"
+            @edit-folder="onEditFolder"
         ></lists-and-folders-list>
     </v-card>
 </template>
@@ -17,21 +21,23 @@
 <script lang="ts">
 import FolderInterface from '@/types/FolderInterface'
 import ListInterface from '@/types/ListInterface'
-import { onMounted, PropType, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import ListsAndFoldersList from '@/components/molecules/ListsAndFoldersList.vue'
 import Toolbar from '@/components/molecules/Toolbar.vue'
 import { foldersFetch, listsFromFolder } from '@/services/Api'
 import { useAppStore } from '@/store/app'
 import { AxiosError } from 'axios'
 import router from '@/router'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
     name: 'ListsAndFoldersIndex',
     components: {
         ListsAndFoldersList,
         Toolbar,
     },
-    setup() {
+    emits: ['createFolder', 'createList', 'editFolder'],
+    setup(props, { emit }) {
         const storage = useAppStore()
         const folders = ref<FolderInterface[]>([])
         const lists = ref<ListInterface[]>([])
@@ -39,21 +45,21 @@ export default {
         const listPage = ref(1)
         const nextFolderExists = ref(false)
         const nextListExists = ref(false)
-      const searchTerm = ref('')
+        const searchTerm = ref('')
 
         onMounted(() => {
             receiveFolders()
             receiveLists()
         })
 
-      function setDefaultValues() {
-        folders.value = []
-        lists.value = []
-        page.value = 1
-        listPage.value = 1
-        nextListExists.value = false
-        nextFolderExists.value = false
-      }
+        function setDefaultValues() {
+            folders.value = []
+            lists.value = []
+            page.value = 1
+            listPage.value = 1
+            nextListExists.value = false
+            nextFolderExists.value = false
+        }
 
         function receiveFolders() {
             storage.loading = true
@@ -124,10 +130,25 @@ export default {
             if (value != null && value.length < 4) {
                 return
             }
+            if (value == null) {
+                value = ''
+            }
             setDefaultValues()
             searchTerm.value = value
-          receiveLists()
-          receiveFolders()
+            receiveLists()
+            receiveFolders()
+        }
+
+        function onCreateFolder() {
+            emit('createFolder')
+        }
+
+        function onCreateList() {
+            emit('createList')
+        }
+
+        function onEditFolder(id: Number) {
+            emit('editFolder', id)
         }
 
         return {
@@ -138,9 +159,12 @@ export default {
             receiveFolders,
             receiveLists,
             searchWithFilter,
+            onCreateFolder,
+            onCreateList,
+            onEditFolder,
         }
     },
-}
+})
 </script>
 
 <style scoped></style>

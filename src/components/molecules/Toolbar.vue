@@ -26,7 +26,10 @@
             @click="searchActive = !searchActive"
         ></v-btn>
 
-        <v-btn variant="text" icon="mdi-plus"></v-btn>
+        <add-list-or-folder-btn
+            @create-folder="onCreateFolder"
+            @create-list="onCreateList"
+        ></add-list-or-folder-btn>
     </v-toolbar>
 </template>
 
@@ -34,13 +37,15 @@
 import AtomToolbarTitle from '@/components/atoms/AtomToolbarTitle.vue'
 import AtomSpacer from '@/components/atoms/AtomSpacer.vue'
 import { ref, defineComponent, computed } from 'vue'
+import AddListOrFolderBtn from '@/components/molecules/AddListOrFolderBtn.vue'
 
 export default defineComponent({
     name: 'Toolbar',
-    emits: ['search'],
+    emits: ['search', 'createFolder', 'createList'],
     components: {
         AtomToolbarTitle,
         AtomSpacer,
+        AddListOrFolderBtn,
     },
     props: {
         showBackButton: Boolean,
@@ -52,18 +57,31 @@ export default defineComponent({
         const searchValue = computed({
             get: () => searchInput.value,
             set: function (value) {
-              searchInput.value = value
-              emit('search', value)
+                searchInput.value = value
+                emit('search', value)
             },
         })
 
-      function onClear() {
-          console.log('clear')
-        searchInput.value = ''
-        emit('search', '')
-      }
+        function onClear() {
+            searchInput.value = ''
+            emit('search', '')
+        }
 
-        return { searchActive, searchInput, searchValue, onClear }
+        function onCreateFolder() {
+            emit('createFolder')
+        }
+        function onCreateList() {
+            emit('createList')
+        }
+
+        return {
+            searchActive,
+            searchInput,
+            searchValue,
+            onClear,
+            onCreateFolder,
+            onCreateList,
+        }
     },
 })
 </script>

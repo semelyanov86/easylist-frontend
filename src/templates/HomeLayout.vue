@@ -8,10 +8,19 @@
             />
         </v-container>
         <atom-loading-indicator></atom-loading-indicator>
+        <create-list-or-folder
+            :dialog="createFolderMode"
+            @close-dialog="onCloseDialog"
+            :folder-id="folderId"
+        ></create-list-or-folder>
         <v-responsive>
             <v-row>
                 <v-col cols="12" lg="4">
-                    <lists-and-folders-index></lists-and-folders-index>
+                    <lists-and-folders-index
+                        @create-folder="onCreateFolder"
+                        @create-list="onCreateList"
+                        @edit-folder="onEditFolder"
+                    ></lists-and-folders-index>
                 </v-col>
 
                 <v-col cols="12" md="6" lg="8">
@@ -29,6 +38,7 @@ import { useAppStore } from '@/store/app'
 import { ref } from 'vue'
 import ErrorAlert from '@/components/molecules/ErrorAlert.vue'
 import AtomLoadingIndicator from '@/components/atoms/AtomLoadingIndicator.vue'
+import CreateListOrFolder from '@/templates/CreateListOrFolder.vue'
 
 export default {
     components: {
@@ -36,9 +46,13 @@ export default {
         ItemsIndex,
         ErrorAlert,
         AtomLoadingIndicator,
+        CreateListOrFolder,
     },
     setup() {
         const storage = useAppStore()
+        const createFolderMode = ref(false)
+        const createListMode = ref(false)
+        const folderId = ref(0)
 
         const items = ref([
             {
@@ -68,9 +82,33 @@ export default {
             },
         ])
 
+        function onCreateFolder() {
+            folderId.value = 0
+            createFolderMode.value = true
+        }
+
+        function onCreateList() {
+            createListMode.value = true
+        }
+
+        function onCloseDialog(value: boolean) {
+            createFolderMode.value = value
+        }
+
+        function onEditFolder(id: number) {
+            folderId.value = id
+            createFolderMode.value = true
+        }
+
         return {
             storage,
             items,
+            onCreateFolder,
+            onCreateList,
+            onCloseDialog,
+            createFolderMode,
+            folderId,
+            onEditFolder,
         }
     },
 }

@@ -15,7 +15,9 @@
             </template>
 
             <template v-slot:append>
-                <folder-submenu></folder-submenu>
+                <folder-submenu
+                    @edit-folder="editFolder(folder.id)"
+                ></folder-submenu>
             </template>
         </v-list-item>
         <atom-load-more v-if="nextFolder" @click="loadMoreFolders"
@@ -61,7 +63,7 @@ import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-    emits: ['loadMoreFolders', 'loadMoreLists'],
+    emits: ['loadMoreFolders', 'loadMoreLists', 'editFolder'],
     name: 'ListsAndFoldersList',
     components: {
         AtomIcon,
@@ -87,10 +89,14 @@ export default defineComponent({
         function loadMoreLists() {
             emit('loadMoreLists')
         }
+        function editFolder(id: Number) {
+            emit('editFolder', id)
+        }
         return {
             listSubtitle,
             loadMoreFolders,
             loadMoreLists,
+            editFolder,
         }
     },
 })
