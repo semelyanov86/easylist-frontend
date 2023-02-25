@@ -33,13 +33,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import FolderInterface from '@/types/FolderInterface'
+import { getFolderById } from '@/services/Api'
+import { useAppStore } from '@/store/app'
 
 export default defineComponent({
     name: 'EditFolderForm',
     emits: ['saveFolder', 'closeFolder'],
+    props: {
+        folderId: Number,
+    },
     setup(props, { emit }) {
+        const storage = useAppStore()
+
         const folderModel = ref<FolderInterface>({
             id: 0,
             name: '',
@@ -54,6 +61,41 @@ export default defineComponent({
             'mdi-folder-home',
             'mdi-folder-image',
         ])
+
+        onMounted(function () {
+            if (!props.folderId || props.folderId < 1) {
+                return
+            }
+            storage.loading = true
+            getFolderById(props.folderId)
+                .then((response) => {
+                    folderModel.value.id = props.folderId ?? 0
+                    folderModel.value.icon = response.data.data.attributes.icon
+                    folderModel.value.name = response.data.data.attributes.name
+                    folderModel.value.order =
+                        response.data.data.attributes.order
+                    folderModel.value.created_at = new Date(
+                        response.data.data.attributes.created_at
+                    )
+                    folderModel.value.updated_at = new Date(
+                        response.data.data.attributes.updated_at
+                    )
+
+                    if (
+                        folderModel.value.id &&
+                        typeof folderModel.value.id === 'number'
+                    ) {
+                        folderModel.value.id = folderModel.value.id.toString()
+                    }
+
+                    storage.loading = false
+                })
+                .catch((error) => {
+                    console.log(error)
+                    storage.setErrorFromAxios(error)
+                    storage.loading = false
+                })
+        })
 
         function saveFolder() {
             emit('saveFolder', folderModel.value)

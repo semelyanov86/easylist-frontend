@@ -44,12 +44,29 @@ export const useAppStore = defineStore('app', {
             this.error = err.message
         },
         addFolder(folder: FolderInterface) {
-            if (folder.name != 'default') {
+            if (folder.name == 'default') {
+                return
+            }
+            const foundFolder = this.folders.findIndex(
+                (folderCurrent: FolderInterface) =>
+                    folderCurrent.id === folder.id
+            )
+            if (foundFolder < 0) {
                 this.folders.push(folder)
+            } else {
+                this.folders[foundFolder] = folder
             }
         },
         addList(list: ListInterface) {
             this.lists.push(list)
+            const foundList = this.lists.findIndex(
+                (listCurrent: ListInterface) => listCurrent.id === list.id
+            )
+            if (foundList < 0) {
+                this.lists.push(list)
+            } else {
+                this.lists[foundList] = list
+            }
         },
         setDefaultsForData() {
             this.folders = []

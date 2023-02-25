@@ -4,6 +4,7 @@
         <edit-folder-form
             @save-folder="saveFolder"
             @close-folder="closeFolder"
+            :folder-id="folderId"
         ></edit-folder-form>
     </v-card>
 </template>
@@ -18,6 +19,9 @@ import EditFolderForm from '@/components/molecules/EditFolderForm.vue'
 export default defineComponent({
     name: 'EditFolderCard',
     emits: ['saveFolder', 'closeFolder'],
+    props: {
+        folderId: Number,
+    },
     components: {
         AtomCardTitle,
         EditFolderForm,

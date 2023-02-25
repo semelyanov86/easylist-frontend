@@ -95,8 +95,12 @@ export default {
             createFolderMode.value = false
         }
 
-        function onEditFolder(id: number) {
-            folderId.value = id
+        function onEditFolder(id: number | string) {
+            if (typeof id === 'string') {
+                folderId.value = parseInt(id)
+            } else {
+                folderId.value = id
+            }
             createFolderMode.value = true
         }
 

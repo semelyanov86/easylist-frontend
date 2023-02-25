@@ -4,6 +4,8 @@ import axios, { AxiosInstance } from 'axios'
 import TokenInterface from '@/types/TokenInterface'
 import { AxiosResponse } from 'axios'
 import { useAppStore } from '@/store/app'
+import FolderInterface from '@/types/FolderInterface'
+import serializeToJsonApi from '@/services/JsonApiConverter'
 
 export function doAuth(login: SignInInterface): Promise<AxiosResponse<any>> {
     return axios.post(
@@ -76,6 +78,27 @@ export function listsFromFolder(
             pageSize +
             postQuery
     )
+}
+
+export function createOrUpdateFolder(
+    folder: FolderInterface
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    if (folder.id && folder.id > 0) {
+        return http.patch(
+            import.meta.env.VITE_API_URL + '/folders/' + folder.id,
+            serializeToJsonApi<FolderInterface>(folder, 'folders')
+        )
+    }
+    return http.post(
+        import.meta.env.VITE_API_URL + '/folders/',
+        serializeToJsonApi<FolderInterface>(folder, 'folders')
+    )
+}
+
+export function getFolderById(id: number): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.get(import.meta.env.VITE_API_URL + '/folders/' + id)
 }
 
 function createHttp(): AxiosInstance {
