@@ -17,6 +17,24 @@ export const useAppStore = defineStore('app', {
         folders: [] as FolderInterface[],
         lists: [] as ListInterface[],
     }),
+    getters: {
+        getAllFolders(state): FolderInterface[] {
+            const folders: FolderInterface[] = [
+                {
+                    id: 1,
+                    name: 'default',
+                    icon: 'mdi-folder',
+                    order: 1,
+                    created_at: new Date(),
+                    updated_at: new Date(),
+                },
+            ]
+            state.folders.forEach(function (folder) {
+                folders.push(folder)
+            })
+            return folders
+        },
+    },
     actions: {
         setToken(token: string) {
             this.token = token
@@ -58,7 +76,6 @@ export const useAppStore = defineStore('app', {
             }
         },
         addList(list: ListInterface) {
-            this.lists.push(list)
             const foundList = this.lists.findIndex(
                 (listCurrent: ListInterface) => listCurrent.id === list.id
             )

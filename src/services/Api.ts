@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios'
 import { useAppStore } from '@/store/app'
 import FolderInterface from '@/types/FolderInterface'
 import serializeToJsonApi from '@/services/JsonApiConverter'
+import ListInterface from '@/types/ListInterface'
 
 export function doAuth(login: SignInInterface): Promise<AxiosResponse<any>> {
     return axios.post(
@@ -99,6 +100,27 @@ export function createOrUpdateFolder(
 export function getFolderById(id: number): Promise<AxiosResponse<any>> {
     const http = createHttp()
     return http.get(import.meta.env.VITE_API_URL + '/folders/' + id)
+}
+
+export function getListById(id: number): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.get(import.meta.env.VITE_API_URL + '/lists/' + id)
+}
+
+export function createOrUpdateList(
+    list: ListInterface
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    if (list.id && list.id > 0) {
+        return http.patch(
+            import.meta.env.VITE_API_URL + '/lists/' + list.id,
+            serializeToJsonApi<ListInterface>(list, 'lists')
+        )
+    }
+    return http.post(
+        import.meta.env.VITE_API_URL + '/lists/',
+        serializeToJsonApi<ListInterface>(list, 'lists')
+    )
 }
 
 function createHttp(): AxiosInstance {

@@ -12,6 +12,7 @@
             @load-more-folders="receiveFolders"
             @load-more-lists="receiveLists"
             @edit-folder="onEditFolder"
+            @edit-list="onEditList"
         ></lists-and-folders-list>
     </v-card>
 </template>
@@ -34,7 +35,7 @@ export default defineComponent({
         ListsAndFoldersList,
         Toolbar,
     },
-    emits: ['createFolder', 'createList', 'editFolder'],
+    emits: ['createFolder', 'createList', 'editFolder', 'editList'],
     setup(props, { emit }) {
         const storage = useAppStore()
         const page = ref(1)
@@ -144,6 +145,10 @@ export default defineComponent({
             emit('editFolder', id)
         }
 
+      function onEditList(id: Number) {
+        emit('editList', id)
+      }
+
         return {
             nextListExists,
             nextFolderExists,
@@ -153,6 +158,7 @@ export default defineComponent({
             onCreateFolder,
             onCreateList,
             onEditFolder,
+          onEditList,
         }
     },
 })

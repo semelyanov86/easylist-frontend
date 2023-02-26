@@ -1,8 +1,8 @@
 export default interface ListInterface {
-    id: bigint
+    id: number | string
     name: string
     icon: string
-    folder_id: bigint
+    folder_id: number
     created_at: Date
     updated_at: Date
     items_count: number

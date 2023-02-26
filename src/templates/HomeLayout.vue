@@ -10,8 +10,11 @@
         <atom-loading-indicator></atom-loading-indicator>
         <create-list-or-folder
             :folder-dialog="createFolderMode"
+            :list-dialog="createListMode"
             @close-folder-dialog="onCloseFolderDialog"
+            @close-list-dialog="onCloseListDialog"
             :folder-id="folderId"
+            :list-id="listId"
         ></create-list-or-folder>
         <v-responsive>
             <v-row>
@@ -20,6 +23,7 @@
                         @create-folder="onCreateFolder"
                         @create-list="onCreateList"
                         @edit-folder="onEditFolder"
+                        @edit-list="onEditList"
                     ></lists-and-folders-index>
                 </v-col>
 
@@ -53,6 +57,7 @@ export default {
         const createFolderMode = ref(false)
         const createListMode = ref(false)
         const folderId = ref(0)
+      const listId = ref(0)
 
         const items = ref([
             {
@@ -88,12 +93,17 @@ export default {
         }
 
         function onCreateList() {
+          listId.value = 0
             createListMode.value = true
         }
 
         function onCloseFolderDialog(value: boolean) {
             createFolderMode.value = false
         }
+
+      function onCloseListDialog(value: boolean) {
+        createListMode.value = false
+      }
 
         function onEditFolder(id: number | string) {
             if (typeof id === 'string') {
@@ -104,6 +114,15 @@ export default {
             createFolderMode.value = true
         }
 
+        function onEditList(id: number | string) {
+          if (typeof id === 'string') {
+            listId.value = parseInt(id)
+          } else {
+            listId.value = id
+          }
+          createListMode.value = true
+        }
+
         return {
             storage,
             items,
@@ -112,7 +131,11 @@ export default {
             onCloseFolderDialog,
             createFolderMode,
             folderId,
+          listId,
             onEditFolder,
+          onEditList,
+          createListMode,
+          onCloseListDialog
         }
     },
 }
