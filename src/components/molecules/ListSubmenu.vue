@@ -15,20 +15,20 @@
 
 <script lang="ts">
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
-import {defineComponent} from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ListSubmenu',
-  emits: ['editList'],
+    emits: ['editList'],
     components: {
         AtomIconBtn,
     },
-  setup(props, {emit}) {
-      function editList() {
-        emit('editList')
-      }
-      return {editList}
-  }
+    setup(props, { emit }) {
+        function editList() {
+            emit('editList')
+        }
+        return { editList }
+    },
 })
 </script>
 

@@ -7,6 +7,7 @@ import { useAppStore } from '@/store/app'
 import FolderInterface from '@/types/FolderInterface'
 import serializeToJsonApi from '@/services/JsonApiConverter'
 import ListInterface from '@/types/ListInterface'
+import MovedInterface from '@/types/MovedInterface'
 
 export function doAuth(login: SignInInterface): Promise<AxiosResponse<any>> {
     return axios.post(
@@ -120,6 +121,26 @@ export function createOrUpdateList(
     return http.post(
         import.meta.env.VITE_API_URL + '/lists/',
         serializeToJsonApi<ListInterface>(list, 'lists')
+    )
+}
+
+export function updateOrderOfFolder(
+    moved: MovedInterface<FolderInterface>
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    const storage = useAppStore()
+    const prevFolder = storage.folders[moved.moved.newIndex - 1]
+    return http.patch(
+        import.meta.env.VITE_API_URL + '/folders/' + moved.moved.element.id,
+        {
+            data: {
+                id: moved.moved.element.id.toString,
+                type: 'folders',
+                attributes: {
+                    order: prevFolder.order + 1,
+                },
+            },
+        }
     )
 }
 

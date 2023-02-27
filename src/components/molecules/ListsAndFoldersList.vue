@@ -2,24 +2,37 @@
     <v-list lines="two">
         <atom-subheader text="Folders" />
 
-        <v-list-item
-            v-for="folder in storage.folders"
-            :key="folder.id"
-            :title="folder.name"
-            :subtitle="folder.created_at.toDateString()"
+        <draggable
+            item-key="id"
+            v-model="storage.folders"
+            @start="isDragging = true"
+            @end="isDragging = false"
+            @change="dropFolder"
+            handle=".handle"
         >
-            <template v-slot:prepend>
-                <v-avatar color="grey-lighten-1">
-                    <atom-icon color="default" :icon="folder.icon"></atom-icon>
-                </v-avatar>
-            </template>
+            <template #item="{ element }">
+                <v-list-item
+                    :key="element.id"
+                    :title="element.name"
+                    :subtitle="element.created_at.toDateString()"
+                >
+                    <template v-slot:prepend>
+                        <v-avatar color="grey-lighten-1" class="handle">
+                            <atom-icon
+                                color="default"
+                                :icon="element.icon"
+                            ></atom-icon>
+                        </v-avatar>
+                    </template>
 
-            <template v-slot:append>
-                <folder-submenu
-                    @edit-folder="editFolder(folder.id)"
-                ></folder-submenu>
+                    <template v-slot:append>
+                        <folder-submenu
+                            @edit-folder="editFolder(element.id)"
+                        ></folder-submenu>
+                    </template>
+                </v-list-item>
             </template>
-        </v-list-item>
+        </draggable>
         <atom-load-more v-if="nextFolder" @click="loadMoreFolders"
             >Load More</atom-load-more
         >
@@ -53,7 +66,7 @@
 <script lang="ts">
 import FolderInterface from '@/types/FolderInterface'
 import ListInterface from '@/types/ListInterface'
-import { PropType } from 'vue'
+import { computed, PropType, ref, WritableComputedRef } from 'vue'
 import FolderSubmenu from '@/components/molecules/FolderSubmenu.vue'
 import AtomIcon from '@/components/atoms/AtomIcon.vue'
 import AtomSubheader from '@/components/atoms/AtomSubheader.vue'
@@ -62,6 +75,11 @@ import ListSubmenu from '@/components/molecules/ListSubmenu.vue'
 import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/app'
+import draggable from 'vuedraggable'
+import MovedInterface from '@/types/MovedInterface'
+import { updateOrderOfFolder } from '@/services/Api'
+import { AxiosError } from 'axios/index'
+import router from '@/router'
 
 export default defineComponent({
     emits: ['loadMoreFolders', 'loadMoreLists', 'editFolder', 'editList'],
@@ -73,6 +91,7 @@ export default defineComponent({
         FolderSubmenu,
         ListSubmenu,
         AtomLoadMore,
+        draggable,
     },
     props: {
         nextFolder: Boolean,
@@ -80,6 +99,7 @@ export default defineComponent({
     },
     setup(props, { emit }) {
         const storage = useAppStore()
+        const isDragging = ref(false)
 
         function listSubtitle(list: ListInterface): string {
             return list.items_count + ' items'
@@ -94,15 +114,42 @@ export default defineComponent({
             emit('editFolder', id)
         }
         function editList(id: Number) {
-          emit('editList', id)
+            emit('editList', id)
         }
+
+        const dragOptions = computed(() => {
+            return {
+                animation: 0,
+                group: 'description',
+                disabled: false,
+                ghostClass: 'ghost',
+            }
+        })
+
+        function dropFolder(moved: MovedInterface<FolderInterface>) {
+            updateOrderOfFolder(moved)
+                .then(
+                    () =>
+                        (storage.message =
+                            'Folder ' +
+                            moved.moved.element.name +
+                            ' Successfully moved')
+                )
+                .catch((error: AxiosError) => {
+                    storage.setErrorFromAxios(error)
+                })
+        }
+
         return {
             listSubtitle,
             loadMoreFolders,
             loadMoreLists,
             editFolder,
-          editList,
+            editList,
             storage,
+            dragOptions,
+            isDragging,
+            dropFolder,
         }
     },
 })

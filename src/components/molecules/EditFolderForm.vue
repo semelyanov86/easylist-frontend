@@ -10,7 +10,9 @@
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <atom-icon-select v-model="folderModel.icon"></atom-icon-select>
+                    <atom-icon-select
+                        v-model="folderModel.icon"
+                    ></atom-icon-select>
                 </v-col>
             </v-row>
         </v-container>
@@ -32,7 +34,7 @@ import { defineComponent, onMounted, ref } from 'vue'
 import FolderInterface from '@/types/FolderInterface'
 import { getFolderById } from '@/services/Api'
 import { useAppStore } from '@/store/app'
-import AtomIconSelect from "@/components/atoms/AtomIconSelect.vue";
+import AtomIconSelect from '@/components/atoms/AtomIconSelect.vue'
 
 export default defineComponent({
     name: 'EditFolderForm',
@@ -40,9 +42,9 @@ export default defineComponent({
     props: {
         folderId: Number,
     },
-  components: {
-    AtomIconSelect
-  },
+    components: {
+        AtomIconSelect,
+    },
     setup(props, { emit }) {
         const storage = useAppStore()
 

@@ -145,9 +145,9 @@ export default defineComponent({
             emit('editFolder', id)
         }
 
-      function onEditList(id: Number) {
-        emit('editList', id)
-      }
+        function onEditList(id: Number) {
+            emit('editList', id)
+        }
 
         return {
             nextListExists,
@@ -158,7 +158,7 @@ export default defineComponent({
             onCreateFolder,
             onCreateList,
             onEditFolder,
-          onEditList,
+            onEditList,
         }
     },
 })

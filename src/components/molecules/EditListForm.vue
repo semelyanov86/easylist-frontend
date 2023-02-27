@@ -20,7 +20,9 @@
                     ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
-                  <atom-icon-select v-model="listModel.icon"></atom-icon-select>
+                    <atom-icon-select
+                        v-model="listModel.icon"
+                    ></atom-icon-select>
                 </v-col>
             </v-row>
         </v-container>
@@ -38,11 +40,11 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, ref} from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import { getFolderById, getListById } from '@/services/Api'
 import { useAppStore } from '@/store/app'
 import ListInterface from '@/types/ListInterface'
-import AtomIconSelect from "@/components/atoms/AtomIconSelect.vue";
+import AtomIconSelect from '@/components/atoms/AtomIconSelect.vue'
 
 export default defineComponent({
     name: 'EditListForm',
@@ -50,9 +52,9 @@ export default defineComponent({
     props: {
         listId: Number,
     },
-  components: {
-    AtomIconSelect
-  },
+    components: {
+        AtomIconSelect,
+    },
     setup(props, { emit }) {
         const storage = useAppStore()
 

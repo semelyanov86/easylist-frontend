@@ -16,6 +16,7 @@ export const useAppStore = defineStore('app', {
         loading: false,
         folders: [] as FolderInterface[],
         lists: [] as ListInterface[],
+        message: '',
     }),
     getters: {
         getAllFolders(state): FolderInterface[] {

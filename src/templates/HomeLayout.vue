@@ -7,6 +7,9 @@
                 v-model="alert"
             />
         </v-container>
+        <v-container>
+            <message-alert></message-alert>
+        </v-container>
         <atom-loading-indicator></atom-loading-indicator>
         <create-list-or-folder
             :folder-dialog="createFolderMode"
@@ -43,6 +46,7 @@ import { ref } from 'vue'
 import ErrorAlert from '@/components/molecules/ErrorAlert.vue'
 import AtomLoadingIndicator from '@/components/atoms/AtomLoadingIndicator.vue'
 import CreateListOrFolder from '@/templates/CreateListOrFolder.vue'
+import MessageAlert from '@/components/molecules/MessageAlert.vue'
 
 export default {
     components: {
@@ -51,13 +55,14 @@ export default {
         ErrorAlert,
         AtomLoadingIndicator,
         CreateListOrFolder,
+        MessageAlert,
     },
     setup() {
         const storage = useAppStore()
         const createFolderMode = ref(false)
         const createListMode = ref(false)
         const folderId = ref(0)
-      const listId = ref(0)
+        const listId = ref(0)
 
         const items = ref([
             {
@@ -93,7 +98,7 @@ export default {
         }
 
         function onCreateList() {
-          listId.value = 0
+            listId.value = 0
             createListMode.value = true
         }
 
@@ -101,9 +106,9 @@ export default {
             createFolderMode.value = false
         }
 
-      function onCloseListDialog(value: boolean) {
-        createListMode.value = false
-      }
+        function onCloseListDialog(value: boolean) {
+            createListMode.value = false
+        }
 
         function onEditFolder(id: number | string) {
             if (typeof id === 'string') {
@@ -115,12 +120,12 @@ export default {
         }
 
         function onEditList(id: number | string) {
-          if (typeof id === 'string') {
-            listId.value = parseInt(id)
-          } else {
-            listId.value = id
-          }
-          createListMode.value = true
+            if (typeof id === 'string') {
+                listId.value = parseInt(id)
+            } else {
+                listId.value = id
+            }
+            createListMode.value = true
         }
 
         return {
@@ -131,11 +136,11 @@ export default {
             onCloseFolderDialog,
             createFolderMode,
             folderId,
-          listId,
+            listId,
             onEditFolder,
-          onEditList,
-          createListMode,
-          onCloseListDialog
+            onEditList,
+            createListMode,
+            onCloseListDialog,
         }
     },
 }
