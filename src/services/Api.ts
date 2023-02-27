@@ -144,6 +144,26 @@ export function updateOrderOfFolder(
     )
 }
 
+export function updateOrderOfList(
+    moved: MovedInterface<ListInterface>
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    const storage = useAppStore()
+    const prevList = storage.lists[moved.moved.newIndex - 1]
+    return http.patch(
+        import.meta.env.VITE_API_URL + '/lists/' + moved.moved.element.id,
+        {
+            data: {
+                id: moved.moved.element.id.toString,
+                type: 'lists',
+                attributes: {
+                    order: prevList.order + 1,
+                },
+            },
+        }
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

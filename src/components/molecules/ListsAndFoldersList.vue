@@ -40,23 +40,37 @@
         <atom-divider inset></atom-divider>
 
         <atom-subheader text="Lists" />
-
-        <v-list-item
-            v-for="list in storage.lists"
-            :key="list.id"
-            :title="list.name"
-            :subtitle="listSubtitle(list)"
+        <draggable
+            item-key="id"
+            v-model="storage.lists"
+            @start="isDragging = true"
+            @end="isDragging = false"
+            @change="dropList"
+            handle=".handle"
         >
-            <template v-slot:prepend>
-                <v-avatar color="default">
-                    <atom-icon color="default" :icon="list.icon"></atom-icon>
-                </v-avatar>
-            </template>
+            <template #item="{ element }">
+                <v-list-item
+                    :key="element.id"
+                    :title="element.name"
+                    :subtitle="listSubtitle(element)"
+                >
+                    <template v-slot:prepend>
+                        <v-avatar color="default" class="handle">
+                            <atom-icon
+                                color="default"
+                                :icon="element.icon"
+                            ></atom-icon>
+                        </v-avatar>
+                    </template>
 
-            <template v-slot:append>
-                <list-submenu @edit-list="editList(list.id)"></list-submenu>
+                    <template v-slot:append>
+                        <list-submenu
+                            @edit-list="editList(element.id)"
+                        ></list-submenu>
+                    </template>
+                </v-list-item>
             </template>
-        </v-list-item>
+        </draggable>
         <atom-load-more v-if="nextList" @click="loadMoreLists"
             >Load More</atom-load-more
         >
@@ -77,7 +91,7 @@ import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/app'
 import draggable from 'vuedraggable'
 import MovedInterface from '@/types/MovedInterface'
-import { updateOrderOfFolder } from '@/services/Api'
+import { updateOrderOfFolder, updateOrderOfList } from '@/services/Api'
 import { AxiosError } from 'axios/index'
 import router from '@/router'
 
@@ -140,6 +154,20 @@ export default defineComponent({
                 })
         }
 
+        function dropList(moved: MovedInterface<ListInterface>) {
+            updateOrderOfList(moved)
+                .then(
+                    () =>
+                        (storage.message =
+                            'List ' +
+                            moved.moved.element.name +
+                            ' Successfully moved')
+                )
+                .catch((error: AxiosError) => {
+                    storage.setErrorFromAxios(error)
+                })
+        }
+
         return {
             listSubtitle,
             loadMoreFolders,
@@ -150,6 +178,7 @@ export default defineComponent({
             dragOptions,
             isDragging,
             dropFolder,
+            dropList,
         }
     },
 })
