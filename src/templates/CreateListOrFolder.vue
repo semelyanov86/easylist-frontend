@@ -35,7 +35,7 @@ export default defineComponent({
         folderId: Number,
         listDialog: Boolean,
         listId: Number,
-      moveToFolderMode: Boolean,
+        moveToFolderMode: Boolean,
     },
     setup(props, { emit }) {
         const storage = useAppStore()
@@ -79,7 +79,7 @@ export default defineComponent({
             createOrUpdateList(list)
                 .then((response) => {
                     const newList: ListInterface = {
-                        id: response.data.data.id,
+                        id: parseInt(response.data.data.id),
                         name: response.data.data.attributes.name,
                         icon: response.data.data.attributes.icon,
                         order: response.data.data.attributes.order,

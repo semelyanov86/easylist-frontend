@@ -82,8 +82,10 @@ export const useAppStore = defineStore('app', {
             )
             if (foundList < 0) {
                 this.lists.push(list)
-            } else {
+            } else if (list.folder_id == this.selectedFolder) {
                 this.lists[foundList] = list
+            } else {
+                this.lists.splice(foundList, 1)
             }
         },
         setDefaultsForData() {

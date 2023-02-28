@@ -22,7 +22,7 @@ export default defineComponent({
     emits: ['saveList', 'closeList'],
     props: {
         listId: Number,
-      moveToFolderMode: Boolean
+        moveToFolderMode: Boolean,
     },
     components: {
         AtomCardTitle,

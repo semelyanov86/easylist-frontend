@@ -39,7 +39,13 @@ export default defineComponent({
         ListsAndFoldersList,
         Toolbar,
     },
-    emits: ['createFolder', 'createList', 'editFolder', 'editList', 'moveToFolder'],
+    emits: [
+        'createFolder',
+        'createList',
+        'editFolder',
+        'editList',
+        'moveToFolder',
+    ],
     setup(props, { emit }) {
         const storage = useAppStore()
         const page = ref(1)
@@ -70,7 +76,7 @@ export default defineComponent({
                     page.value++
                     response.data.data.forEach(function (result: any) {
                         const folder: FolderInterface = {
-                            id: result.id,
+                            id: parseInt(result.id),
                             name: result.attributes.name,
                             icon: result.attributes.icon,
                             order: result.attributes.order,
@@ -99,7 +105,7 @@ export default defineComponent({
                     listPage.value++
                     response.data.data.forEach(function (result: any) {
                         const list: ListInterface = {
-                            id: result.id,
+                            id: parseInt(result.id),
                             name: result.attributes.name,
                             icon: result.attributes.icon,
                             order: result.attributes.order,
@@ -155,7 +161,7 @@ export default defineComponent({
         }
 
         function onMoveToFolder(id: Number) {
-          emit('moveToFolder', id)
+            emit('moveToFolder', id)
         }
 
         function onFolderSelected(folder: FolderInterface) {
@@ -167,6 +173,7 @@ export default defineComponent({
             headerName.value = folder.name
             setDefaultValues()
             receiveLists()
+            receiveFolders()
         }
 
         function onClickBackButton() {
@@ -191,7 +198,7 @@ export default defineComponent({
             onFolderSelected,
             storage,
             onClickBackButton,
-          onMoveToFolder,
+            onMoveToFolder,
         }
     },
 })

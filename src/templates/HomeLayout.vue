@@ -49,7 +49,7 @@ import ErrorAlert from '@/components/molecules/ErrorAlert.vue'
 import AtomLoadingIndicator from '@/components/atoms/AtomLoadingIndicator.vue'
 import CreateListOrFolder from '@/templates/CreateListOrFolder.vue'
 import MessageAlert from '@/components/molecules/MessageAlert.vue'
-import {tr} from "vuetify/locale";
+import { tr } from 'vuetify/locale'
 
 export default {
     components: {
@@ -66,7 +66,7 @@ export default {
         const createListMode = ref(false)
         const folderId = ref(0)
         const listId = ref(0)
-      const moveToFolderMode = ref(false)
+        const moveToFolderMode = ref(false)
 
         const items = ref([
             {
@@ -112,7 +112,7 @@ export default {
 
         function onCloseListDialog(value: boolean) {
             createListMode.value = false
-          moveToFolderMode.value = false
+            moveToFolderMode.value = false
         }
 
         function onEditFolder(id: number | string) {
@@ -134,13 +134,13 @@ export default {
         }
 
         function onMoveToFolder(id: number | string) {
-          if (typeof id === 'string') {
-            listId.value = parseInt(id)
-          } else {
-            listId.value = id
-          }
-          moveToFolderMode.value = true
-          createListMode.value = true
+            if (typeof id === 'string') {
+                listId.value = parseInt(id)
+            } else {
+                listId.value = id
+            }
+            moveToFolderMode.value = true
+            createListMode.value = true
         }
 
         return {
@@ -156,8 +156,8 @@ export default {
             onEditList,
             createListMode,
             onCloseListDialog,
-          onMoveToFolder,
-          moveToFolderMode,
+            onMoveToFolder,
+            moveToFolderMode,
         }
     },
 }

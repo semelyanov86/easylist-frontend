@@ -28,7 +28,7 @@ export default defineComponent({
             emit('editList')
         }
         function moveToFolder() {
-          emit('moveToFolder')
+            emit('moveToFolder')
         }
         return { editList, moveToFolder }
     },

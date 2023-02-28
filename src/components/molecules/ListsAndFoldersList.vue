@@ -1,9 +1,10 @@
 <template>
     <v-list lines="two">
-        <atom-subheader text="Folders" />
+        <atom-subheader text="Folders" v-if="storage.selectedFolder === 1" />
 
         <draggable
             item-key="id"
+            v-if="storage.selectedFolder === 1"
             v-model="storage.folders"
             @start="isDragging = true"
             @end="isDragging = false"
@@ -38,7 +39,7 @@
             >Load More</atom-load-more
         >
 
-        <atom-divider inset></atom-divider>
+        <atom-divider inset v-if="storage.selectedFolder === 1"></atom-divider>
 
         <atom-subheader text="Lists" />
         <draggable
@@ -104,7 +105,7 @@ export default defineComponent({
         'editFolder',
         'editList',
         'folderSelected',
-      'moveToFolder',
+        'moveToFolder',
     ],
     name: 'ListsAndFoldersList',
     components: {
@@ -140,7 +141,7 @@ export default defineComponent({
             emit('editList', id)
         }
         function onMoveToFolder(id: Number) {
-          emit('moveToFolder', id)
+            emit('moveToFolder', id)
         }
 
         const dragOptions = computed(() => {
@@ -196,7 +197,7 @@ export default defineComponent({
             dropFolder,
             dropList,
             folderSelected,
-          onMoveToFolder,
+            onMoveToFolder,
         }
     },
 })
