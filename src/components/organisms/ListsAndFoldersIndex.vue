@@ -4,7 +4,9 @@
             @search="searchWithFilter"
             @create-folder="onCreateFolder"
             @create-list="onCreateList"
-            >Choose a list to display items
+            :showBackButton="storage.selectedFolder !== 1"
+            @back-click="onClickBackButton"
+            >{{ headerName }}
         </toolbar>
         <lists-and-folders-list
             :nextFolder="nextFolderExists"
@@ -13,6 +15,7 @@
             @load-more-lists="receiveLists"
             @edit-folder="onEditFolder"
             @edit-list="onEditList"
+            @folder-selected="onFolderSelected"
         ></lists-and-folders-list>
     </v-card>
 </template>
@@ -43,6 +46,7 @@ export default defineComponent({
         const nextFolderExists = ref(false)
         const nextListExists = ref(false)
         const searchTerm = ref('')
+        const headerName = ref('Choose a list to display items')
 
         onMounted(() => {
             receiveFolders()
@@ -149,6 +153,25 @@ export default defineComponent({
             emit('editList', id)
         }
 
+        function onFolderSelected(folder: FolderInterface) {
+            if (typeof folder.id == 'string') {
+                storage.selectedFolder = parseInt(folder.id)
+            } else {
+                storage.selectedFolder = folder.id
+            }
+            headerName.value = folder.name
+            setDefaultValues()
+            receiveLists()
+        }
+
+        function onClickBackButton() {
+            setDefaultValues()
+            storage.selectedFolder = 1
+            receiveFolders()
+            receiveLists()
+            headerName.value = 'Choose a list to display items'
+        }
+
         return {
             nextListExists,
             nextFolderExists,
@@ -159,6 +182,10 @@ export default defineComponent({
             onCreateList,
             onEditFolder,
             onEditList,
+            headerName,
+            onFolderSelected,
+            storage,
+            onClickBackButton,
         }
     },
 })

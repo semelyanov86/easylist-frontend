@@ -3,6 +3,7 @@
         <v-btn
             variant="text"
             icon="mdi-arrow-left"
+            @click="onClickBackButton"
             v-if="showBackButton"
         ></v-btn>
         <atom-toolbar-title><slot></slot></atom-toolbar-title>
@@ -41,7 +42,7 @@ import AddListOrFolderBtn from '@/components/molecules/AddListOrFolderBtn.vue'
 
 export default defineComponent({
     name: 'Toolbar',
-    emits: ['search', 'createFolder', 'createList'],
+    emits: ['search', 'createFolder', 'createList', 'backClick'],
     components: {
         AtomToolbarTitle,
         AtomSpacer,
@@ -74,6 +75,10 @@ export default defineComponent({
             emit('createList')
         }
 
+        function onClickBackButton() {
+            emit('backClick')
+        }
+
         return {
             searchActive,
             searchInput,
@@ -81,6 +86,7 @@ export default defineComponent({
             onClear,
             onCreateFolder,
             onCreateList,
+            onClickBackButton,
         }
     },
 })

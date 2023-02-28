@@ -15,6 +15,7 @@
                     :key="element.id"
                     :title="element.name"
                     :subtitle="element.created_at.toDateString()"
+                    @click="folderSelected(element)"
                 >
                     <template v-slot:prepend>
                         <v-avatar color="grey-lighten-1" class="handle">
@@ -96,7 +97,13 @@ import { AxiosError } from 'axios/index'
 import router from '@/router'
 
 export default defineComponent({
-    emits: ['loadMoreFolders', 'loadMoreLists', 'editFolder', 'editList'],
+    emits: [
+        'loadMoreFolders',
+        'loadMoreLists',
+        'editFolder',
+        'editList',
+        'folderSelected',
+    ],
     name: 'ListsAndFoldersList',
     components: {
         AtomIcon,
@@ -168,6 +175,10 @@ export default defineComponent({
                 })
         }
 
+        function folderSelected(folder: FolderInterface) {
+            emit('folderSelected', folder)
+        }
+
         return {
             listSubtitle,
             loadMoreFolders,
@@ -179,6 +190,7 @@ export default defineComponent({
             isDragging,
             dropFolder,
             dropList,
+            folderSelected,
         }
     },
 })
