@@ -67,6 +67,7 @@
                     <template v-slot:append>
                         <list-submenu
                             @edit-list="editList(element.id)"
+                            @move-to-folder="onMoveToFolder(element.id)"
                         ></list-submenu>
                     </template>
                 </v-list-item>
@@ -103,6 +104,7 @@ export default defineComponent({
         'editFolder',
         'editList',
         'folderSelected',
+      'moveToFolder',
     ],
     name: 'ListsAndFoldersList',
     components: {
@@ -136,6 +138,9 @@ export default defineComponent({
         }
         function editList(id: Number) {
             emit('editList', id)
+        }
+        function onMoveToFolder(id: Number) {
+          emit('moveToFolder', id)
         }
 
         const dragOptions = computed(() => {
@@ -191,6 +196,7 @@ export default defineComponent({
             dropFolder,
             dropList,
             folderSelected,
+          onMoveToFolder,
         }
     },
 })

@@ -5,6 +5,7 @@
             @save-list="saveList"
             @close-list="closeList"
             :list-id="listId"
+            :move-to-folder-mode="moveToFolderMode"
         ></edit-list-form>
     </v-card>
 </template>
@@ -21,6 +22,7 @@ export default defineComponent({
     emits: ['saveList', 'closeList'],
     props: {
         listId: Number,
+      moveToFolderMode: Boolean
     },
     components: {
         AtomCardTitle,

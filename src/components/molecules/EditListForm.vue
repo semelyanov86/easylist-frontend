@@ -2,7 +2,7 @@
     <v-card-text>
         <v-container>
             <v-row>
-                <v-col cols="12">
+                <v-col cols="12" v-if="!moveToFolderMode">
                     <v-text-field
                         label="Name*"
                         required
@@ -19,7 +19,7 @@
                         v-model="listModel.folder_id"
                     ></v-select>
                 </v-col>
-                <v-col cols="12" sm="6">
+                <v-col cols="12" sm="6" v-if="!moveToFolderMode">
                     <atom-icon-select
                         v-model="listModel.icon"
                     ></atom-icon-select>
@@ -51,6 +51,7 @@ export default defineComponent({
     emits: ['saveList', 'closeList'],
     props: {
         listId: Number,
+      moveToFolderMode: Boolean,
     },
     components: {
         AtomIconSelect,

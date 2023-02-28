@@ -5,7 +5,7 @@
                 <v-list-item @click="editList">
                     <v-list-item-title>Edit List</v-list-item-title>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item @click="moveToFolder">
                     <v-list-item-title>Move To Folder</v-list-item-title>
                 </v-list-item>
             </v-list>
@@ -19,7 +19,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ListSubmenu',
-    emits: ['editList'],
+    emits: ['editList', 'moveToFolder'],
     components: {
         AtomIconBtn,
     },
@@ -27,7 +27,10 @@ export default defineComponent({
         function editList() {
             emit('editList')
         }
-        return { editList }
+        function moveToFolder() {
+          emit('moveToFolder')
+        }
+        return { editList, moveToFolder }
     },
 })
 </script>

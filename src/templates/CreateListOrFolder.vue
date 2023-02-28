@@ -11,6 +11,7 @@
             @save-list="saveList"
             @close-list="closeList"
             :list-id="listId"
+            :move-to-folder-mode="moveToFolderMode"
         ></edit-list-card>
     </v-dialog>
 </template>
@@ -34,6 +35,7 @@ export default defineComponent({
         folderId: Number,
         listDialog: Boolean,
         listId: Number,
+      moveToFolderMode: Boolean,
     },
     setup(props, { emit }) {
         const storage = useAppStore()

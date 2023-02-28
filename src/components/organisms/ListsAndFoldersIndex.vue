@@ -15,6 +15,7 @@
             @load-more-lists="receiveLists"
             @edit-folder="onEditFolder"
             @edit-list="onEditList"
+            @move-to-folder="onMoveToFolder"
             @folder-selected="onFolderSelected"
         ></lists-and-folders-list>
     </v-card>
@@ -38,7 +39,7 @@ export default defineComponent({
         ListsAndFoldersList,
         Toolbar,
     },
-    emits: ['createFolder', 'createList', 'editFolder', 'editList'],
+    emits: ['createFolder', 'createList', 'editFolder', 'editList', 'moveToFolder'],
     setup(props, { emit }) {
         const storage = useAppStore()
         const page = ref(1)
@@ -153,6 +154,10 @@ export default defineComponent({
             emit('editList', id)
         }
 
+        function onMoveToFolder(id: Number) {
+          emit('moveToFolder', id)
+        }
+
         function onFolderSelected(folder: FolderInterface) {
             if (typeof folder.id == 'string') {
                 storage.selectedFolder = parseInt(folder.id)
@@ -186,6 +191,7 @@ export default defineComponent({
             onFolderSelected,
             storage,
             onClickBackButton,
+          onMoveToFolder,
         }
     },
 })
