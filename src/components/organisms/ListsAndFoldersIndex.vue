@@ -103,22 +103,7 @@ export default defineComponent({
                 .then(function (response: any) {
                     nextListExists.value = !!response.data.links.next
                     listPage.value++
-                    response.data.data.forEach(function (result: any) {
-                        const list: ListInterface = {
-                            id: parseInt(result.id),
-                            name: result.attributes.name,
-                            icon: result.attributes.icon,
-                            order: result.attributes.order,
-                            folder_id: result.attributes.folder_id,
-                            link: result.attributes.link,
-                            items_count: result.attributes.items_count
-                                ? result.attributes.items_count
-                                : 0,
-                            created_at: new Date(result.attributes.created_at),
-                            updated_at: new Date(result.attributes.updated_at),
-                        }
-                        storage.addList(list)
-                    })
+                    storage.addListsFromResponse(response);
                     storage.loading = false
                 })
                 .catch((error: AxiosError) => {

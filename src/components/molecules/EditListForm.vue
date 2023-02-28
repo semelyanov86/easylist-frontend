@@ -45,6 +45,7 @@ import { getFolderById, getListById } from '@/services/Api'
 import { useAppStore } from '@/store/app'
 import ListInterface from '@/types/ListInterface'
 import AtomIconSelect from '@/components/atoms/AtomIconSelect.vue'
+import {mapListDataFromResponse} from "@/services/ResponseDataMapper";
 
 export default defineComponent({
     name: 'EditListForm',
@@ -78,25 +79,7 @@ export default defineComponent({
             storage.loading = true
             getListById(props.listId)
                 .then((response) => {
-                    listModel.value.id = props.listId ?? 0
-                    listModel.value.icon = response.data.data.attributes.icon
-                    listModel.value.name = response.data.data.attributes.name
-                    listModel.value.folder_id =
-                        response.data.data.attributes.folder_id
-                    listModel.value.order = response.data.data.attributes.order
-                    listModel.value.created_at = new Date(
-                        response.data.data.attributes.created_at
-                    )
-                    listModel.value.updated_at = new Date(
-                        response.data.data.attributes.updated_at
-                    )
-
-                    if (
-                        listModel.value.id &&
-                        typeof listModel.value.id === 'number'
-                    ) {
-                        listModel.value.id = listModel.value.id.toString()
-                    }
+                  listModel.value = mapListDataFromResponse(response, props.listId ?? 0)
 
                     storage.loading = false
                 })

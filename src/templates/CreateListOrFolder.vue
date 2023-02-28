@@ -25,6 +25,7 @@ import FolderInterface from '@/types/FolderInterface'
 import { useAppStore } from '@/store/app'
 import { createOrUpdateFolder, createOrUpdateList } from '@/services/Api'
 import ListInterface from '@/types/ListInterface'
+import {mapListDataFromResponse} from "@/services/ResponseDataMapper";
 
 export default defineComponent({
     name: 'CreateListOrFolder',
@@ -55,7 +56,7 @@ export default defineComponent({
             createOrUpdateFolder(folder)
                 .then((response) => {
                     const folder: FolderInterface = {
-                        id: response.data.data.id,
+                        id: parseInt(response.data.data.id),
                         name: response.data.data.attributes.name,
                         icon: response.data.data.attributes.icon,
                         order: response.data.data.attributes.order,
@@ -78,17 +79,7 @@ export default defineComponent({
             storage.loading = true
             createOrUpdateList(list)
                 .then((response) => {
-                    const newList: ListInterface = {
-                        id: parseInt(response.data.data.id),
-                        name: response.data.data.attributes.name,
-                        icon: response.data.data.attributes.icon,
-                        order: response.data.data.attributes.order,
-                        created_at: new Date(),
-                        updated_at: new Date(),
-                        folder_id: response.data.data.attributes.folder_id,
-                        items_count: 0,
-                        link: response.data.data.attributes.link,
-                    }
+                  const newList = mapListDataFromResponse(response, parseInt(response.data.data.id))
                     newList.items_count = list.items_count
                     storage.addList(newList)
                     storage.loading = false

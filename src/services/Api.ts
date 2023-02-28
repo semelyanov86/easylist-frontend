@@ -112,6 +112,9 @@ export function createOrUpdateList(
     list: ListInterface
 ): Promise<AxiosResponse<any>> {
     const http = createHttp()
+    if (list.id && typeof list.id === 'number') {
+        list.id = list.id.toString()
+    }
     if (list.id && list.id > 0) {
         return http.patch(
             import.meta.env.VITE_API_URL + '/lists/' + list.id,
