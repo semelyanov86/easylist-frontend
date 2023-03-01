@@ -115,6 +115,9 @@ export const useAppStore = defineStore('app', {
         setDefaultsForData() {
             this.folders = []
             this.lists = []
+            this.setDefaultItems()
+        },
+        setDefaultItems() {
             this.items = []
             this.itemsPage = 1
             this.itemsSearch = ''

@@ -1,6 +1,11 @@
 <template>
     <v-card class="mx-auto">
-        <toolbar :showBackButton="true">List of items</toolbar>
+        <toolbar
+            @back-click="onClickBackButton"
+            @search="onSearch"
+            :showBackButton="true"
+            >List of items</toolbar
+        >
 
         <items-list @load-more-items="onLoadMoreItems" />
     </v-card>
@@ -12,16 +17,27 @@ import ItemInterface from '@/types/ItemInterface'
 import ItemsList from '@/components/molecules/ItemsList.vue'
 import Toolbar from '@/components/molecules/Toolbar.vue'
 import { defineComponent } from 'vue'
+import { useAppStore } from '@/store/app'
 
 export default defineComponent({
     name: 'ItemsIndex',
-    emits: ['loadMoreItems'],
+    emits: ['loadMoreItems', 'itemsSearch'],
     components: { ItemsList, Toolbar },
     setup(_, { emit }) {
+        const storage = useAppStore()
         function onLoadMoreItems() {
             emit('loadMoreItems')
         }
-        return { onLoadMoreItems }
+        function onClickBackButton() {
+            storage.setDefaultItems()
+            storage.selectedList = null
+        }
+
+        function onSearch(value: string) {
+            storage.itemsSearch = value
+            emit('itemsSearch', value)
+        }
+        return { onLoadMoreItems, onClickBackButton, onSearch }
     },
 })
 </script>

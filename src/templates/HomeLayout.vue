@@ -33,8 +33,16 @@
                     ></lists-and-folders-index>
                 </v-col>
 
-                <v-col cols="12" md="6" lg="8" v-if="storage.items.length > 0">
-                    <items-index @load-more-items="onLoadMoreItems" />
+                <v-col
+                    cols="12"
+                    md="6"
+                    lg="8"
+                    v-if="storage.items.length > 0 || storage.itemsSearch"
+                >
+                    <items-index
+                        @load-more-items="onLoadMoreItems"
+                        @items-search="onItemsSearch"
+                    />
                 </v-col>
             </v-row>
         </v-responsive>
@@ -148,6 +156,12 @@ export default {
                 })
         }
 
+        function onItemsSearch(value: string) {
+            if (!value || value.length > 3) {
+                loadItemsData(false)
+            }
+        }
+
         function onListSelected() {
             loadItemsData(false)
         }
@@ -172,6 +186,7 @@ export default {
             moveToFolderMode,
             onListSelected,
             onLoadMoreItems,
+            onItemsSearch,
         }
     },
 }
