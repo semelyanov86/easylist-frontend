@@ -34,7 +34,7 @@
                 </v-col>
 
                 <v-col cols="12" md="6" lg="8" v-if="storage.items.length > 0">
-                    <items-index />
+                    <items-index @load-more-items="onLoadMoreItems" />
                 </v-col>
             </v-row>
         </v-responsive>
@@ -120,7 +120,7 @@ export default {
             createListMode.value = true
         }
 
-        function onListSelected() {
+        function loadItemsData(addToExistingArray = false) {
             storage.loading = true
             const listModel = storage.selectedList
             if (!listModel) {
@@ -133,7 +133,11 @@ export default {
             itemsFromList(id, storage.itemsPage, storage.itemsSearch)
                 .then((response) => {
                     const items = mapItemsDataFromResponse(response.data)
-                    storage.setItems(items)
+                    if (addToExistingArray) {
+                        storage.addItemsToList(items)
+                    } else {
+                        storage.setItems(items)
+                    }
                     storage.itemsTotal = response.data.meta.total
                     storage.loading = false
                 })
@@ -142,6 +146,14 @@ export default {
                     storage.setErrorFromAxios(error)
                     storage.loading = false
                 })
+        }
+
+        function onListSelected() {
+            loadItemsData(false)
+        }
+
+        function onLoadMoreItems() {
+            loadItemsData(true)
         }
 
         return {
@@ -159,6 +171,7 @@ export default {
             onMoveToFolder,
             moveToFolderMode,
             onListSelected,
+            onLoadMoreItems,
         }
     },
 }

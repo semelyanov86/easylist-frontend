@@ -25,21 +25,23 @@ import { PropType } from 'vue'
 import ItemInterface from '@/types/ItemInterface'
 import { useAppStore } from '@/store/app'
 import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
     name: 'ItemsList',
+    emits: ['loadMoreItems'],
     props: {},
     components: {
         AtomLoadMore,
     },
-    setup() {
+    setup(_, { emit }) {
         const storage = useAppStore()
         function loadMoreItems() {
-            console.log('load more...')
+            emit('loadMoreItems')
         }
         return { storage, loadMoreItems }
     },
-}
+})
 </script>
 
 <style scoped></style>

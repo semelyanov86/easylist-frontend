@@ -71,9 +71,9 @@ export default defineComponent({
             nextFolderExists.value = false
         }
 
-        function receiveFolders() {
+        function receiveFolders(largePaginate = false) {
             storage.loading = true
-            foldersFetch(page.value, searchTerm.value)
+            foldersFetch(page.value, searchTerm.value, largePaginate)
                 .then(function (response: any) {
                     nextFolderExists.value = !!response.data.links.next
                     page.value++
@@ -155,7 +155,7 @@ export default defineComponent({
             headerName.value = folder.name
             setDefaultValues()
             receiveLists()
-            receiveFolders()
+            receiveFolders(true)
         }
 
         function onClickBackButton() {

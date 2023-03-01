@@ -37,7 +37,8 @@ export function doUserInfo(): Promise<AxiosResponse<any>> {
 
 export function foldersFetch(
     page: number,
-    search: string
+    search: string,
+    largePaginate = false
 ): Promise<AxiosResponse<any>> {
     const http = createHttp()
     let pageSize = import.meta.env.VITE_API_PAGE_SIZE
@@ -45,6 +46,9 @@ export function foldersFetch(
     if (search) {
         pageSize = import.meta.env.VITE_API_PAGE_SIZE_IN_SEARCH
         postQuery = '&filter[name]=' + search
+    }
+    if (largePaginate) {
+        pageSize = import.meta.env.VITE_API_PAGE_SIZE_IN_SEARCH
     }
     return http.get(
         import.meta.env.VITE_API_URL +
