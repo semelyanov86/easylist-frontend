@@ -17,6 +17,7 @@
             @edit-list="onEditList"
             @move-to-folder="onMoveToFolder"
             @folder-selected="onFolderSelected"
+            @list-selected="onListSelected"
         ></lists-and-folders-list>
     </v-card>
 </template>
@@ -46,6 +47,7 @@ export default defineComponent({
         'editFolder',
         'editList',
         'moveToFolder',
+        'listSelected',
     ],
     setup(props, { emit }) {
         const storage = useAppStore()
@@ -164,6 +166,10 @@ export default defineComponent({
             headerName.value = 'Choose a list to display items'
         }
 
+        function onListSelected() {
+            emit('listSelected')
+        }
+
         return {
             nextListExists,
             nextFolderExists,
@@ -179,6 +185,7 @@ export default defineComponent({
             storage,
             onClickBackButton,
             onMoveToFolder,
+            onListSelected,
         }
     },
 })

@@ -1,10 +1,10 @@
 export default interface ItemInterface {
-    id: bigint
-    created_at: string
+    id: number
+    created_at: Date
     description: string
     file: string
     is_starred: boolean
-    list_id: bigint
+    list_id: number
     name: string
     order: number
     price: number

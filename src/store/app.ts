@@ -4,6 +4,7 @@ import UserInterface from '@/types/UserInterface'
 import { AxiosError } from 'axios'
 import ListInterface from '@/types/ListInterface'
 import FolderInterface from '@/types/FolderInterface'
+import ItemInterface from '@/types/ItemInterface'
 
 export const useAppStore = defineStore('app', {
     state: () => ({
@@ -12,11 +13,15 @@ export const useAppStore = defineStore('app', {
         errorAlert: <boolean>false,
         user: <UserInterface>{},
         selectedFolder: 1,
-        selectedList: <ListInterface>{},
+        selectedList: <ListInterface | null>null,
         loading: false,
         folders: [] as FolderInterface[],
         lists: [] as ListInterface[],
         message: '',
+        items: [] as ItemInterface[],
+        itemsPage: 1,
+        itemsSearch: '',
+        itemsTotal: 0,
     }),
     getters: {
         getAllFolders(state): FolderInterface[] {
@@ -110,6 +115,19 @@ export const useAppStore = defineStore('app', {
         setDefaultsForData() {
             this.folders = []
             this.lists = []
+            this.items = []
+            this.itemsPage = 1
+            this.itemsSearch = ''
+            this.itemsTotal = 0
+        },
+        setItems(items: ItemInterface[]) {
+            this.items = items
+        },
+        addItemsToList(items: ItemInterface[]) {
+            items.forEach((item: ItemInterface) => this.items.push(item))
+        },
+        increaseItemsPage() {
+            this.itemsPage++
         },
     },
 })

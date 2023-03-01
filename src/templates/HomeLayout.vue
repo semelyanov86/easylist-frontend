@@ -29,11 +29,12 @@
                         @edit-folder="onEditFolder"
                         @edit-list="onEditList"
                         @move-to-folder="onMoveToFolder"
+                        @list-selected="onListSelected"
                     ></lists-and-folders-index>
                 </v-col>
 
-                <v-col cols="12" md="6" lg="8">
-                    <items-index :items="items" />
+                <v-col cols="12" md="6" lg="8" v-if="storage.items.length > 0">
+                    <items-index />
                 </v-col>
             </v-row>
         </v-responsive>
@@ -50,6 +51,10 @@ import AtomLoadingIndicator from '@/components/atoms/AtomLoadingIndicator.vue'
 import CreateListOrFolder from '@/templates/CreateListOrFolder.vue'
 import MessageAlert from '@/components/molecules/MessageAlert.vue'
 import { tr } from 'vuetify/locale'
+import { itemsFromList } from '@/services/Api'
+import UserInterface from '@/types/UserInterface'
+import ItemInterface from '@/types/ItemInterface'
+import { mapItemsDataFromResponse } from '@/services/ResponseDataMapper'
 
 export default {
     components: {
@@ -67,34 +72,6 @@ export default {
         const folderId = ref(0)
         const listId = ref(0)
         const moveToFolderMode = ref(false)
-
-        const items = ref([
-            {
-                id: 1,
-                name: 'Brunch this weekend?',
-                description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-            },
-            {
-                id: 2,
-                name: 'Second Test',
-                description: 'Second Description',
-            },
-            {
-                id: 3,
-                name: 'Brunch this weekend?',
-                description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-            },
-            {
-                id: 4,
-                name: 'Brunch this weekend?',
-                description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-            },
-            {
-                id: 1,
-                name: 'Brunch this weekend?',
-                description: `Ali Connors; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-            },
-        ])
 
         function onCreateFolder() {
             folderId.value = 0
@@ -143,9 +120,32 @@ export default {
             createListMode.value = true
         }
 
+        function onListSelected() {
+            storage.loading = true
+            const listModel = storage.selectedList
+            if (!listModel) {
+                return
+            }
+            let id = listModel.id
+            if (typeof id === 'string') {
+                id = parseInt(id)
+            }
+            itemsFromList(id, storage.itemsPage, storage.itemsSearch)
+                .then((response) => {
+                    const items = mapItemsDataFromResponse(response.data)
+                    storage.setItems(items)
+                    storage.itemsTotal = response.data.meta.total
+                    storage.loading = false
+                })
+                .catch((error) => {
+                    console.log(error)
+                    storage.setErrorFromAxios(error)
+                    storage.loading = false
+                })
+        }
+
         return {
             storage,
-            items,
             onCreateFolder,
             onCreateList,
             onCloseFolderDialog,
@@ -158,6 +158,7 @@ export default {
             onCloseListDialog,
             onMoveToFolder,
             moveToFolderMode,
+            onListSelected,
         }
     },
 }

@@ -55,6 +55,8 @@
                     :key="element.id"
                     :title="element.name"
                     :subtitle="listSubtitle(element)"
+                    @click="listSelected(element)"
+                    :active="storage.selectedList?.id === element.id"
                 >
                     <template v-slot:prepend>
                         <v-avatar color="default" class="handle">
@@ -106,6 +108,7 @@ export default defineComponent({
         'editList',
         'folderSelected',
         'moveToFolder',
+        'listSelected',
     ],
     name: 'ListsAndFoldersList',
     components: {
@@ -185,6 +188,11 @@ export default defineComponent({
             emit('folderSelected', folder)
         }
 
+        function listSelected(list: ListInterface) {
+            storage.selectedList = list
+            emit('listSelected')
+        }
+
         return {
             listSubtitle,
             loadMoreFolders,
@@ -198,6 +206,7 @@ export default defineComponent({
             dropList,
             folderSelected,
             onMoveToFolder,
+            listSelected,
         }
     },
 })

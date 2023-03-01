@@ -1,5 +1,6 @@
 import ListInterface from '@/types/ListInterface'
 import FolderInterface from '@/types/FolderInterface'
+import ItemInterface from '@/types/ItemInterface'
 
 export function mapListDataFromResponse(
     response: any,
@@ -32,4 +33,30 @@ export function mapFolderDataFromResponseAttributes(
         updated_at: new Date(response.attributes.updated_at),
     }
     return folder
+}
+
+export function mapItemFromResponseAttributes(response: any): ItemInterface {
+    const item: ItemInterface = {
+        id: parseInt(response.id),
+        created_at: new Date(response.attributes.created_at),
+        description: response.attributes.description,
+        name: response.attributes.name,
+        file: response.attributes.file,
+        is_starred: response.attributes.is_starred,
+        list_id: response.attributes.list_id,
+        order: response.attributes.order,
+        price: response.attributes.price,
+        quantity: response.attributes.quantity,
+        quantity_type: response.attributes.quantity_type,
+        is_done: response.attributes.is_done,
+    }
+    return item
+}
+
+export function mapItemsDataFromResponse(responseData: any): ItemInterface[] {
+    const result = [] as ItemInterface[]
+    responseData.data.forEach((response: any) =>
+        result.push(mapItemFromResponseAttributes(response))
+    )
+    return result
 }

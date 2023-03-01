@@ -1,7 +1,7 @@
 <template>
     <v-list item-title="name" item-props lines="three">
         <v-list-item
-            v-for="item in items"
+            v-for="item in storage.items"
             :key="item.id"
             :title="item.name"
             :subtitle="item.description"
@@ -12,17 +12,32 @@
                 </v-list-item-action>
             </template>
         </v-list-item>
+        <atom-load-more
+            v-if="storage.itemsTotal > storage.items.length"
+            @click="loadMoreItems"
+            >Load More</atom-load-more
+        >
     </v-list>
 </template>
 
 <script lang="ts">
 import { PropType } from 'vue'
 import ItemInterface from '@/types/ItemInterface'
+import { useAppStore } from '@/store/app'
+import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 
 export default {
     name: 'ItemsList',
-    props: {
-        items: Array as PropType<ItemInterface[]>,
+    props: {},
+    components: {
+        AtomLoadMore,
+    },
+    setup() {
+        const storage = useAppStore()
+        function loadMoreItems() {
+            console.log('load more...')
+        }
+        return { storage, loadMoreItems }
     },
 }
 </script>

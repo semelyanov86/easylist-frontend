@@ -119,6 +119,7 @@ export function createOrUpdateList(
         list.id = list.id.toString()
     }
     if (list.id && list.id > 0) {
+        const id = list.id.toString()
         return http.patch(
             import.meta.env.VITE_API_URL + '/lists/' + list.id,
             serializeToJsonApi<ListInterface>(list, 'lists')
@@ -167,6 +168,32 @@ export function updateOrderOfList(
                 },
             },
         }
+    )
+}
+
+export function itemsFromList(
+    listId: number,
+    page: number,
+    search: string
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    let pageSize = import.meta.env.VITE_API_PAGE_SIZE
+    let postQuery = ''
+    if (search) {
+        pageSize = import.meta.env.VITE_API_PAGE_SIZE_IN_SEARCH
+        postQuery = '&filter[name]=' + search
+    }
+
+    return http.get(
+        import.meta.env.VITE_API_URL +
+            '/lists/' +
+            listId +
+            '/items' +
+            '?page[number]=' +
+            page +
+            '&page[size]=' +
+            pageSize +
+            postQuery
     )
 }
 
