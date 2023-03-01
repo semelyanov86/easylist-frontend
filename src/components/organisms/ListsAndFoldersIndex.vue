@@ -32,6 +32,7 @@ import { useAppStore } from '@/store/app'
 import { AxiosError } from 'axios'
 import router from '@/router'
 import { defineComponent } from 'vue'
+import { mapFolderDataFromResponseAttributes } from '@/services/ResponseDataMapper'
 
 export default defineComponent({
     name: 'ListsAndFoldersIndex',
@@ -75,14 +76,8 @@ export default defineComponent({
                     nextFolderExists.value = !!response.data.links.next
                     page.value++
                     response.data.data.forEach(function (result: any) {
-                        const folder: FolderInterface = {
-                            id: parseInt(result.id),
-                            name: result.attributes.name,
-                            icon: result.attributes.icon,
-                            order: result.attributes.order,
-                            created_at: new Date(result.attributes.created_at),
-                            updated_at: new Date(result.attributes.updated_at),
-                        }
+                        const folder =
+                            mapFolderDataFromResponseAttributes(result)
                         storage.addFolder(folder)
                         storage.loading = false
                     })
@@ -103,7 +98,7 @@ export default defineComponent({
                 .then(function (response: any) {
                     nextListExists.value = !!response.data.links.next
                     listPage.value++
-                    storage.addListsFromResponse(response);
+                    storage.addListsFromResponse(response)
                     storage.loading = false
                 })
                 .catch((error: AxiosError) => {

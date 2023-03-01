@@ -35,6 +35,7 @@ import FolderInterface from '@/types/FolderInterface'
 import { getFolderById } from '@/services/Api'
 import { useAppStore } from '@/store/app'
 import AtomIconSelect from '@/components/atoms/AtomIconSelect.vue'
+import { mapFolderDataFromResponseAttributes } from '@/services/ResponseDataMapper'
 
 export default defineComponent({
     name: 'EditFolderForm',
@@ -64,25 +65,11 @@ export default defineComponent({
             storage.loading = true
             getFolderById(props.folderId)
                 .then((response) => {
+                    const folderData = mapFolderDataFromResponseAttributes(
+                        response.data.data
+                    )
+                    folderModel.value = folderData
                     folderModel.value.id = props.folderId ?? 0
-                    folderModel.value.icon = response.data.data.attributes.icon
-                    folderModel.value.name = response.data.data.attributes.name
-                    folderModel.value.order =
-                        response.data.data.attributes.order
-                    folderModel.value.created_at = new Date(
-                        response.data.data.attributes.created_at
-                    )
-                    folderModel.value.updated_at = new Date(
-                        response.data.data.attributes.updated_at
-                    )
-
-                    if (
-                        folderModel.value.id &&
-                        typeof folderModel.value.id === 'number'
-                    ) {
-                        folderModel.value.id = folderModel.value.id.toString()
-                    }
-
                     storage.loading = false
                 })
                 .catch((error) => {

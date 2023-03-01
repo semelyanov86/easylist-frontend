@@ -45,7 +45,7 @@ import { getFolderById, getListById } from '@/services/Api'
 import { useAppStore } from '@/store/app'
 import ListInterface from '@/types/ListInterface'
 import AtomIconSelect from '@/components/atoms/AtomIconSelect.vue'
-import {mapListDataFromResponse} from "@/services/ResponseDataMapper";
+import { mapListDataFromResponse } from '@/services/ResponseDataMapper'
 
 export default defineComponent({
     name: 'EditListForm',
@@ -79,7 +79,10 @@ export default defineComponent({
             storage.loading = true
             getListById(props.listId)
                 .then((response) => {
-                  listModel.value = mapListDataFromResponse(response, props.listId ?? 0)
+                    listModel.value = mapListDataFromResponse(
+                        response,
+                        props.listId ?? 0
+                    )
 
                     storage.loading = false
                 })

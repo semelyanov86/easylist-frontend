@@ -86,6 +86,9 @@ export function createOrUpdateFolder(
     folder: FolderInterface
 ): Promise<AxiosResponse<any>> {
     const http = createHttp()
+    if (folder.id && typeof folder.id === 'number') {
+        folder.id = folder.id.toString()
+    }
     if (folder.id && folder.id > 0) {
         return http.patch(
             import.meta.env.VITE_API_URL + '/folders/' + folder.id,

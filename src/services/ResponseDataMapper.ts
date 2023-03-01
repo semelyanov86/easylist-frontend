@@ -1,4 +1,5 @@
 import ListInterface from '@/types/ListInterface'
+import FolderInterface from '@/types/FolderInterface'
 
 export function mapListDataFromResponse(
     response: any,
@@ -17,4 +18,18 @@ export function mapListDataFromResponse(
     }
 
     return listModel
+}
+
+export function mapFolderDataFromResponseAttributes(
+    response: any
+): FolderInterface {
+    const folder: FolderInterface = {
+        id: parseInt(response.id),
+        name: response.attributes.name,
+        icon: response.attributes.icon,
+        order: response.attributes.order,
+        created_at: new Date(response.attributes.created_at),
+        updated_at: new Date(response.attributes.updated_at),
+    }
+    return folder
 }
