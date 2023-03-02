@@ -8,6 +8,7 @@ import FolderInterface from '@/types/FolderInterface'
 import serializeToJsonApi from '@/services/JsonApiConverter'
 import ListInterface from '@/types/ListInterface'
 import MovedInterface from '@/types/MovedInterface'
+import ItemInterface from '@/types/ItemInterface'
 
 export function doAuth(login: SignInInterface): Promise<AxiosResponse<any>> {
     return axios.post(
@@ -199,6 +200,22 @@ export function itemsFromList(
             pageSize +
             postQuery
     )
+}
+
+export function setItemDoneOrUndone(
+    item: ItemInterface,
+    done: boolean
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.patch(import.meta.env.VITE_API_URL + '/items/' + item.id, {
+        data: {
+            id: item.id.toString(),
+            type: 'items',
+            attributes: {
+                is_done: done,
+            },
+        },
+    })
 }
 
 function createHttp(): AxiosInstance {
