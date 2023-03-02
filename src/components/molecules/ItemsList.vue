@@ -3,7 +3,7 @@
         <v-list-item
             v-for="item in storage.items"
             :key="item.id"
-            :title="item.name"
+            :title="getItemName(item)"
             :subtitle="item.description"
         >
             <template v-slot:prepend="{ is_done }">
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
+import {computed, PropType} from 'vue'
 import ItemInterface from '@/types/ItemInterface'
 import { useAppStore } from '@/store/app'
 import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
@@ -39,7 +39,13 @@ export default defineComponent({
         function loadMoreItems() {
             emit('loadMoreItems')
         }
-        return { storage, loadMoreItems }
+        function getItemName(item: ItemInterface): string {
+          if (item.quantity > 0) {
+            return item.name + ' (' + item.quantity + ' ' + item.quantity_type + ')'
+          }
+          return item.name
+        }
+        return { storage, loadMoreItems, getItemName }
     },
 })
 </script>

@@ -4,7 +4,7 @@
             @back-click="onClickBackButton"
             @search="onSearch"
             :showBackButton="true"
-            >List of items</toolbar
+            >Items in {{ storage.selectedList?.name }}</toolbar
         >
 
         <items-list @load-more-items="onLoadMoreItems" />
@@ -37,7 +37,7 @@ export default defineComponent({
             storage.itemsSearch = value
             emit('itemsSearch', value)
         }
-        return { onLoadMoreItems, onClickBackButton, onSearch }
+        return { onLoadMoreItems, onClickBackButton, onSearch, storage }
     },
 })
 </script>
