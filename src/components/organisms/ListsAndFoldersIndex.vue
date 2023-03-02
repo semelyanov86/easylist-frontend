@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mx-auto" max-width="600">
+    <v-card :class="{'mx-auto': true, 'hidden-md-and-down': storage.selectedList}" max-width="600">
         <toolbar
             @search="searchWithFilter"
             @create-folder="onCreateFolder"
