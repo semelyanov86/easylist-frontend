@@ -124,7 +124,6 @@ export function createOrUpdateList(
         list.id = list.id.toString()
     }
     if (list.id && list.id > 0) {
-        const id = list.id.toString()
         return http.patch(
             import.meta.env.VITE_API_URL + '/lists/' + list.id,
             serializeToJsonApi<ListInterface>(list, 'lists')
@@ -216,6 +215,26 @@ export function setItemDoneOrUndone(
             },
         },
     })
+}
+
+export function updateOrderOfItem(
+    moved: MovedInterface<ItemInterface>
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    const storage = useAppStore()
+    const prevItem = storage.items[moved.moved.newIndex - 1]
+    return http.patch(
+        import.meta.env.VITE_API_URL + '/items/' + moved.moved.element.id,
+        {
+            data: {
+                id: moved.moved.element.id.toString(),
+                type: 'items',
+                attributes: {
+                    order: prevItem.order + 1,
+                },
+            },
+        }
+    )
 }
 
 function createHttp(): AxiosInstance {

@@ -1,21 +1,34 @@
 <template>
     <v-list item-title="name" item-props lines="three">
-        <v-list-item
-            v-for="item in storage.items"
-            :key="item.id"
-            :title="getItemName(item)"
-            :subtitle="item.description"
+        <draggable
+            item-key="id"
+            v-model="storage.items"
+            @start="isDragging = true"
+            @end="isDragging = false"
+            @change="dropItem"
+            handle=".handle"
         >
-            <template v-slot:prepend>
-                <v-list-item-action start>
-                    <v-checkbox-btn
-                        @change="changeDoneValue($event, item)"
-                        :model-value="item.is_done"
-                    ></v-checkbox-btn>
-                    <v-avatar :image="getAvatar(item)"></v-avatar>
-                </v-list-item-action>
+            <template #item="{ element }">
+                <v-list-item
+                    :key="element.id"
+                    :title="getItemName(element)"
+                    :subtitle="element.description"
+                >
+                    <template v-slot:prepend>
+                        <v-list-item-action start>
+                            <v-checkbox-btn
+                                @change="changeDoneValue($event, element)"
+                                :model-value="element.is_done"
+                            ></v-checkbox-btn>
+                            <v-avatar
+                                :image="getAvatar(element)"
+                                class="handle"
+                            ></v-avatar>
+                        </v-list-item-action>
+                    </template>
+                </v-list-item>
             </template>
-        </v-list-item>
+        </draggable>
         <atom-load-more
             v-if="storage.itemsTotal > storage.items.length"
             @click="loadMoreItems"
@@ -25,12 +38,19 @@
 </template>
 
 <script lang="ts">
-import { computed, PropType } from 'vue'
+import { computed, PropType, ref } from 'vue'
 import ItemInterface from '@/types/ItemInterface'
 import { useAppStore } from '@/store/app'
 import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 import { defineComponent } from 'vue'
-import { setItemDoneOrUndone } from '@/services/Api'
+import {
+    setItemDoneOrUndone,
+    updateOrderOfItem,
+    updateOrderOfList,
+} from '@/services/Api'
+import { AxiosError } from 'axios'
+import MovedInterface from '@/types/MovedInterface'
+import draggable from 'vuedraggable'
 
 export default defineComponent({
     name: 'ItemsList',
@@ -38,9 +58,11 @@ export default defineComponent({
     props: {},
     components: {
         AtomLoadMore,
+        draggable,
     },
     setup(_, { emit }) {
         const storage = useAppStore()
+        const isDragging = ref(false)
         function loadMoreItems() {
             emit('loadMoreItems')
         }
@@ -72,12 +94,29 @@ export default defineComponent({
                 storage.loading = false
             })
         }
+
+        function dropItem(moved: MovedInterface<ItemInterface>) {
+            updateOrderOfItem(moved)
+                .then(
+                    () =>
+                        (storage.message =
+                            'Item ' +
+                            moved.moved.element.name +
+                            ' Successfully moved')
+                )
+                .catch((error: AxiosError) => {
+                    storage.setErrorFromAxios(error)
+                })
+        }
+
         return {
             storage,
             loadMoreItems,
             getItemName,
             getAvatar,
             changeDoneValue,
+            isDragging,
+            dropItem,
         }
     },
 })
