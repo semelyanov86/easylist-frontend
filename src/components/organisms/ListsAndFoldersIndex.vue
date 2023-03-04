@@ -1,12 +1,22 @@
 <template>
-    <v-card :class="{'mx-auto': true, 'hidden-md-and-down': storage.selectedList}" max-width="600">
+    <v-card
+        :class="{ 'mx-auto': true, 'hidden-md-and-down': storage.selectedList }"
+        max-width="600"
+    >
         <toolbar
             @search="searchWithFilter"
             @create-folder="onCreateFolder"
             @create-list="onCreateList"
             :showBackButton="storage.selectedFolder !== 1"
             @back-click="onClickBackButton"
-            >{{ headerName }}
+        >
+            <template v-slot:header>{{ headerName }}</template>
+            <template v-slot:actions>
+                <add-list-or-folder-btn
+                    @create-folder="onCreateFolder"
+                    @create-list="onCreateList"
+                ></add-list-or-folder-btn>
+            </template>
         </toolbar>
         <lists-and-folders-list
             :nextFolder="nextFolderExists"
@@ -34,10 +44,12 @@ import { AxiosError } from 'axios'
 import router from '@/router'
 import { defineComponent } from 'vue'
 import { mapFolderDataFromResponseAttributes } from '@/services/ResponseDataMapper'
+import AddListOrFolderBtn from '@/components/molecules/AddListOrFolderBtn.vue'
 
 export default defineComponent({
     name: 'ListsAndFoldersIndex',
     components: {
+        AddListOrFolderBtn,
         ListsAndFoldersList,
         Toolbar,
     },

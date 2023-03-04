@@ -4,8 +4,18 @@
             @back-click="onClickBackButton"
             @search="onSearch"
             :showBackButton="true"
-            >Items in {{ storage.selectedList?.name }}</toolbar
         >
+            <template v-slot:header
+                >Items in {{ storage.selectedList?.name }}</template
+            >
+            <template v-slot:actions>
+                <atom-icon-btn
+                    atom-icon="mdi-plus"
+                    color="default"
+                    @click="createItem"
+                ></atom-icon-btn>
+            </template>
+        </toolbar>
 
         <items-list @load-more-items="onLoadMoreItems" />
     </v-card>
@@ -18,11 +28,12 @@ import ItemsList from '@/components/molecules/ItemsList.vue'
 import Toolbar from '@/components/molecules/Toolbar.vue'
 import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/app'
+import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
 
 export default defineComponent({
     name: 'ItemsIndex',
-    emits: ['loadMoreItems', 'itemsSearch'],
-    components: { ItemsList, Toolbar },
+    emits: ['loadMoreItems', 'itemsSearch', 'createItem'],
+    components: { AtomIconBtn, ItemsList, Toolbar },
     setup(_, { emit }) {
         const storage = useAppStore()
         function onLoadMoreItems() {
@@ -37,7 +48,17 @@ export default defineComponent({
             storage.itemsSearch = value
             emit('itemsSearch', value)
         }
-        return { onLoadMoreItems, onClickBackButton, onSearch, storage }
+
+        function createItem() {
+            emit('createItem')
+        }
+        return {
+            onLoadMoreItems,
+            onClickBackButton,
+            onSearch,
+            storage,
+            createItem,
+        }
     },
 })
 </script>

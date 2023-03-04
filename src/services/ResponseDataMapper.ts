@@ -60,3 +60,16 @@ export function mapItemsDataFromResponse(responseData: any): ItemInterface[] {
     )
     return result
 }
+
+export function fileConverter(
+    blob: Blob
+): Promise<string | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onerror = reject
+        reader.onload = () => {
+            resolve(reader.result)
+        }
+        reader.readAsDataURL(blob)
+    })
+}

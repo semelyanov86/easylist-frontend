@@ -129,6 +129,16 @@ export const useAppStore = defineStore('app', {
         addItemsToList(items: ItemInterface[]) {
             items.forEach((item: ItemInterface) => this.items.push(item))
         },
+        addItem(item: ItemInterface) {
+            const foundItem = this.items.findIndex(
+                (itemCurrent: ItemInterface) => itemCurrent.id === item.id
+            )
+            if (foundItem < 0) {
+                this.items.push(item)
+            } else {
+                this.items[foundItem] = item
+            }
+        },
         increaseItemsPage() {
             this.itemsPage++
         },

@@ -237,6 +237,30 @@ export function updateOrderOfItem(
     )
 }
 
+export function getItemById(id: number): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.get(import.meta.env.VITE_API_URL + '/items/' + id)
+}
+
+export function createOrUpdateItem(
+    item: ItemInterface
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    if (item.id && typeof item.id === 'number') {
+        item.id = item.id.toString()
+    }
+    if (item.id && item.id > 0) {
+        return http.patch(
+            import.meta.env.VITE_API_URL + '/items/' + item.id,
+            serializeToJsonApi<ItemInterface>(item, 'items')
+        )
+    }
+    return http.post(
+        import.meta.env.VITE_API_URL + '/items',
+        serializeToJsonApi<ItemInterface>(item, 'items')
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

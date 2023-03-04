@@ -20,6 +20,11 @@
             :list-id="listId"
             :move-to-folder-mode="moveToFolderMode"
         ></create-list-or-folder>
+        <create-item
+            :item-dialog="createItemMode"
+            :item-id="itemId"
+            @close-item-dialog="onCloseItemDialog"
+        ></create-item>
         <v-responsive>
             <v-row>
                 <v-col cols="12" lg="4">
@@ -33,15 +38,11 @@
                     ></lists-and-folders-index>
                 </v-col>
 
-                <v-col
-                    cols="12"
-                    md="6"
-                    lg="8"
-                    v-if="storage.items.length > 0 || storage.itemsSearch"
-                >
+                <v-col cols="12" md="6" lg="8" v-if="storage.selectedList">
                     <items-index
                         @load-more-items="onLoadMoreItems"
                         @items-search="onItemsSearch"
+                        @create-item="onCreateItem"
                     />
                 </v-col>
             </v-row>
@@ -63,9 +64,11 @@ import { itemsFromList } from '@/services/Api'
 import UserInterface from '@/types/UserInterface'
 import ItemInterface from '@/types/ItemInterface'
 import { mapItemsDataFromResponse } from '@/services/ResponseDataMapper'
+import CreateItem from '@/templates/CreateItem.vue'
 
 export default {
     components: {
+        CreateItem,
         ListsAndFoldersIndex,
         ItemsIndex,
         ErrorAlert,
@@ -80,6 +83,8 @@ export default {
         const folderId = ref(0)
         const listId = ref(0)
         const moveToFolderMode = ref(false)
+        const createItemMode = ref(false)
+        const itemId = ref(0)
 
         function onCreateFolder() {
             folderId.value = 0
@@ -91,6 +96,10 @@ export default {
             createListMode.value = true
         }
 
+        function onCreateItem() {
+            createItemMode.value = true
+        }
+
         function onCloseFolderDialog(value: boolean) {
             createFolderMode.value = false
         }
@@ -98,6 +107,10 @@ export default {
         function onCloseListDialog(value: boolean) {
             createListMode.value = false
             moveToFolderMode.value = false
+        }
+
+        function onCloseItemDialog(value: boolean) {
+            createItemMode.value = false
         }
 
         function onEditFolder(id: number | string) {
@@ -187,6 +200,10 @@ export default {
             onListSelected,
             onLoadMoreItems,
             onItemsSearch,
+            createItemMode,
+            itemId,
+            onCreateItem,
+            onCloseItemDialog,
         }
     },
 }

@@ -6,7 +6,7 @@
             @click="onClickBackButton"
             v-if="showBackButton"
         ></v-btn>
-        <atom-toolbar-title><slot></slot></atom-toolbar-title>
+        <atom-toolbar-title><slot name="header"></slot></atom-toolbar-title>
 
         <atom-spacer v-if="!searchActive" />
 
@@ -26,11 +26,7 @@
             icon="mdi-magnify"
             @click="searchActive = !searchActive"
         ></v-btn>
-
-        <add-list-or-folder-btn
-            @create-folder="onCreateFolder"
-            @create-list="onCreateList"
-        ></add-list-or-folder-btn>
+        <slot name="actions"></slot>
     </v-toolbar>
 </template>
 
@@ -38,15 +34,13 @@
 import AtomToolbarTitle from '@/components/atoms/AtomToolbarTitle.vue'
 import AtomSpacer from '@/components/atoms/AtomSpacer.vue'
 import { ref, defineComponent, computed } from 'vue'
-import AddListOrFolderBtn from '@/components/molecules/AddListOrFolderBtn.vue'
 
 export default defineComponent({
     name: 'Toolbar',
-    emits: ['search', 'createFolder', 'createList', 'backClick'],
+    emits: ['search', 'backClick'],
     components: {
         AtomToolbarTitle,
         AtomSpacer,
-        AddListOrFolderBtn,
     },
     props: {
         showBackButton: Boolean,
@@ -68,13 +62,6 @@ export default defineComponent({
             emit('search', '')
         }
 
-        function onCreateFolder() {
-            emit('createFolder')
-        }
-        function onCreateList() {
-            emit('createList')
-        }
-
         function onClickBackButton() {
             emit('backClick')
         }
@@ -84,8 +71,6 @@ export default defineComponent({
             searchInput,
             searchValue,
             onClear,
-            onCreateFolder,
-            onCreateList,
             onClickBackButton,
         }
     },

@@ -1,5 +1,5 @@
 export default interface ItemInterface {
-    id: number
+    id: number | string
     created_at: Date
     description: string
     file: string
