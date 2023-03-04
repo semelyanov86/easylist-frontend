@@ -17,7 +17,7 @@
             </template>
         </toolbar>
 
-        <items-list @load-more-items="onLoadMoreItems" />
+        <items-list @load-more-items="onLoadMoreItems" @edit-item="editItem" />
     </v-card>
 </template>
 
@@ -32,7 +32,7 @@ import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
 
 export default defineComponent({
     name: 'ItemsIndex',
-    emits: ['loadMoreItems', 'itemsSearch', 'createItem'],
+    emits: ['loadMoreItems', 'itemsSearch', 'createItem', 'editItem'],
     components: { AtomIconBtn, ItemsList, Toolbar },
     setup(_, { emit }) {
         const storage = useAppStore()
@@ -52,12 +52,16 @@ export default defineComponent({
         function createItem() {
             emit('createItem')
         }
+        function editItem(id: number) {
+            emit('editItem', id)
+        }
         return {
             onLoadMoreItems,
             onClickBackButton,
             onSearch,
             storage,
             createItem,
+            editItem,
         }
     },
 })

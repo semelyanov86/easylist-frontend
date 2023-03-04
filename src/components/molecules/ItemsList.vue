@@ -26,6 +26,11 @@
                             ></v-avatar>
                         </v-list-item-action>
                     </template>
+                    <template v-slot:append>
+                        <item-submenu
+                            @edit-item="editItem(element.id)"
+                        ></item-submenu>
+                    </template>
                 </v-list-item>
             </template>
         </draggable>
@@ -51,12 +56,14 @@ import {
 import { AxiosError } from 'axios'
 import MovedInterface from '@/types/MovedInterface'
 import draggable from 'vuedraggable'
+import ItemSubmenu from '@/components/molecules/ItemSubmenu.vue'
 
 export default defineComponent({
     name: 'ItemsList',
-    emits: ['loadMoreItems'],
+    emits: ['loadMoreItems', 'editItem'],
     props: {},
     components: {
+        ItemSubmenu,
         AtomLoadMore,
         draggable,
     },
@@ -109,6 +116,10 @@ export default defineComponent({
                 })
         }
 
+        function editItem(id: number) {
+            emit('editItem', id)
+        }
+
         return {
             storage,
             loadMoreItems,
@@ -117,6 +128,7 @@ export default defineComponent({
             changeDoneValue,
             isDragging,
             dropItem,
+            editItem,
         }
     },
 })

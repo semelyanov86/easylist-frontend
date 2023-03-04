@@ -1,6 +1,8 @@
 import ListInterface from '@/types/ListInterface'
 import FolderInterface from '@/types/FolderInterface'
 import ItemInterface from '@/types/ItemInterface'
+// @ts-ignore
+import imageToBase64 from 'image-to-base64/browser'
 
 export function mapListDataFromResponse(
     response: any,
@@ -72,4 +74,8 @@ export function fileConverter(
         }
         reader.readAsDataURL(blob)
     })
+}
+
+export function convertImageToBase64(imgUrl: string): Promise<string> {
+    return imageToBase64(import.meta.env.VITE_BASIC_URL + imgUrl)
 }

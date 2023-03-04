@@ -43,6 +43,7 @@
                         @load-more-items="onLoadMoreItems"
                         @items-search="onItemsSearch"
                         @create-item="onCreateItem"
+                        @edit-item="onEditItem"
                     />
                 </v-col>
             </v-row>
@@ -98,6 +99,11 @@ export default {
 
         function onCreateItem() {
             createItemMode.value = true
+        }
+
+        function onEditItem(id: number) {
+            itemId.value = id
+            onCreateItem()
         }
 
         function onCloseFolderDialog(value: boolean) {
@@ -204,6 +210,7 @@ export default {
             itemId,
             onCreateItem,
             onCloseItemDialog,
+            onEditItem,
         }
     },
 }

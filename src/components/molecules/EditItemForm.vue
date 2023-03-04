@@ -65,6 +65,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { getItemById } from '@/services/Api'
 import { useAppStore } from '@/store/app'
 import {
+    convertImageToBase64,
     fileConverter,
     mapItemFromResponseAttributes,
 } from '@/services/ResponseDataMapper'
@@ -113,6 +114,15 @@ export default defineComponent({
                     itemModel.value = mapItemFromResponseAttributes(
                         response.data.data
                     )
+                    if (itemModel.value.file) {
+                        convertImageToBase64(itemModel.value.file)
+                            .then(
+                                (response) => (itemModel.value.file = response)
+                            )
+                            .catch((error) => {
+                                console.log(error)
+                            })
+                    }
 
                     storage.loading = false
                 })
