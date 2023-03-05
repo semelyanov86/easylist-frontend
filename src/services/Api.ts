@@ -301,6 +301,11 @@ export function starOrUnstarItem(
     })
 }
 
+export function deleteItem(item: ItemInterface): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.delete(import.meta.env.VITE_API_URL + '/items/' + item.id)
+}
+
 export function copyItem(
     item: ItemInterface,
     newList: number

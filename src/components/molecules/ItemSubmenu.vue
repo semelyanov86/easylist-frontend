@@ -18,7 +18,7 @@
                         >Add / Remove from favourites</v-list-item-title
                     >
                 </v-list-item>
-                <v-list-item>
+                <v-list-item @click="$emit('deleteItem')">
                     <v-list-item-title>Delete Item</v-list-item-title>
                 </v-list-item>
             </v-list>
@@ -32,7 +32,7 @@ import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ItemSubmenu',
-    emits: ['editItem', 'moveItem', 'copyItem', 'starItem'],
+    emits: ['editItem', 'moveItem', 'copyItem', 'starItem', 'deleteItem'],
     components: {
         AtomIconBtn,
     },

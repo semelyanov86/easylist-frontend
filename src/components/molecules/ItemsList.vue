@@ -1,4 +1,5 @@
 <template>
+    <confirm ref="veeConfirmRef"></confirm>
     <v-list item-title="name" item-props lines="three">
         <draggable
             item-key="id"
@@ -33,6 +34,7 @@
                             @move-item="moveItem(element)"
                             @copy-item="onCopyItem(element)"
                             @star-item="onStarItem(element)"
+                            @delete-item="onDeleteItem(element)"
                         ></item-submenu>
                     </template>
                 </v-list-item>
@@ -53,6 +55,7 @@ import { useAppStore } from '@/store/app'
 import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 import { defineComponent } from 'vue'
 import {
+    deleteItem,
     setItemDoneOrUndone,
     starOrUnstarItem,
     updateOrderOfItem,
@@ -62,6 +65,7 @@ import { AxiosError } from 'axios'
 import MovedInterface from '@/types/MovedInterface'
 import draggable from 'vuedraggable'
 import ItemSubmenu from '@/components/molecules/ItemSubmenu.vue'
+import Confirm from '@/components/organisms/Confirm.vue'
 
 export default defineComponent({
     name: 'ItemsList',
@@ -71,10 +75,13 @@ export default defineComponent({
         ItemSubmenu,
         AtomLoadMore,
         draggable,
+        Confirm,
     },
     setup(_, { emit }) {
         const storage = useAppStore()
         const isDragging = ref(false)
+        const veeConfirmRef = ref<InstanceType<typeof Confirm>>()
+
         function loadMoreItems() {
             emit('loadMoreItems')
         }
@@ -145,6 +152,35 @@ export default defineComponent({
                 })
         }
 
+        function onDeleteItem(item: ItemInterface) {
+            veeConfirmRef.value
+                ?.open('Delete', 'Are you sure?', {
+                    color: 'red',
+                    width: 290,
+                    zIndex: 200,
+                })
+                .then((confirm: boolean) => {
+                    if (confirm) {
+                        storage.loading = true
+                        if (confirm) {
+                            deleteItem(item)
+                                .then(function () {
+                                    storage.message =
+                                        'Item ' + item.name + ' deleted!'
+                                    storage.deleteItem(item)
+                                    storage.decreaseItemCounter(item.list_id)
+                                    storage.itemsTotal--
+                                    storage.loading = false
+                                })
+                                .catch((error: AxiosError) => {
+                                    storage.setErrorFromAxios(error)
+                                    storage.loading = false
+                                })
+                        }
+                    }
+                })
+        }
+
         return {
             storage,
             loadMoreItems,
@@ -157,6 +193,8 @@ export default defineComponent({
             moveItem,
             onCopyItem,
             onStarItem,
+            onDeleteItem,
+            veeConfirmRef,
         }
     },
 })
