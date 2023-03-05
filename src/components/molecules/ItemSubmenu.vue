@@ -13,8 +13,10 @@
                 <v-list-item @click="$emit('copyItem')">
                     <v-list-item-title>Copy Item</v-list-item-title>
                 </v-list-item>
-                <v-list-item>
-                    <v-list-item-title>Add To Favourites</v-list-item-title>
+                <v-list-item @click="$emit('starItem')">
+                    <v-list-item-title
+                        >Add / Remove from favourites</v-list-item-title
+                    >
                 </v-list-item>
                 <v-list-item>
                     <v-list-item-title>Delete Item</v-list-item-title>
@@ -26,15 +28,15 @@
 
 <script lang="ts">
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ItemSubmenu',
-    emits: ['editItem', 'moveItem', 'copyItem'],
+    emits: ['editItem', 'moveItem', 'copyItem', 'starItem'],
     components: {
         AtomIconBtn,
     },
-    setup(_, { emit }) {
+    setup(props, { emit }) {
         function editItem() {
             emit('editItem')
         }

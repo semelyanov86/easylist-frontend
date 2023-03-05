@@ -13,6 +13,7 @@
                     :key="element.id"
                     :title="getItemName(element)"
                     :subtitle="element.description"
+                    :class="{ 'bg-blue-lighten-4': element.is_starred }"
                 >
                     <template v-slot:prepend>
                         <v-list-item-action start>
@@ -31,6 +32,7 @@
                             @edit-item="editItem(element.id)"
                             @move-item="moveItem(element)"
                             @copy-item="onCopyItem(element)"
+                            @star-item="onStarItem(element)"
                         ></item-submenu>
                     </template>
                 </v-list-item>
@@ -52,6 +54,7 @@ import AtomLoadMore from '@/components/atoms/AtomLoadMore.vue'
 import { defineComponent } from 'vue'
 import {
     setItemDoneOrUndone,
+    starOrUnstarItem,
     updateOrderOfItem,
     updateOrderOfList,
 } from '@/services/Api'
@@ -130,6 +133,18 @@ export default defineComponent({
             emit('copyItem', item)
         }
 
+        function onStarItem(item: ItemInterface) {
+            starOrUnstarItem(item)
+                .then(function () {
+                    const starMsg = item.is_starred ? 'Not starred' : 'Starred'
+                    storage.message = 'Item is now ' + starMsg
+                    storage.starOrUnstarItem(item)
+                })
+                .catch((error: AxiosError) => {
+                    storage.setErrorFromAxios(error)
+                })
+        }
+
         return {
             storage,
             loadMoreItems,
@@ -141,6 +156,7 @@ export default defineComponent({
             editItem,
             moveItem,
             onCopyItem,
+            onStarItem,
         }
     },
 })

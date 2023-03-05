@@ -283,6 +283,24 @@ export function moveItem(
     })
 }
 
+export function starOrUnstarItem(
+    item: ItemInterface
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    if (item.id && typeof item.id === 'number') {
+        item.id = item.id.toString()
+    }
+    return http.patch(import.meta.env.VITE_API_URL + '/items/' + item.id, {
+        data: {
+            id: item.id,
+            type: 'items',
+            attributes: {
+                is_starred: !item.is_starred,
+            },
+        },
+    })
+}
+
 export function copyItem(
     item: ItemInterface,
     newList: number

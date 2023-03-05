@@ -137,6 +137,15 @@ export const useAppStore = defineStore('app', {
             }
             this.items.splice(foundItem, 1)
         },
+        starOrUnstarItem(item: ItemInterface) {
+            const foundItem = this.items.findIndex(
+                (itemCurrent: ItemInterface) => itemCurrent.id == item.id
+            )
+            if (foundItem < 0) {
+                return
+            }
+            this.items[foundItem].is_starred = !this.items[foundItem].is_starred
+        },
         increaseItemCounter(listId: number) {
             const foundItem = this.lists.findIndex(
                 (itemCurrent: ListInterface) => itemCurrent.id == listId
