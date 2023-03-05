@@ -63,7 +63,8 @@ export function foldersFetch(
 
 export function listsFromFolder(
     page: number,
-    search: string
+    search: string,
+    folderId: number | undefined
 ): Promise<AxiosResponse<any>> {
     const http = createHttp()
     let pageSize = import.meta.env.VITE_API_PAGE_SIZE
@@ -73,7 +74,9 @@ export function listsFromFolder(
         postQuery = '&filter[name]=' + search
     }
     const storage = useAppStore()
-    const folderId = storage.selectedFolder
+    if (!folderId) {
+        folderId = storage.selectedFolder
+    }
     return http.get(
         import.meta.env.VITE_API_URL +
             '/folders/' +
@@ -259,6 +262,25 @@ export function createOrUpdateItem(
         import.meta.env.VITE_API_URL + '/items',
         serializeToJsonApi<ItemInterface>(item, 'items')
     )
+}
+
+export function moveItem(
+    item: ItemInterface,
+    newList: number
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    if (item.id && typeof item.id === 'number') {
+        item.id = item.id.toString()
+    }
+    return http.patch(import.meta.env.VITE_API_URL + '/items/' + item.id, {
+        data: {
+            id: item.id,
+            type: 'items',
+            attributes: {
+                list_id: newList,
+            },
+        },
+    })
 }
 
 function createHttp(): AxiosInstance {

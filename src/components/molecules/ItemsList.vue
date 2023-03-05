@@ -29,6 +29,7 @@
                     <template v-slot:append>
                         <item-submenu
                             @edit-item="editItem(element.id)"
+                            @move-item="moveItem(element)"
                         ></item-submenu>
                     </template>
                 </v-list-item>
@@ -60,7 +61,7 @@ import ItemSubmenu from '@/components/molecules/ItemSubmenu.vue'
 
 export default defineComponent({
     name: 'ItemsList',
-    emits: ['loadMoreItems', 'editItem'],
+    emits: ['loadMoreItems', 'editItem', 'moveItem'],
     props: {},
     components: {
         ItemSubmenu,
@@ -120,6 +121,10 @@ export default defineComponent({
             emit('editItem', id)
         }
 
+        function moveItem(item: ItemInterface) {
+            emit('moveItem', item)
+        }
+
         return {
             storage,
             loadMoreItems,
@@ -129,6 +134,7 @@ export default defineComponent({
             isDragging,
             dropItem,
             editItem,
+            moveItem,
         }
     },
 })

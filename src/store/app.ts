@@ -5,6 +5,7 @@ import { AxiosError } from 'axios'
 import ListInterface from '@/types/ListInterface'
 import FolderInterface from '@/types/FolderInterface'
 import ItemInterface from '@/types/ItemInterface'
+import { mapListDataFromResponseAttributes } from '@/services/ResponseDataMapper'
 
 export const useAppStore = defineStore('app', {
     state: () => ({
@@ -96,19 +97,7 @@ export const useAppStore = defineStore('app', {
         addListsFromResponse(response: any) {
             const storage = useAppStore()
             response.data.data.forEach(function (result: any) {
-                const list: ListInterface = {
-                    id: parseInt(result.id),
-                    name: result.attributes.name,
-                    icon: result.attributes.icon,
-                    order: result.attributes.order,
-                    folder_id: result.attributes.folder_id,
-                    link: result.attributes.link,
-                    items_count: result.attributes.items_count
-                        ? result.attributes.items_count
-                        : 0,
-                    created_at: new Date(result.attributes.created_at),
-                    updated_at: new Date(result.attributes.updated_at),
-                }
+                const list = mapListDataFromResponseAttributes(result, null)
                 storage.addList(list)
             })
         },
@@ -138,6 +127,33 @@ export const useAppStore = defineStore('app', {
             } else {
                 this.items[foundItem] = item
             }
+        },
+        deleteItem(item: ItemInterface) {
+            const foundItem = this.items.findIndex(
+                (itemCurrent: ItemInterface) => itemCurrent.id == item.id
+            )
+            if (foundItem < 0) {
+                return
+            }
+            this.items.splice(foundItem, 1)
+        },
+        increaseItemCounter(listId: number) {
+            const foundItem = this.lists.findIndex(
+                (itemCurrent: ListInterface) => itemCurrent.id == listId
+            )
+            if (foundItem < 0) {
+                return
+            }
+            this.lists[foundItem].items_count++
+        },
+        decreaseItemCounter(listId: number | string | undefined) {
+            const foundItem = this.lists.findIndex(
+                (itemCurrent: ListInterface) => itemCurrent.id == listId
+            )
+            if (foundItem < 0) {
+                return
+            }
+            this.lists[foundItem].items_count--
         },
         increaseItemsPage() {
             this.itemsPage++

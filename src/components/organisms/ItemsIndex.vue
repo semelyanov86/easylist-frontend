@@ -1,13 +1,18 @@
 <template>
+    <move-item-card
+        :item-model="movingItem"
+        :move-dialog="movingItem != null"
+        @close-move-item="movingItem = null"
+    ></move-item-card>
     <v-card class="mx-auto">
         <toolbar
             @back-click="onClickBackButton"
             @search="onSearch"
             :showBackButton="true"
         >
-            <template v-slot:header
-                >Items in {{ storage.selectedList?.name }}</template
-            >
+            <template v-slot:header>
+                Items in {{ storage.selectedList?.name }}
+            </template>
             <template v-slot:actions>
                 <atom-icon-btn
                     atom-icon="mdi-plus"
@@ -17,25 +22,31 @@
             </template>
         </toolbar>
 
-        <items-list @load-more-items="onLoadMoreItems" @edit-item="editItem" />
+        <items-list
+            @load-more-items="onLoadMoreItems"
+            @edit-item="editItem"
+            @move-item="moveItem"
+        />
     </v-card>
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
+import { PropType, ref } from 'vue'
 import ItemInterface from '@/types/ItemInterface'
 import ItemsList from '@/components/molecules/ItemsList.vue'
 import Toolbar from '@/components/molecules/Toolbar.vue'
 import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/app'
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
+import MoveItemCard from '@/components/organisms/MoveItemCard.vue'
 
 export default defineComponent({
     name: 'ItemsIndex',
     emits: ['loadMoreItems', 'itemsSearch', 'createItem', 'editItem'],
-    components: { AtomIconBtn, ItemsList, Toolbar },
+    components: { MoveItemCard, AtomIconBtn, ItemsList, Toolbar },
     setup(_, { emit }) {
         const storage = useAppStore()
+        const movingItem = ref<ItemInterface | null>(null)
         function onLoadMoreItems() {
             emit('loadMoreItems')
         }
@@ -55,6 +66,9 @@ export default defineComponent({
         function editItem(id: number) {
             emit('editItem', id)
         }
+        function moveItem(item: ItemInterface) {
+            movingItem.value = item
+        }
         return {
             onLoadMoreItems,
             onClickBackButton,
@@ -62,6 +76,8 @@ export default defineComponent({
             storage,
             createItem,
             editItem,
+            moveItem,
+            movingItem,
         }
     },
 })

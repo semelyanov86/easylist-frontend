@@ -108,7 +108,7 @@ export default defineComponent({
 
         function receiveLists() {
             storage.loading = true
-            listsFromFolder(listPage.value, searchTerm.value)
+            listsFromFolder(listPage.value, searchTerm.value, undefined)
                 .then(function (response: any) {
                     nextListExists.value = !!response.data.links.next
                     listPage.value++

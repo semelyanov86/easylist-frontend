@@ -23,6 +23,30 @@ export function mapListDataFromResponse(
     return listModel
 }
 
+export function mapListDataFromResponseAttributes(
+    response: any,
+    id: number | null
+): ListInterface {
+    if (!id) {
+        id = parseInt(response.id)
+    }
+    const listModel: ListInterface = {
+        id: id,
+        name: response.attributes.name,
+        icon: response.attributes.icon,
+        order: response.attributes.order,
+        folder_id: response.attributes.folder_id,
+        link: response.attributes.link,
+        items_count: response.attributes.items_count
+            ? response.attributes.items_count
+            : 0,
+        created_at: new Date(response.attributes.created_at),
+        updated_at: new Date(response.attributes.updated_at),
+    }
+
+    return listModel
+}
+
 export function mapFolderDataFromResponseAttributes(
     response: any
 ): FolderInterface {

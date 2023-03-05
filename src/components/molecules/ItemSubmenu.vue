@@ -7,7 +7,7 @@
                         >Edit Item</v-list-item-title
                     >
                 </v-list-item>
-                <v-list-item>
+                <v-list-item @click="moveItem">
                     <v-list-item-title>Change List</v-list-item-title>
                 </v-list-item>
                 <v-list-item>
@@ -30,7 +30,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'ItemSubmenu',
-    emits: ['editItem'],
+    emits: ['editItem', 'moveItem'],
     components: {
         AtomIconBtn,
     },
@@ -38,7 +38,10 @@ export default defineComponent({
         function editItem() {
             emit('editItem')
         }
-        return { editItem }
+        function moveItem() {
+            emit('moveItem')
+        }
+        return { editItem, moveItem }
     },
 })
 </script>
