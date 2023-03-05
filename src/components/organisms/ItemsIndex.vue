@@ -3,6 +3,7 @@
         :item-model="movingItem"
         :move-dialog="movingItem != null"
         @close-move-item="movingItem = null"
+        :copy-mode="copyMode"
     ></move-item-card>
     <v-card class="mx-auto">
         <toolbar
@@ -26,6 +27,7 @@
             @load-more-items="onLoadMoreItems"
             @edit-item="editItem"
             @move-item="moveItem"
+            @copy-item="copyItem"
         />
     </v-card>
 </template>
@@ -47,6 +49,8 @@ export default defineComponent({
     setup(_, { emit }) {
         const storage = useAppStore()
         const movingItem = ref<ItemInterface | null>(null)
+        const copyMode = ref(false)
+
         function onLoadMoreItems() {
             emit('loadMoreItems')
         }
@@ -67,6 +71,11 @@ export default defineComponent({
             emit('editItem', id)
         }
         function moveItem(item: ItemInterface) {
+            copyMode.value = false
+            movingItem.value = item
+        }
+        function copyItem(item: ItemInterface) {
+            copyMode.value = true
             movingItem.value = item
         }
         return {
@@ -78,6 +87,8 @@ export default defineComponent({
             editItem,
             moveItem,
             movingItem,
+            copyItem,
+            copyMode,
         }
     },
 })

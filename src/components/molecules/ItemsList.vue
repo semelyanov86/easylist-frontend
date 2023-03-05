@@ -30,6 +30,7 @@
                         <item-submenu
                             @edit-item="editItem(element.id)"
                             @move-item="moveItem(element)"
+                            @copy-item="onCopyItem(element)"
                         ></item-submenu>
                     </template>
                 </v-list-item>
@@ -61,7 +62,7 @@ import ItemSubmenu from '@/components/molecules/ItemSubmenu.vue'
 
 export default defineComponent({
     name: 'ItemsList',
-    emits: ['loadMoreItems', 'editItem', 'moveItem'],
+    emits: ['loadMoreItems', 'editItem', 'moveItem', 'copyItem'],
     props: {},
     components: {
         ItemSubmenu,
@@ -125,6 +126,10 @@ export default defineComponent({
             emit('moveItem', item)
         }
 
+        function onCopyItem(item: ItemInterface) {
+            emit('copyItem', item)
+        }
+
         return {
             storage,
             loadMoreItems,
@@ -135,6 +140,7 @@ export default defineComponent({
             dropItem,
             editItem,
             moveItem,
+            onCopyItem,
         }
     },
 })

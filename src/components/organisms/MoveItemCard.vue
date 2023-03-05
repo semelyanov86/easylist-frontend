@@ -1,10 +1,14 @@
 <template>
     <v-dialog v-model="isMoveCardOpen" activator="parent" width="auto">
         <v-card>
-            <atom-card-title>Move item to other list</atom-card-title>
+            <atom-card-title v-if="copyMode"
+                >Copy item to other list</atom-card-title
+            >
+            <atom-card-title v-else>Move item to other list</atom-card-title>
             <move-item-form
                 :item-model="itemModel"
                 @close-move-item="$emit('closeMoveItem')"
+                :copy-mode="copyMode"
             ></move-item-form>
         </v-card>
     </v-dialog>
@@ -22,6 +26,7 @@ export default defineComponent({
     props: {
         itemModel: Object as PropType<ItemInterface>,
         moveDialog: Boolean,
+        copyMode: Boolean,
     },
     components: { MoveItemForm, AtomCardTitle },
     setup(props, { emit }) {

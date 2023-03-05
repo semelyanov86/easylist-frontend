@@ -31,16 +31,16 @@
         <v-btn color="blue-darken-1" variant="text" @click="closeMoveItem">
             Close
         </v-btn>
-        <v-btn color="blue-darken-1" variant="text" @click="onDoMove">
-            Move
+        <v-btn color="blue-darken-1" variant="text" @click="runMoveOrCopy">
+            {{ getButtonText }}
         </v-btn>
     </v-card-actions>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, ref } from 'vue'
+import { computed, defineComponent, onMounted, PropType, ref } from 'vue'
 import { useAppStore } from '@/store/app'
-import { listsFromFolder, moveItem } from '@/services/Api'
+import { copyItem, listsFromFolder, moveItem } from '@/services/Api'
 import { AxiosError } from 'axios'
 import router from '@/router'
 import ListInterface from '@/types/ListInterface'
@@ -55,6 +55,7 @@ export default defineComponent({
     emits: ['closeMoveItem'],
     props: {
         itemModel: Object as PropType<ItemInterface>,
+        copyMode: Boolean,
     },
     setup(props, { emit }) {
         const storage = useAppStore()
@@ -88,7 +89,15 @@ export default defineComponent({
                 })
         }
 
-        function onDoMove() {
+        function runMoveOrCopy() {
+            if (props.copyMode) {
+                doCopy()
+            } else {
+                doMove()
+            }
+        }
+
+        function doMove() {
             if (selectedListId.value && props.itemModel) {
                 storage.loading = true
                 moveItem(props.itemModel, selectedListId.value)
@@ -112,9 +121,37 @@ export default defineComponent({
             }
         }
 
+        function doCopy() {
+            if (selectedListId.value && props.itemModel) {
+                storage.loading = true
+                copyItem(props.itemModel, selectedListId.value)
+                    .then(function (response: any) {
+                        const item = mapItemFromResponseAttributes(
+                            response.data.data
+                        )
+                        storage.increaseItemCounter(item.list_id)
+                        if (item.list_id == storage.selectedList?.id) {
+                            storage.addItem(item)
+                        }
+                        storage.loading = false
+                        closeMoveItem()
+                        storage.message =
+                            'Item successfully copied with id: ' + item.id
+                    })
+                    .catch((error: AxiosError) => {
+                        console.log(error)
+                        storage.setErrorFromAxios(error)
+                        storage.loading = false
+                        closeMoveItem()
+                    })
+            }
+        }
+
         function closeMoveItem() {
             emit('closeMoveItem')
         }
+
+        const getButtonText = computed(() => (props.copyMode ? 'Copy' : 'Move'))
 
         return {
             storage,
@@ -123,7 +160,8 @@ export default defineComponent({
             lists,
             receiveLists,
             closeMoveItem,
-            onDoMove,
+            runMoveOrCopy,
+            getButtonText,
         }
     },
 })

@@ -283,6 +283,20 @@ export function moveItem(
     })
 }
 
+export function copyItem(
+    item: ItemInterface,
+    newList: number
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    item.id = 0
+    item.list_id = newList
+    item.file = ''
+    return http.post(
+        import.meta.env.VITE_API_URL + '/items',
+        serializeToJsonApi<ItemInterface>(item, 'items')
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({
