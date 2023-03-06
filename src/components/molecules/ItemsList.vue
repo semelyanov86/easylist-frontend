@@ -3,7 +3,7 @@
     <v-list item-title="name" item-props lines="three">
         <draggable
             item-key="id"
-            v-model="storage.items"
+            v-model="storage.getItems"
             @start="isDragging = true"
             @end="isDragging = false"
             @change="dropItem"

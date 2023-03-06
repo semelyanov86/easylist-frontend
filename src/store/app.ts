@@ -23,6 +23,7 @@ export const useAppStore = defineStore('app', {
         itemsPage: 1,
         itemsSearch: '',
         itemsTotal: 0,
+        onlyStarred: false,
     }),
     getters: {
         getAllFolders(state): FolderInterface[] {
@@ -40,6 +41,12 @@ export const useAppStore = defineStore('app', {
                 folders.push(folder)
             })
             return folders
+        },
+        getItems(state): ItemInterface[] {
+            if (state.onlyStarred) {
+                return state.items.filter((item) => item.is_starred)
+            }
+            return state.items
         },
     },
     actions: {
