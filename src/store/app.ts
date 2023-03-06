@@ -24,6 +24,7 @@ export const useAppStore = defineStore('app', {
         itemsSearch: '',
         itemsTotal: 0,
         onlyStarred: false,
+        hideCompleted: false,
     }),
     getters: {
         getAllFolders(state): FolderInterface[] {
@@ -43,10 +44,14 @@ export const useAppStore = defineStore('app', {
             return folders
         },
         getItems(state): ItemInterface[] {
+            let items = state.items
             if (state.onlyStarred) {
-                return state.items.filter((item) => item.is_starred)
+                items = items.filter((item) => item.is_starred)
             }
-            return state.items
+            if (state.hideCompleted) {
+                items = items.filter((item) => !item.is_done)
+            }
+            return items
         },
     },
     actions: {
@@ -118,6 +123,8 @@ export const useAppStore = defineStore('app', {
             this.itemsPage = 1
             this.itemsSearch = ''
             this.itemsTotal = 0
+            this.onlyStarred = false
+            this.hideCompleted = false
         },
         setItems(items: ItemInterface[]) {
             this.items = items
@@ -173,6 +180,15 @@ export const useAppStore = defineStore('app', {
         },
         increaseItemsPage() {
             this.itemsPage++
+        },
+        markItemDoneOrUndone(item: ItemInterface, isDone: boolean) {
+            const foundItem = this.items.findIndex(
+                (itemCurrent: ItemInterface) => itemCurrent.id == item.id
+            )
+            if (foundItem < 0) {
+                return
+            }
+            this.items[foundItem].is_done = isDone
         },
     },
 })

@@ -20,10 +20,7 @@
                     color="default"
                     @click="createItem"
                 ></atom-icon-btn>
-                <atom-star-btn
-                    :is-active="storage.onlyStarred"
-                    @showStarred="onShowStarred"
-                ></atom-star-btn>
+                <items-toolbar-submenu></items-toolbar-submenu>
             </template>
         </toolbar>
 
@@ -45,12 +42,18 @@ import { defineComponent } from 'vue'
 import { useAppStore } from '@/store/app'
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
 import MoveItemCard from '@/components/organisms/MoveItemCard.vue'
-import AtomStarBtn from '@/components/atoms/AtomStarBtn.vue'
+import ItemsToolbarSubmenu from '@/components/molecules/ItemsToolbarSubmenu.vue'
 
 export default defineComponent({
     name: 'ItemsIndex',
     emits: ['loadMoreItems', 'itemsSearch', 'createItem', 'editItem'],
-    components: { AtomStarBtn, MoveItemCard, AtomIconBtn, ItemsList, Toolbar },
+    components: {
+        ItemsToolbarSubmenu,
+        MoveItemCard,
+        AtomIconBtn,
+        ItemsList,
+        Toolbar,
+    },
     setup(_, { emit }) {
         const storage = useAppStore()
         const movingItem = ref<ItemInterface | null>(null)
@@ -84,9 +87,6 @@ export default defineComponent({
             movingItem.value = item
         }
 
-        function onShowStarred() {
-            storage.onlyStarred = !storage.onlyStarred
-        }
         return {
             onLoadMoreItems,
             onClickBackButton,
@@ -98,7 +98,6 @@ export default defineComponent({
             movingItem,
             copyItem,
             copyMode,
-            onShowStarred,
         }
     },
 })

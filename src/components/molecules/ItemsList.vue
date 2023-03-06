@@ -112,6 +112,7 @@ export default defineComponent({
                 storage.setErrorFromAxios(error)
                 storage.loading = false
             })
+            storage.markItemDoneOrUndone(item, isChecked)
         }
 
         function dropItem(moved: MovedInterface<ItemInterface>) {
