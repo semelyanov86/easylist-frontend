@@ -320,6 +320,15 @@ export function copyItem(
     )
 }
 
+export function uncrossItems(
+    listId: number | string
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.patch(
+        import.meta.env.VITE_API_URL + '/lists/' + listId + '/items/undone'
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

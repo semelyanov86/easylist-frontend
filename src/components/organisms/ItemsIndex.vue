@@ -20,7 +20,9 @@
                     color="default"
                     @click="createItem"
                 ></atom-icon-btn>
-                <items-toolbar-submenu></items-toolbar-submenu>
+                <items-toolbar-submenu
+                    @uncross-items="onUncrossItems"
+                ></items-toolbar-submenu>
             </template>
         </toolbar>
 
@@ -43,6 +45,8 @@ import { useAppStore } from '@/store/app'
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
 import MoveItemCard from '@/components/organisms/MoveItemCard.vue'
 import ItemsToolbarSubmenu from '@/components/molecules/ItemsToolbarSubmenu.vue'
+import { uncrossItems } from '@/services/Api'
+import { AxiosError } from 'axios'
 
 export default defineComponent({
     name: 'ItemsIndex',
@@ -58,6 +62,17 @@ export default defineComponent({
         const storage = useAppStore()
         const movingItem = ref<ItemInterface | null>(null)
         const copyMode = ref(false)
+
+        function onUncrossItems() {
+            storage.uncrossItemsInList()
+            if (storage.selectedList) {
+                uncrossItems(storage.selectedList.id).catch(
+                    (error: AxiosError) => {
+                        storage.setErrorFromAxios(error)
+                    }
+                )
+            }
+        }
 
         function onLoadMoreItems() {
             emit('loadMoreItems')
@@ -98,6 +113,7 @@ export default defineComponent({
             movingItem,
             copyItem,
             copyMode,
+            onUncrossItems,
         }
     },
 })

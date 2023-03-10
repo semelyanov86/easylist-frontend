@@ -190,5 +190,11 @@ export const useAppStore = defineStore('app', {
             }
             this.items[foundItem].is_done = isDone
         },
+        uncrossItemsInList() {
+            this.items = this.items.map((item: ItemInterface) => {
+                item.is_done = false
+                return item
+            })
+        },
     },
 })
