@@ -329,6 +329,24 @@ export function uncrossItems(
     )
 }
 
+export function deleteCrossedItems(
+    listId: number | string
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.delete(
+        import.meta.env.VITE_API_URL + '/lists/' + listId + '/items/done'
+    )
+}
+
+export function deleteAllItems(
+    listId: number | string
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.delete(
+        import.meta.env.VITE_API_URL + '/lists/' + listId + '/items'
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

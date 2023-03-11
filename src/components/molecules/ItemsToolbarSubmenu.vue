@@ -21,6 +21,20 @@
                 <v-list-item @click="uncrossItems">
                     <v-list-item-title> Uncross All Items </v-list-item-title>
                 </v-list-item>
+                <v-list-item @click="$emit('deleteCrossed')">
+                    <v-list-item-title>
+                        Delete Crossed Items
+                    </v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="$emit('deleteAll')">
+                    <v-list-item-title> Delete All Items </v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="$emit('sendEmail')">
+                    <v-list-item-title> Send List By Email </v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="$emit('makePublic')">
+                    <v-list-item-title> Make List Public </v-list-item-title>
+                </v-list-item>
             </v-list>
         </v-menu>
     </v-btn>
@@ -34,7 +48,13 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     name: 'ItemsToolbarSubmenu',
     components: {},
-    emits: ['uncrossItems'],
+    emits: [
+        'uncrossItems',
+        'deleteCrossed',
+        'deleteAll',
+        'sendEmail',
+        'makePublic',
+    ],
     setup(_, { emit }) {
         const storage = useAppStore()
         function hideCompleted() {

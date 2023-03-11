@@ -138,6 +138,10 @@ export const useAppStore = defineStore('app', {
             )
             if (foundItem < 0) {
                 this.items.push(item)
+                const storage = useAppStore()
+                if (this.selectedList) {
+                    storage.increaseItemCounter(this.selectedList.id)
+                }
             } else {
                 this.items[foundItem] = item
             }
@@ -160,7 +164,7 @@ export const useAppStore = defineStore('app', {
             }
             this.items[foundItem].is_starred = !this.items[foundItem].is_starred
         },
-        increaseItemCounter(listId: number) {
+        increaseItemCounter(listId: number | string) {
             const foundItem = this.lists.findIndex(
                 (itemCurrent: ListInterface) => itemCurrent.id == listId
             )
@@ -177,6 +181,15 @@ export const useAppStore = defineStore('app', {
                 return
             }
             this.lists[foundItem].items_count--
+        },
+        setItemCounter(listId: number | string | undefined, counter: number) {
+            const foundItem = this.lists.findIndex(
+                (itemCurrent: ListInterface) => itemCurrent.id == listId
+            )
+            if (foundItem < 0) {
+                return
+            }
+            this.lists[foundItem].items_count = counter
         },
         increaseItemsPage() {
             this.itemsPage++
@@ -195,6 +208,16 @@ export const useAppStore = defineStore('app', {
                 item.is_done = false
                 return item
             })
+        },
+        deleteCrossed() {
+            this.items = this.items.filter(
+                (item: ItemInterface) => !item.is_done
+            )
+            this.itemsTotal = this.items.length
+            const storage = useAppStore()
+            if (this.selectedList) {
+                storage.setItemCounter(this.selectedList.id, this.itemsTotal)
+            }
         },
     },
 })

@@ -22,6 +22,8 @@
                 ></atom-icon-btn>
                 <items-toolbar-submenu
                     @uncross-items="onUncrossItems"
+                    @delete-crossed="onDeleteCrossed"
+                    @delete-all="onDeleteAllItems"
                 ></items-toolbar-submenu>
             </template>
         </toolbar>
@@ -45,7 +47,11 @@ import { useAppStore } from '@/store/app'
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
 import MoveItemCard from '@/components/organisms/MoveItemCard.vue'
 import ItemsToolbarSubmenu from '@/components/molecules/ItemsToolbarSubmenu.vue'
-import { uncrossItems } from '@/services/Api'
+import {
+    deleteAllItems,
+    deleteCrossedItems,
+    uncrossItems,
+} from '@/services/Api'
 import { AxiosError } from 'axios'
 
 export default defineComponent({
@@ -67,6 +73,29 @@ export default defineComponent({
             storage.uncrossItemsInList()
             if (storage.selectedList) {
                 uncrossItems(storage.selectedList.id).catch(
+                    (error: AxiosError) => {
+                        storage.setErrorFromAxios(error)
+                    }
+                )
+            }
+        }
+
+        function onDeleteCrossed() {
+            storage.deleteCrossed()
+            if (storage.selectedList) {
+                deleteCrossedItems(storage.selectedList.id).catch(
+                    (error: AxiosError) => {
+                        storage.setErrorFromAxios(error)
+                    }
+                )
+            }
+        }
+
+        function onDeleteAllItems() {
+            storage.setDefaultItems()
+            if (storage.selectedList) {
+                storage.setItemCounter(storage.selectedList.id, 0)
+                deleteAllItems(storage.selectedList.id).catch(
                     (error: AxiosError) => {
                         storage.setErrorFromAxios(error)
                     }
@@ -114,6 +143,8 @@ export default defineComponent({
             copyItem,
             copyMode,
             onUncrossItems,
+            onDeleteCrossed,
+            onDeleteAllItems,
         }
     },
 })
