@@ -347,6 +347,24 @@ export function deleteAllItems(
     )
 }
 
+export function sendEmailRequest(
+    listId: number | string,
+    email: string
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.post(
+        import.meta.env.VITE_API_URL + '/lists/' + listId + '/email',
+        {
+            data: {
+                type: 'emails',
+                attributes: {
+                    email: email,
+                },
+            },
+        }
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

@@ -25,6 +25,10 @@
             :item-id="itemId"
             @close-item-dialog="onCloseItemDialog"
         ></create-item>
+        <send-email-popup
+            :email-dialog="sendEmailMode"
+            @close-email-popup="sendEmailMode = false"
+        ></send-email-popup>
         <v-responsive>
             <v-row>
                 <v-col cols="12" lg="4">
@@ -44,6 +48,7 @@
                         @items-search="onItemsSearch"
                         @create-item="onCreateItem"
                         @edit-item="onEditItem"
+                        @send-email-form="sendEmailMode = true"
                     />
                 </v-col>
             </v-row>
@@ -66,9 +71,11 @@ import UserInterface from '@/types/UserInterface'
 import ItemInterface from '@/types/ItemInterface'
 import { mapItemsDataFromResponse } from '@/services/ResponseDataMapper'
 import CreateItem from '@/templates/CreateItem.vue'
+import SendEmailPopup from '@/templates/SendEmailPopup.vue'
 
 export default {
     components: {
+        SendEmailPopup,
         CreateItem,
         ListsAndFoldersIndex,
         ItemsIndex,
@@ -81,6 +88,7 @@ export default {
         const storage = useAppStore()
         const createFolderMode = ref(false)
         const createListMode = ref(false)
+        const sendEmailMode = ref(false)
         const folderId = ref(0)
         const listId = ref(0)
         const moveToFolderMode = ref(false)
@@ -211,6 +219,7 @@ export default {
             onCreateItem,
             onCloseItemDialog,
             onEditItem,
+            sendEmailMode,
         }
     },
 }

@@ -29,7 +29,7 @@
                 <v-list-item @click="$emit('deleteAll')">
                     <v-list-item-title> Delete All Items </v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="$emit('sendEmail')">
+                <v-list-item @click="$emit('sendEmailForm')">
                     <v-list-item-title> Send List By Email </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('makePublic')">
@@ -52,7 +52,7 @@ export default defineComponent({
         'uncrossItems',
         'deleteCrossed',
         'deleteAll',
-        'sendEmail',
+        'sendEmailForm',
         'makePublic',
     ],
     setup(_, { emit }) {

@@ -24,6 +24,7 @@
                     @uncross-items="onUncrossItems"
                     @delete-crossed="onDeleteCrossed"
                     @delete-all="onDeleteAllItems"
+                    @send-email-form="$emit('sendEmailForm')"
                 ></items-toolbar-submenu>
             </template>
         </toolbar>
@@ -56,7 +57,13 @@ import { AxiosError } from 'axios'
 
 export default defineComponent({
     name: 'ItemsIndex',
-    emits: ['loadMoreItems', 'itemsSearch', 'createItem', 'editItem'],
+    emits: [
+        'loadMoreItems',
+        'itemsSearch',
+        'createItem',
+        'editItem',
+        'sendEmailForm',
+    ],
     components: {
         ItemsToolbarSubmenu,
         MoveItemCard,
