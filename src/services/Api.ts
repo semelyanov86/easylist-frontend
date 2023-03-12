@@ -191,7 +191,7 @@ export function makeListPublicOrUnpublic(
             id: listId,
             type: 'lists',
             attributes: {
-                is_public: isPublic,
+                is_public: isPublic ? 2 : 1,
             },
         },
     })
