@@ -29,6 +29,10 @@
             :email-dialog="sendEmailMode"
             @close-email-popup="sendEmailMode = false"
         ></send-email-popup>
+        <make-public-popup
+            :public-dialog="makePublicMode"
+            @close-public-popup="makePublicMode = false"
+        ></make-public-popup>
         <v-responsive>
             <v-row>
                 <v-col cols="12" lg="4">
@@ -49,6 +53,7 @@
                         @create-item="onCreateItem"
                         @edit-item="onEditItem"
                         @send-email-form="sendEmailMode = true"
+                        @make-public-form="makePublicMode = true"
                     />
                 </v-col>
             </v-row>
@@ -72,9 +77,11 @@ import ItemInterface from '@/types/ItemInterface'
 import { mapItemsDataFromResponse } from '@/services/ResponseDataMapper'
 import CreateItem from '@/templates/CreateItem.vue'
 import SendEmailPopup from '@/templates/SendEmailPopup.vue'
+import MakePublicPopup from '@/templates/MakePublicPopup.vue'
 
 export default {
     components: {
+        MakePublicPopup,
         SendEmailPopup,
         CreateItem,
         ListsAndFoldersIndex,
@@ -89,6 +96,7 @@ export default {
         const createFolderMode = ref(false)
         const createListMode = ref(false)
         const sendEmailMode = ref(false)
+        const makePublicMode = ref(false)
         const folderId = ref(0)
         const listId = ref(0)
         const moveToFolderMode = ref(false)
@@ -220,6 +228,7 @@ export default {
             onCloseItemDialog,
             onEditItem,
             sendEmailMode,
+            makePublicMode,
         }
     },
 }

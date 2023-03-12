@@ -178,6 +178,25 @@ export function updateOrderOfList(
     )
 }
 
+export function makeListPublicOrUnpublic(
+    listId: number | string,
+    isPublic: boolean
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    if (typeof listId == 'number') {
+        listId = listId.toString()
+    }
+    return http.patch(import.meta.env.VITE_API_URL + '/lists/' + listId, {
+        data: {
+            id: listId,
+            type: 'lists',
+            attributes: {
+                is_public: isPublic,
+            },
+        },
+    })
+}
+
 export function itemsFromList(
     listId: number,
     page: number,

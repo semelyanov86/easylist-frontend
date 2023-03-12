@@ -68,6 +68,10 @@
                     </template>
 
                     <template v-slot:append>
+                        <atom-icon
+                            icon="mdi-eye-circle-outline"
+                            v-if="element.link"
+                        ></atom-icon>
                         <list-submenu
                             @edit-list="editList(element.id)"
                             @move-to-folder="onMoveToFolder(element.id)"
@@ -97,7 +101,7 @@ import { useAppStore } from '@/store/app'
 import draggable from 'vuedraggable'
 import MovedInterface from '@/types/MovedInterface'
 import { updateOrderOfFolder, updateOrderOfList } from '@/services/Api'
-import { AxiosError } from 'axios/index'
+import { AxiosError } from 'axios'
 import router from '@/router'
 
 export default defineComponent({

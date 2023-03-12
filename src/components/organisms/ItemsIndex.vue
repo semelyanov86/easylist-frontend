@@ -25,6 +25,7 @@
                     @delete-crossed="onDeleteCrossed"
                     @delete-all="onDeleteAllItems"
                     @send-email-form="$emit('sendEmailForm')"
+                    @make-public-form="$emit('makePublicForm')"
                 ></items-toolbar-submenu>
             </template>
         </toolbar>
@@ -63,6 +64,7 @@ export default defineComponent({
         'createItem',
         'editItem',
         'sendEmailForm',
+        'makePublicForm',
     ],
     components: {
         ItemsToolbarSubmenu,

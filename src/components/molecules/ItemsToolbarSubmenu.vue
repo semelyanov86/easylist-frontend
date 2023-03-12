@@ -32,7 +32,7 @@
                 <v-list-item @click="$emit('sendEmailForm')">
                     <v-list-item-title> Send List By Email </v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="$emit('makePublic')">
+                <v-list-item @click="$emit('makePublicForm')">
                     <v-list-item-title> Make List Public </v-list-item-title>
                 </v-list-item>
             </v-list>
@@ -53,7 +53,7 @@ export default defineComponent({
         'deleteCrossed',
         'deleteAll',
         'sendEmailForm',
-        'makePublic',
+        'makePublicForm',
     ],
     setup(_, { emit }) {
         const storage = useAppStore()
