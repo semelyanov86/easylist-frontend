@@ -1,6 +1,8 @@
 // Plugins
 import vue from '@vitejs/plugin-vue'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+import { resolve, dirname } from 'node:path'
 
 // Utilities
 import { defineConfig } from 'vite'
@@ -11,6 +13,12 @@ export default defineConfig({
     plugins: [
         vue({
             template: { transformAssetUrls },
+        }),
+        VueI18nPlugin({
+            include: resolve(
+                dirname(fileURLToPath(import.meta.url)),
+                './src/i18n/locales/**'
+            ), // provide a path to the folder where you'll store translation data (see below)
         }),
         // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
         vuetify({

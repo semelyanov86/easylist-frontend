@@ -10,11 +10,16 @@ import vuetify from './vuetify'
 import pinia from '../store'
 import VueCookies from 'vue-cookies'
 import router from '../router'
+import i18n from '@/i18n'
 
 // Types
 import type { App } from 'vue'
 
 export function registerPlugins(app: App) {
     loadFonts()
-    app.use(VueCookies, { expires: '7d' }).use(pinia).use(vuetify).use(router)
+    app.use(VueCookies, { expires: '7d' })
+        .use(pinia)
+        .use(vuetify)
+        .use(router)
+        .use(i18n)
 }

@@ -4,11 +4,13 @@ import Login from '@/views/Login.vue'
 import security from '@/services/Security'
 import { inject } from 'vue'
 import { VueCookies } from 'vue-cookies'
+import Trans from '@/i18n/translation'
 
 const routes = [
     {
         path: '/',
         component: () => import('@/layouts/default/Default.vue'),
+        beforeEnter: Trans.routeMiddleware,
         children: [
             {
                 path: '',

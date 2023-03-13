@@ -1,5 +1,6 @@
 <template>
     <div>
+        <language-switcher></language-switcher>
         <atom-btn
             href="https://next.vuetifyjs.com/components/all/"
             min-width="164"
@@ -10,7 +11,7 @@
         >
             <atom-icon icon="mdi-view-dashboard" size="large" start />
 
-            Help
+            {{ $t('nav.help') }}
         </atom-btn>
 
         <atom-btn
@@ -22,7 +23,7 @@
         >
             <atom-icon icon="mdi-account" size="large" start />
 
-            Account
+            {{ $t('nav.account') }}
         </atom-btn>
         <atom-btn
             href="https://community.vuetifyjs.com/"
@@ -33,7 +34,7 @@
         >
             <atom-icon icon="mdi-lock" size="large" start />
 
-            Sign Out
+            {{ $t('nav.sign-out') }}
         </atom-btn>
     </div>
 </template>
@@ -41,12 +42,14 @@
 <script lang="ts">
 import AtomBtn from '@/components/atoms/AtomBtn.vue'
 import AtomIcon from '@/components/atoms/AtomIcon.vue'
+import LanguageSwitcher from '@/components/molecules/LanguageSwitcher.vue'
 
 export default {
     name: 'AppBarMenu',
     components: {
         AtomBtn,
         AtomIcon,
+        LanguageSwitcher,
     },
 }
 </script>
