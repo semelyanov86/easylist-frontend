@@ -45,6 +45,7 @@ import router from '@/router'
 import { defineComponent } from 'vue'
 import { mapFolderDataFromResponseAttributes } from '@/services/ResponseDataMapper'
 import AddListOrFolderBtn from '@/components/molecules/AddListOrFolderBtn.vue'
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
     name: 'ListsAndFoldersIndex',
@@ -68,7 +69,8 @@ export default defineComponent({
         const nextFolderExists = ref(false)
         const nextListExists = ref(false)
         const searchTerm = ref('')
-        const headerName = ref('Choose a list to display items')
+        const { t } = useI18n()
+        const headerName = ref(t('lists.choose-list'))
 
         onMounted(() => {
             receiveFolders()
@@ -175,7 +177,7 @@ export default defineComponent({
             storage.selectedFolder = 1
             receiveFolders()
             receiveLists()
-            headerName.value = 'Choose a list to display items'
+            headerName.value = t('lists.choose-list')
         }
 
         function onListSelected() {

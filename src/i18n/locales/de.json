@@ -4,5 +4,30 @@
         "account": "Konto",
         "sign-out": "Abmelden",
         "easylist": "EasyList"
+    },
+    "lists": {
+        "choose-list": "Liste auswählen, um Elemente anzuzeigen",
+        "folders":  "Folders",
+        "folder": "Folder",
+        "list": "Liste",
+        "moved": "Erfolgreich verschoben",
+        "lists": "Listen",
+        "search-text": "Beginnen Sie mit der Eingabe für die Suche",
+        "edit-list": "Liste bearbeiten",
+        "move-to-folder": "In Ordner verschieben",
+        "edit-folder": "Ordner bearbeiten",
+        "create-folder": "Ordner erstellen",
+        "create-list": "Liste erstellen"
+    },
+    "items": {
+        "items": "items"
+    },
+    "general": {
+        "load-more": "Load More",
+        "made-with": "hergestellt mit",
+        "by": "von",
+        "better-web": "für ein besseres Web",
+        "autor": "Sergey Emelyanov",
+        "about-me": "Über mich"
     }
 }

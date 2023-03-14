@@ -1,7 +1,9 @@
 import i18n from '@/i18n'
-import { nextTick } from 'vue'
+import { inject, nextTick } from 'vue'
 import LanguageInterface from '@/types/LanguageInterface'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import { VueCookies } from 'vue-cookies'
+import { app } from '@/main.js'
 
 const Trans = {
     get defaultLocale(): string {
@@ -27,7 +29,15 @@ const Trans = {
     async switchLanguage(newLocale: string) {
         await Trans.loadLocaleMessages(newLocale)
         Trans.currentLocale = newLocale
-        localStorage.setItem('user-locale', newLocale)
+        localStorage.setItem('_locale', newLocale)
+        app.config.globalProperties.$cookies?.set(
+            '_locale',
+            newLocale,
+            '180d',
+            '/',
+            undefined,
+            false
+        )
     },
 
     async loadLocaleMessages(locale: string) {
@@ -57,7 +67,7 @@ const Trans = {
     },
 
     getPersistedLocale() {
-        const persistedLocale = localStorage.getItem('user-locale')
+        const persistedLocale = localStorage.getItem('_locale')
 
         if (persistedLocale && Trans.isLocaleSupported(persistedLocale)) {
             return persistedLocale
@@ -66,7 +76,14 @@ const Trans = {
         }
     },
 
-    guessDefaultLocale() {
+    guessDefaultLocale(): string {
+        const coockieLocale =
+            app.config.globalProperties.$cookies?.get('_locale')
+        console.log(coockieLocale)
+        if (coockieLocale) {
+            return coockieLocale
+        }
+
         const userPersistedLocale = Trans.getPersistedLocale()
         if (userPersistedLocale) {
             return userPersistedLocale
@@ -92,7 +109,7 @@ const Trans = {
         let paramLocale = to.params.locale
 
         if (!paramLocale) {
-            paramLocale = Trans.defaultLocale
+            paramLocale = Trans.guessDefaultLocale()
         }
 
         if (typeof paramLocale != 'string') {

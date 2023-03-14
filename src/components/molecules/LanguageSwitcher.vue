@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import LanguageInterface from '@/types/LanguageInterface'
 import { useI18n } from 'vue-i18n'
 import Trans from '@/i18n/translation'
@@ -48,6 +48,16 @@ export default {
                 router.push('/')
             }
         }
+
+        onMounted(function () {
+          const currentLocale = Trans.guessDefaultLocale()
+          console.log(currentLocale)
+          const localeModel = langs.find((loc: LanguageInterface) => loc.value == currentLocale)
+          console.log(localeModel)
+          if (localeModel) {
+            activeLang.value = localeModel
+          }
+        })
 
         return { langs, languageMenu, activeLang, switchLanguage }
     },

@@ -3,7 +3,7 @@
         <v-menu activator="parent">
             <v-list>
                 <v-list-item @click="editFolder">
-                    <v-list-item-title>Edit Folder</v-list-item-title>
+                    <v-list-item-title>{{ $t('lists.edit-folder') }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

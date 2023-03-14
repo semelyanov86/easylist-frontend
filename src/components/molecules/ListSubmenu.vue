@@ -3,10 +3,10 @@
         <v-menu activator="parent">
             <v-list>
                 <v-list-item @click="editList">
-                    <v-list-item-title>Edit List</v-list-item-title>
+                    <v-list-item-title>{{$t('lists.edit-list')}}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="moveToFolder">
-                    <v-list-item-title>Move To Folder</v-list-item-title>
+                    <v-list-item-title>{{ $t('lists.move-to-folder') }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

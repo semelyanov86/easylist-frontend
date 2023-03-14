@@ -23,13 +23,13 @@
                     <div
                         class="body-1 font-weight-light pt-6 pt-md-0 text-center"
                     >
-                        &copy; 2023, made with
+                        &copy; 2023, {{$t('general.made-with')}}
                         <v-icon size="18"> mdi-heart </v-icon>
-                        by
+                        {{$t('general.by')}}
                         <a href="https://linkedin.com/in/sergeyem"
-                            >Sergey Emelyanov</a
+                            >{{ $t('general.autor') }}</a
                         >
-                        for a better web.
+                        {{$t('general.better-web')}}.
                     </div>
                 </v-col>
             </v-row>
@@ -38,16 +38,21 @@
 </template>
 
 <script lang="ts">
+import {ref} from "vue";
+import {useI18n} from "vue-i18n";
+
 export default {
     name: 'CoreFooter',
-    data: () => ({
-        links: [
-            {
-                href: 'https://sergeyem.ru',
-                text: 'About Me',
-            },
-        ],
-    }),
+  setup() {
+      const {t} = useI18n()
+      const links = ref([
+        {
+          href: 'https://sergeyem.ru',
+          text: t('general.about-me'),
+        },
+      ])
+    return {links}
+  }
 }
 </script>
 

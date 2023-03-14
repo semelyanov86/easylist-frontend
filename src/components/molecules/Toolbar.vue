@@ -13,7 +13,7 @@
         <v-text-field
             class="mt-5"
             clearable
-            label="Start typing to search"
+            :label="$t('lists.search-text')"
             v-if="searchActive"
             variant="solo"
             v-model="searchValue"
