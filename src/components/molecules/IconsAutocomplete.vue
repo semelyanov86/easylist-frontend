@@ -5,7 +5,7 @@
         v-model:search-input="search"
         item-value="name"
         item-text="name"
-        label="Choose an icon"
+        :label="$t('lists.choose-icon')"
         outlined
     >
         <template v-slot:item="{ item }">

@@ -4,7 +4,7 @@
             <v-row>
                 <v-col cols="12">
                     <v-text-field
-                        label="Name*"
+                        :label="$t('lists.name')"
                         required
                         v-model="folderModel.name"
                     ></v-text-field>
@@ -16,15 +16,15 @@
                 </v-col>
             </v-row>
         </v-container>
-        <small>*indicates required field</small>
+        <small>{{ $t('general.fields-required')}} </small>
     </v-card-text>
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeFolder">
-            Close
+            {{ $t('general.close') }}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="saveFolder">
-            Save
+            {{ $t('general.save') }}
         </v-btn>
     </v-card-actions>
 </template>

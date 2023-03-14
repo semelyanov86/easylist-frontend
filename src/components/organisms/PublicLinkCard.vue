@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <atom-card-title>Public Link for current list</atom-card-title>
+        <atom-card-title>{{$t('items.public-header')}}</atom-card-title>
         <public-link-form
             @close-form="$emit('closePublicPopup')"
         ></public-link-form>

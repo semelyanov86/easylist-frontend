@@ -12,7 +12,7 @@
             :showBackButton="true"
         >
             <template v-slot:header>
-                Items in {{ storage.selectedList?.name }}
+                {{$t('items.items-in')}} {{ storage.selectedList?.name }}
             </template>
             <template v-slot:actions>
                 <atom-icon-btn

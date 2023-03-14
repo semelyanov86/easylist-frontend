@@ -1,10 +1,9 @@
 <template>
     <v-card-subtitle
-        >This list is public available via following link</v-card-subtitle
+        >{{ $t('items.public-title') }}</v-card-subtitle
     >
     <v-card-text>
-        Copy following URL and send it to your friends. This way you can share
-        your shopping list with others!
+        {{$t('items.public-description')}}
         <v-container>
             <atom-clipboard-field
                 :initial-value="publicLink"
@@ -14,10 +13,10 @@
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeForm">
-            Close
+            {{$t('general.close')}}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="deleteLink">
-            Make Unpublic
+            {{ $t('items.make-unpublic') }}
         </v-btn>
     </v-card-actions>
 </template>

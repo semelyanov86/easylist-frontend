@@ -4,22 +4,22 @@
             <v-row>
                 <v-col>
                     <v-text-field
-                        label="Email*"
+                        :label="$t('items.email') + '*'"
                         required
                         v-model="email"
                     ></v-text-field>
                 </v-col>
             </v-row>
         </v-container>
-        <small>*indicates required field</small>
+        <small>{{$t('general.fields-required')}}</small>
     </v-card-text>
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeForm">
-            Close
+            {{$t('general.close')}}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="sendEmail">
-            Save
+          {{ $t('items.send') }}
         </v-btn>
     </v-card-actions>
 </template>

@@ -4,36 +4,36 @@
             <v-row>
                 <v-col cols="12">
                     <v-text-field
-                        label="Name*"
+                        :label="$t('items.name')"
                         required
                         v-model="itemModel.name"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
-                        label="Description"
+                        :label="$t('items.description')"
                         v-model="itemModel.description"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
-                        label="Quantity"
+                        :label="$t('items.quantity')"
                         v-model.number="itemModel.quantity"
                         type="number"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
-                        label="Quantity Type"
+                        :label="$t('items.quantity-type')"
                         v-model="itemModel.quantity_type"
                     ></v-text-field>
                 </v-col>
                 <v-col cols="12">
                     <v-text-field
-                        label="Price"
+                        :label="$t('items.price')"
                         v-model.number="itemModel.price"
                         :rules="[
-                            (v) => !isNaN(v) || 'Only decimal number allowed',
+                            (v) => !isNaN(v) || $t('items.price-validation'),
                         ]"
                     ></v-text-field>
                 </v-col>
@@ -41,21 +41,21 @@
                     <v-file-input
                         accept="image/png, image/jpeg"
                         clearable
-                        label="File input"
+                        :label="$t('items.file')"
                         v-model="file"
                     ></v-file-input>
                 </v-col>
             </v-row>
         </v-container>
-        <small>*indicates required field</small>
+        <small>{{$t('general.fields-required')}}</small>
     </v-card-text>
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeItem">
-            Close
+            {{$t('general.close')}}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="saveItem">
-            Save
+            {{$t('general.save')}}
         </v-btn>
     </v-card-actions>
 </template>

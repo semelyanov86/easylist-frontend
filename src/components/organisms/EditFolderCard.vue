@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <atom-card-title>Create New Folder</atom-card-title>
+        <atom-card-title>{{$t('lists.create-folder-title')}}</atom-card-title>
         <edit-folder-form
             @save-folder="saveFolder"
             @close-folder="closeFolder"

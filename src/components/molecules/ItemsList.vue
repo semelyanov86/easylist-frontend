@@ -43,7 +43,7 @@
         <atom-load-more
             v-if="storage.itemsTotal > storage.items.length"
             @click="loadMoreItems"
-            >Load More</atom-load-more
+            >{{$t('general.load-more')}}</atom-load-more
         >
     </v-list>
 </template>
@@ -66,6 +66,7 @@ import MovedInterface from '@/types/MovedInterface'
 import draggable from 'vuedraggable'
 import ItemSubmenu from '@/components/molecules/ItemSubmenu.vue'
 import Confirm from '@/components/organisms/Confirm.vue'
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
     name: 'ItemsList',
@@ -81,6 +82,7 @@ export default defineComponent({
         const storage = useAppStore()
         const isDragging = ref(false)
         const veeConfirmRef = ref<InstanceType<typeof Confirm>>()
+      const {t} = useI18n()
 
         function loadMoreItems() {
             emit('loadMoreItems')
@@ -120,9 +122,9 @@ export default defineComponent({
                 .then(
                     () =>
                         (storage.message =
-                            'Item ' +
+                            t('items.item') + ' ' +
                             moved.moved.element.name +
-                            ' Successfully moved')
+                            ' ' + t('items.moved'))
                 )
                 .catch((error: AxiosError) => {
                     storage.setErrorFromAxios(error)
@@ -144,8 +146,8 @@ export default defineComponent({
         function onStarItem(item: ItemInterface) {
             starOrUnstarItem(item)
                 .then(function () {
-                    const starMsg = item.is_starred ? 'Not starred' : 'Starred'
-                    storage.message = 'Item is now ' + starMsg
+                    const starMsg = item.is_starred ? t('items.starred') : t('items.not-starred')
+                    storage.message = t('items.item-now') + ' ' + starMsg
                     storage.starOrUnstarItem(item)
                 })
                 .catch((error: AxiosError) => {
@@ -155,7 +157,7 @@ export default defineComponent({
 
         function onDeleteItem(item: ItemInterface) {
             veeConfirmRef.value
-                ?.open('Delete', 'Are you sure?', {
+                ?.open(t('items.delete'), t('items.delete-msg'), {
                     color: 'red',
                     width: 290,
                     zIndex: 200,
@@ -167,7 +169,7 @@ export default defineComponent({
                             deleteItem(item)
                                 .then(function () {
                                     storage.message =
-                                        'Item ' + item.name + ' deleted!'
+                                        t('items.item') + ' ' + item.name + ' ' + t('items.delete-success')
                                     storage.deleteItem(item)
                                     storage.decreaseItemCounter(item.list_id)
                                     storage.itemsTotal--

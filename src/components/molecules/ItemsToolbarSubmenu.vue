@@ -5,8 +5,8 @@
                 <v-list-item @click="hideCompleted">
                     <v-list-item-title>{{
                         storage.hideCompleted
-                            ? 'Show completed items'
-                            : 'Hide completed items'
+                            ? $t('items.show-completed')
+                            : $t('items.hide-completed')
                     }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item
@@ -14,26 +14,26 @@
                 >
                     <v-list-item-title>{{
                         storage.onlyStarred
-                            ? 'Show All items'
-                            : 'Only starred items'
+                            ? $t('items.show-all')
+                            : $t('items.show-starred')
                     }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="uncrossItems">
-                    <v-list-item-title> Uncross All Items </v-list-item-title>
+                    <v-list-item-title> {{$t('items.uncross-all')}} </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('deleteCrossed')">
                     <v-list-item-title>
-                        Delete Crossed Items
+                        {{$t('items.delete-crossed')}}
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('deleteAll')">
-                    <v-list-item-title> Delete All Items </v-list-item-title>
+                    <v-list-item-title> {{$t('items.delete-all')}} </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('sendEmailForm')">
-                    <v-list-item-title> Send List By Email </v-list-item-title>
+                    <v-list-item-title> {{$t('items.send-by-email')}} </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('makePublicForm')">
-                    <v-list-item-title> Make List Public </v-list-item-title>
+                    <v-list-item-title> {{$t('items.make-public')}} </v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

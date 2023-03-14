@@ -4,7 +4,7 @@
             <v-row>
                 <v-col cols="12">
                     <v-select
-                        label="Select Folder"
+                        :label="$t('items.select-folder')"
                         v-model.number="selectedFolderId"
                         :items="storage.getAllFolders"
                         item-title="name"
@@ -15,7 +15,7 @@
                 </v-col>
                 <v-col cols="12">
                     <v-select
-                        label="Select List"
+                        :label="$t('items.select-list')"
                         v-model.number="selectedListId"
                         :items="lists"
                         item-title="name"
@@ -29,7 +29,7 @@
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeMoveItem">
-            Close
+            {{$t('general.close')}}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="runMoveOrCopy">
             {{ getButtonText }}
@@ -49,6 +49,7 @@ import {
     mapListDataFromResponseAttributes,
 } from '@/services/ResponseDataMapper'
 import ItemInterface from '@/types/ItemInterface'
+import {useI18n} from "vue-i18n";
 
 export default defineComponent({
     name: 'MoveItemForm',
@@ -62,6 +63,7 @@ export default defineComponent({
         const selectedFolderId = ref(1)
         const lists = ref<ListInterface[]>([])
         const selectedListId = ref<number | null>(null)
+      const {t} = useI18n()
 
         onMounted(function () {
             selectedFolderId.value = storage.selectedFolder
@@ -136,7 +138,7 @@ export default defineComponent({
                         storage.loading = false
                         closeMoveItem()
                         storage.message =
-                            'Item successfully copied with id: ' + item.id
+                            t('items.copied') + ' ' + item.id
                     })
                     .catch((error: AxiosError) => {
                         console.log(error)
@@ -151,7 +153,7 @@ export default defineComponent({
             emit('closeMoveItem')
         }
 
-        const getButtonText = computed(() => (props.copyMode ? 'Copy' : 'Move'))
+        const getButtonText = computed(() => (props.copyMode ? t('items.copy') : t('items.move')))
 
         return {
             storage,
