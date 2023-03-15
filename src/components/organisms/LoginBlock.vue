@@ -10,9 +10,9 @@
                 style="align-content: center"
             >
             </atom-img>
-            <h2 class="font-weight-bold mt-4">Sign in</h2>
+            <h2 class="font-weight-bold mt-4">{{$t('login.sign-in')}}</h2>
             <atom-text-six
-                text="To start using easylist service you need to sign in first"
+                :text="$t('login.start-using')"
             />
             <v-container>
                 <v-responsive>
@@ -22,7 +22,7 @@
 
             <div class="d-flex justify-end">
                 <atom-btn variant="text" color="primary">
-                    Forgot Password?
+                    {{$t('login.forgot-password')}}
                 </atom-btn>
             </div>
         </v-col>

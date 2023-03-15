@@ -3,7 +3,7 @@
         <atom-text-field
             v-model="email.value.value"
             :error-messages="email.errorMessage.value"
-            label="E-mail"
+            :label="$t('account.email')"
         ></atom-text-field>
         <atom-text-field
             id="password"
@@ -11,11 +11,11 @@
             v-model="password.value.value"
             :counter="7"
             :error-messages="password.errorMessage.value"
-            label="Password"
+            :label="$t('account.password')"
         ></atom-text-field>
-        <atom-btn color="primary" class="me-4" type="submit"> submit </atom-btn>
+        <atom-btn color="primary" class="me-4" type="submit"> {{$t('login.submit')}} </atom-btn>
 
-        <atom-btn @click="handleReset"> clear </atom-btn>
+        <atom-btn @click="handleReset"> {{$t('login.clear')}} </atom-btn>
     </form>
 </template>
 

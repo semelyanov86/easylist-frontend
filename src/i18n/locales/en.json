@@ -109,5 +109,15 @@
         "header": "Help and Support",
         "subheader": "How to get a support for this service",
         "text": "Currently there are no FAQ page available. To get support or get an answer to your question, send me an email or send a message to Telegram"
+    },
+    "login": {
+        "page-name": "EasyList App",
+        "banner-text": "Registration to this service is disabled by default. If you want to use this service, write to administrator",
+        "learn-more": "Learn More",
+        "sign-in": "Sign in",
+        "start-using": "To start using easylist service you need to sign in first",
+        "forgot-password": "Forgot Password?",
+        "submit": "Submit",
+        "clear": "Clear"
     }
 }

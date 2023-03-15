@@ -109,5 +109,15 @@
         "header": "Hilfe und Support",
         "subheader": "Wie erhalte ich Unterstützung für diesen Dienst",
         "text": "Derzeit ist keine FAQ-Seite verfügbar. Um Support zu erhalten oder eine Antwort auf Ihre Frage zu bekommen, senden Sie mir eine E-Mail oder senden Sie eine Nachricht an Telegram"
+    },
+    "login": {
+        "page-name": "EasyList App",
+        "banner-text": "Die Registrierung für diesen Dienst ist standardmäßig deaktiviert. Wenn Sie diesen Dienst nutzen wollen, schreiben Sie an den Administrator",
+        "learn-more": "Mehr erfahren",
+        "sign-in": "Anmelden",
+        "start-using": "Um den easylist-Dienst zu nutzen, müssen Sie sich zuerst anmelden",
+        "forgot-password": "Passwort vergessen?",
+        "submit": "Abschicken",
+        "clear": "Löschen"
     }
 }

@@ -2,13 +2,13 @@
     <v-row justify="center">
         <v-col xl="5" cols="8">
             <div>
-                <h2 class="text-h4 text-white font-weight-medium">
-                    EasyList App
+                <h2 class="text-h4 text-default font-weight-medium">
+                    {{$t('login.page-name')}}
                 </h2>
                 <atom-text-six
-                    text="Registration to this service is disabled by default. If you want to use this service, write to administrator"
+                    :text="$t('login.banner-text')"
                 />
-                <atom-btn> Learn More </atom-btn>
+                <atom-btn href="https://sergeyem.ru/contact" target="_blank"> {{$t('login.learn-more')}} </atom-btn>
             </div>
         </v-col>
     </v-row>
