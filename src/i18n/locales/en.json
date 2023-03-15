@@ -104,5 +104,10 @@
         "fields-required": "*indicates required field",
         "close": "Close",
         "save": "Save"
+    },
+    "help": {
+        "header": "Help and Support",
+        "subheader": "How to get a support for this service",
+        "text": "Currently there are no FAQ page available. To get support or get an answer to your question, send me an email or send a message to Telegram"
     }
 }

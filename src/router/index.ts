@@ -29,6 +29,14 @@ const routes = [
                         /* webpackChunkName: "account" */ '@/views/Account.vue'
                     ),
             },
+            {
+                path: '/help',
+                name: 'Help',
+                component: () =>
+                    import(
+                        /* webpackChunkName: "account" */ '@/views/Help.vue'
+                    ),
+            },
         ],
     },
     {
