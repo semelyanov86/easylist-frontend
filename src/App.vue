@@ -4,9 +4,12 @@
 
 <script lang="ts">
 import { useAppStore } from '@/store/app'
-import { inject, onBeforeMount } from 'vue'
+import { inject, onBeforeMount, onMounted } from 'vue'
 import { VueCookies } from 'vue-cookies'
 import TokenInterface from './types/TokenInterface'
+import { doUserInfo } from '@/services/Api'
+import UserInterface from '@/types/UserInterface'
+import { mapUserDataFromResponse } from '@/services/ResponseDataMapper'
 
 export default {
     setup() {
@@ -18,6 +21,19 @@ export default {
                 if (tokenData) {
                     storage.setToken(tokenData.token)
                 }
+            }
+        })
+        onMounted(() => {
+            if (!storage.user || !storage.user.id) {
+                doUserInfo()
+                    .then((response) => {
+                        const user = mapUserDataFromResponse(response)
+                        storage.setUser(user)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        storage.setErrorFromAxios(error)
+                    })
             }
         })
     },

@@ -7,7 +7,7 @@
     },
     "lists": {
         "choose-list": "Choose list to display items",
-        "folders":  "Folders",
+        "folders": "Folders",
         "folder": "Folder",
         "list": "List",
         "moved": "Successfully moved",
@@ -70,6 +70,29 @@
         "create-title": "Create New Item",
         "copy-header": "Copy item to other list",
         "copy-title": "Move item to other list"
+    },
+    "account": {
+        "account-info": "Account Info",
+        "name-email": "Name and Email",
+        "id": "ID",
+        "name": "Name",
+        "email": "Email",
+        "change-password": "Change Password",
+        "change-name": "Change Name and Email",
+        "edit-title": "Edit name or email",
+        "edit-subtitle": "Enter your new email or password",
+        "name-required": "Name is required.",
+        "name-limit": "Name must be less than 30 characters.",
+        "email-required": "E-mail is required.",
+        "email-valid": "E-mail must be valid.",
+        "success-update": "User successfully updated",
+        "password-required": "Password is required",
+        "password-length": "Password should be more then 8 symbols",
+        "confirm-error": "Passwords should match",
+        "password": "Password",
+        "password-confirm": "Confirm Password",
+        "edit-password-title": "Edit your password",
+        "edit-password-subtitle": "Enter your new password"
     },
     "general": {
         "load-more": "Load More",

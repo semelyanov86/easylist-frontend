@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <atom-card-title>{{$t('lists.email-title')}}</atom-card-title>
+        <atom-card-title>{{ $t('lists.email-title') }}</atom-card-title>
         <email-form
             :default-email="defaultEmail"
             @send-email="sendForm"

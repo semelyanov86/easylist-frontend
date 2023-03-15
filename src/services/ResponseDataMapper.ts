@@ -3,6 +3,7 @@ import FolderInterface from '@/types/FolderInterface'
 import ItemInterface from '@/types/ItemInterface'
 // @ts-ignore
 import imageToBase64 from 'image-to-base64/browser'
+import UserInterface from '@/types/UserInterface'
 
 export function mapListDataFromResponse(
     response: any,
@@ -102,4 +103,14 @@ export function fileConverter(
 
 export function convertImageToBase64(imgUrl: string): Promise<string> {
     return imageToBase64(import.meta.env.VITE_BASIC_URL + imgUrl)
+}
+
+export function mapUserDataFromResponse(response: any): UserInterface {
+    const user: UserInterface = {
+        id: response.data.data.id,
+        email: response.data.data.attributes.email,
+        name: response.data.data.attributes.name,
+        created_at: response.data.data.attributes.created_at,
+    }
+    return user
 }

@@ -1,16 +1,6 @@
 <template>
     <v-container>
-        <v-container v-if="storage.error">
-            <error-alert
-                :text="storage.error"
-                @click="storage.removeError()"
-                v-model="alert"
-            />
-        </v-container>
-        <v-container>
-            <message-alert></message-alert>
-        </v-container>
-        <atom-loading-indicator></atom-loading-indicator>
+        <messages-block></messages-block>
         <create-list-or-folder
             :folder-dialog="createFolderMode"
             :list-dialog="createListMode"
@@ -78,9 +68,11 @@ import { mapItemsDataFromResponse } from '@/services/ResponseDataMapper'
 import CreateItem from '@/templates/CreateItem.vue'
 import SendEmailPopup from '@/templates/SendEmailPopup.vue'
 import MakePublicPopup from '@/templates/MakePublicPopup.vue'
+import MessagesBlock from '@/components/molecules/MessagesBlock.vue'
 
 export default {
     components: {
+        MessagesBlock,
         MakePublicPopup,
         SendEmailPopup,
         CreateItem,

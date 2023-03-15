@@ -47,15 +47,15 @@
                 </v-col>
             </v-row>
         </v-container>
-        <small>{{$t('general.fields-required')}}</small>
+        <small>{{ $t('general.fields-required') }}</small>
     </v-card-text>
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeItem">
-            {{$t('general.close')}}
+            {{ $t('general.close') }}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="saveItem">
-            {{$t('general.save')}}
+            {{ $t('general.save') }}
         </v-btn>
     </v-card-actions>
 </template>

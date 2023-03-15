@@ -7,6 +7,7 @@
         :text="storage.message"
         type="info"
         @close="storage.message = ''"
+        @click="storage.message = ''"
     ></v-alert>
 </template>
 

@@ -3,37 +3,28 @@
         <language-switcher></language-switcher>
         <atom-btn
             href="https://next.vuetifyjs.com/components/all/"
-            min-width="164"
             class="hidden-sm-and-down font-weight-light"
             rel="noopener noreferrer"
             target="_blank"
             variant="text"
         >
             <atom-icon icon="mdi-view-dashboard" size="large" start />
-
             {{ $t('nav.help') }}
         </atom-btn>
+        <router-link to="/account">
+            <atom-btn rel="noopener noreferrer" variant="text">
+                <atom-icon icon="mdi-account" size="large" start />
+                {{ $t('nav.account') }}
+            </atom-btn>
+        </router-link>
 
         <atom-btn
             href="https://community.vuetifyjs.com/"
-            min-width="164"
-            rel="noopener noreferrer"
-            target="_blank"
-            variant="text"
-        >
-            <atom-icon icon="mdi-account" size="large" start />
-
-            {{ $t('nav.account') }}
-        </atom-btn>
-        <atom-btn
-            href="https://community.vuetifyjs.com/"
-            min-width="164"
             rel="noopener noreferrer"
             target="_blank"
             variant="text"
         >
             <atom-icon icon="mdi-lock" size="large" start />
-
             {{ $t('nav.sign-out') }}
         </atom-btn>
     </div>
@@ -54,4 +45,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+    text-decoration: none;
+    color: inherit;
+}
+</style>

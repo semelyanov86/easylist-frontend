@@ -16,7 +16,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <small>{{ $t('general.fields-required')}} </small>
+        <small>{{ $t('general.fields-required') }} </small>
     </v-card-text>
     <v-card-actions>
         <v-spacer></v-spacer>

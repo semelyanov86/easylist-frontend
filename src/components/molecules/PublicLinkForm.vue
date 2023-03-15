@@ -1,9 +1,7 @@
 <template>
-    <v-card-subtitle
-        >{{ $t('items.public-title') }}</v-card-subtitle
-    >
+    <v-card-subtitle>{{ $t('items.public-title') }}</v-card-subtitle>
     <v-card-text>
-        {{$t('items.public-description')}}
+        {{ $t('items.public-description') }}
         <v-container>
             <atom-clipboard-field
                 :initial-value="publicLink"
@@ -13,7 +11,7 @@
     <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue-darken-1" variant="text" @click="closeForm">
-            {{$t('general.close')}}
+            {{ $t('general.close') }}
         </v-btn>
         <v-btn color="blue-darken-1" variant="text" @click="deleteLink">
             {{ $t('items.make-unpublic') }}

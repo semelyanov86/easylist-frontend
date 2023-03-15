@@ -7,7 +7,7 @@
     },
     "lists": {
         "choose-list": "Выберите список для показа элементов",
-        "folders":  "Папки",
+        "folders": "Папки",
         "folder": "Папка",
         "list": "Список",
         "moved": "Успешно перемещён",
@@ -70,6 +70,29 @@
         "create-title": "Создать новый элемент",
         "copy-header": "Скопировать с другой список",
         "copy-title": "Переместить в другой список"
+    },
+    "account": {
+        "account-info": "Информация об аккаунте",
+        "name-email": "Имя и Email",
+        "id": "ID",
+        "name": "Имя",
+        "email": "Email",
+        "change-password": "Изменить пароль",
+        "change-name": "Изменить имя и email",
+        "edit-title": "Редактировать имя или адрес электронной почты",
+        "edit-subtitle": "Введите ваш адрес почты или имя",
+        "name-required": "Имя обязательно к заполнению",
+        "name-limit": "Должно быть меньше 30 символов",
+        "email-required": "Почта обязательна к заполнению",
+        "email-valid": "Должен быть верный адрес",
+        "success-update": "Данные профиля успешно обновлены",
+        "password-required": "Пароль обязателен",
+        "password-length": "Пароль должен быть больше 8 символов",
+        "confirm-error": "Пароли должны совпадать",
+        "password": "Пароль",
+        "password-confirm": "Подтвердите пароль",
+        "edit-password-title": "Изменить пароль",
+        "edit-password-subtitle": "Введите ваш новый пароль"
     },
     "general": {
         "load-more": "Загрузить ещё",

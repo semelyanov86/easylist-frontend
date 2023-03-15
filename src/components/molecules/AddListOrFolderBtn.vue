@@ -3,10 +3,14 @@
         <v-menu activator="parent">
             <v-list>
                 <v-list-item prepend-icon="mdi-folder" @click="onCreateFolder">
-                    <v-list-item-title>{{$t('lists.create-folder')}}</v-list-item-title>
+                    <v-list-item-title>{{
+                        $t('lists.create-folder')
+                    }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item prepend-icon="mdi-view-list" @click="onCreateList">
-                    <v-list-item-title>{{ $t('lists.create-list') }}</v-list-item-title>
+                    <v-list-item-title>{{
+                        $t('lists.create-list')
+                    }}</v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

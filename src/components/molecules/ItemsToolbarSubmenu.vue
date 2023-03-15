@@ -19,21 +19,29 @@
                     }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="uncrossItems">
-                    <v-list-item-title> {{$t('items.uncross-all')}} </v-list-item-title>
+                    <v-list-item-title>
+                        {{ $t('items.uncross-all') }}
+                    </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('deleteCrossed')">
                     <v-list-item-title>
-                        {{$t('items.delete-crossed')}}
+                        {{ $t('items.delete-crossed') }}
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('deleteAll')">
-                    <v-list-item-title> {{$t('items.delete-all')}} </v-list-item-title>
+                    <v-list-item-title>
+                        {{ $t('items.delete-all') }}
+                    </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('sendEmailForm')">
-                    <v-list-item-title> {{$t('items.send-by-email')}} </v-list-item-title>
+                    <v-list-item-title>
+                        {{ $t('items.send-by-email') }}
+                    </v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="$emit('makePublicForm')">
-                    <v-list-item-title> {{$t('items.make-public')}} </v-list-item-title>
+                    <v-list-item-title>
+                        {{ $t('items.make-public') }}
+                    </v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>

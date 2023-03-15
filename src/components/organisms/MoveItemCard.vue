@@ -1,10 +1,12 @@
 <template>
     <v-dialog v-model="isMoveCardOpen" activator="parent" width="auto">
         <v-card>
-            <atom-card-title v-if="copyMode"
-                >{{$t('items.copy-header')}}</atom-card-title
-            >
-            <atom-card-title v-else>{{$t('items.copy-title')}}</atom-card-title>
+            <atom-card-title v-if="copyMode">{{
+                $t('items.copy-header')
+            }}</atom-card-title>
+            <atom-card-title v-else>{{
+                $t('items.copy-title')
+            }}</atom-card-title>
             <move-item-form
                 :item-model="itemModel"
                 @close-move-item="$emit('closeMoveItem')"

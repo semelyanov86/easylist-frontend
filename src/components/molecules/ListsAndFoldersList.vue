@@ -1,6 +1,9 @@
 <template>
     <v-list lines="two">
-        <atom-subheader :text="$t('lists.folders')" v-if="storage.selectedFolder === 1" />
+        <atom-subheader
+            :text="$t('lists.folders')"
+            v-if="storage.selectedFolder === 1"
+        />
 
         <draggable
             item-key="id"
@@ -35,9 +38,9 @@
                 </v-list-item>
             </template>
         </draggable>
-        <atom-load-more v-if="nextFolder" @click="loadMoreFolders"
-            >{{$t('general.load-more')}}</atom-load-more
-        >
+        <atom-load-more v-if="nextFolder" @click="loadMoreFolders">{{
+            $t('general.load-more')
+        }}</atom-load-more>
 
         <atom-divider inset v-if="storage.selectedFolder === 1"></atom-divider>
 
@@ -80,9 +83,9 @@
                 </v-list-item>
             </template>
         </draggable>
-        <atom-load-more v-if="nextList" @click="loadMoreLists"
-            >{{$t('general.load-more')}}</atom-load-more
-        >
+        <atom-load-more v-if="nextList" @click="loadMoreLists">{{
+            $t('general.load-more')
+        }}</atom-load-more>
     </v-list>
 </template>
 
@@ -103,7 +106,7 @@ import MovedInterface from '@/types/MovedInterface'
 import { updateOrderOfFolder, updateOrderOfList } from '@/services/Api'
 import { AxiosError } from 'axios'
 import router from '@/router'
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
     emits: [
@@ -132,7 +135,7 @@ export default defineComponent({
     setup(props, { emit }) {
         const storage = useAppStore()
         const isDragging = ref(false)
-      const { t } = useI18n()
+        const { t } = useI18n()
 
         function listSubtitle(list: ListInterface): string {
             return list.items_count + ' ' + t('items.items')
@@ -167,9 +170,11 @@ export default defineComponent({
                 .then(
                     () =>
                         (storage.message =
-                            t('lists.folder') + ' ' +
+                            t('lists.folder') +
+                            ' ' +
                             moved.moved.element.name +
-                            ' ' + t('lists.moved'))
+                            ' ' +
+                            t('lists.moved'))
                 )
                 .catch((error: AxiosError) => {
                     storage.setErrorFromAxios(error)
@@ -181,9 +186,11 @@ export default defineComponent({
                 .then(
                     () =>
                         (storage.message =
-                            t('lists.list') + ' ' +
+                            t('lists.list') +
+                            ' ' +
                             moved.moved.element.name +
-                            ' ' + t('lists.moved'))
+                            ' ' +
+                            t('lists.moved'))
                 )
                 .catch((error: AxiosError) => {
                     storage.setErrorFromAxios(error)

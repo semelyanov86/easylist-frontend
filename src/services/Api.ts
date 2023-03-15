@@ -384,6 +384,46 @@ export function sendEmailRequest(
     )
 }
 
+export function updateUserName(
+    name: string,
+    email: string
+): Promise<AxiosResponse<any>> {
+    const storage = useAppStore()
+    const http = createHttp()
+    return http.patch(
+        import.meta.env.VITE_API_URL + '/users/' + storage.user.id,
+        {
+            data: {
+                type: 'users',
+                id: storage.user.id.toString(),
+                attributes: {
+                    name: name,
+                    email: email,
+                },
+            },
+        }
+    )
+}
+
+export function updateUserPassword(
+    password: string
+): Promise<AxiosResponse<any>> {
+    const storage = useAppStore()
+    const http = createHttp()
+    return http.patch(
+        import.meta.env.VITE_API_URL + '/users/' + storage.user.id,
+        {
+            data: {
+                type: 'users',
+                id: storage.user.id.toString(),
+                attributes: {
+                    password: password,
+                },
+            },
+        }
+    )
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

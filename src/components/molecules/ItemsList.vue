@@ -43,7 +43,7 @@
         <atom-load-more
             v-if="storage.itemsTotal > storage.items.length"
             @click="loadMoreItems"
-            >{{$t('general.load-more')}}</atom-load-more
+            >{{ $t('general.load-more') }}</atom-load-more
         >
     </v-list>
 </template>
@@ -66,7 +66,7 @@ import MovedInterface from '@/types/MovedInterface'
 import draggable from 'vuedraggable'
 import ItemSubmenu from '@/components/molecules/ItemSubmenu.vue'
 import Confirm from '@/components/organisms/Confirm.vue'
-import {useI18n} from "vue-i18n";
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
     name: 'ItemsList',
@@ -82,7 +82,7 @@ export default defineComponent({
         const storage = useAppStore()
         const isDragging = ref(false)
         const veeConfirmRef = ref<InstanceType<typeof Confirm>>()
-      const {t} = useI18n()
+        const { t } = useI18n()
 
         function loadMoreItems() {
             emit('loadMoreItems')
@@ -122,9 +122,11 @@ export default defineComponent({
                 .then(
                     () =>
                         (storage.message =
-                            t('items.item') + ' ' +
+                            t('items.item') +
+                            ' ' +
                             moved.moved.element.name +
-                            ' ' + t('items.moved'))
+                            ' ' +
+                            t('items.moved'))
                 )
                 .catch((error: AxiosError) => {
                     storage.setErrorFromAxios(error)
@@ -146,7 +148,9 @@ export default defineComponent({
         function onStarItem(item: ItemInterface) {
             starOrUnstarItem(item)
                 .then(function () {
-                    const starMsg = item.is_starred ? t('items.starred') : t('items.not-starred')
+                    const starMsg = item.is_starred
+                        ? t('items.starred')
+                        : t('items.not-starred')
                     storage.message = t('items.item-now') + ' ' + starMsg
                     storage.starOrUnstarItem(item)
                 })
@@ -169,7 +173,11 @@ export default defineComponent({
                             deleteItem(item)
                                 .then(function () {
                                     storage.message =
-                                        t('items.item') + ' ' + item.name + ' ' + t('items.delete-success')
+                                        t('items.item') +
+                                        ' ' +
+                                        item.name +
+                                        ' ' +
+                                        t('items.delete-success')
                                     storage.deleteItem(item)
                                     storage.decreaseItemCounter(item.list_id)
                                     storage.itemsTotal--

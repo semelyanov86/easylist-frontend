@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <atom-card-title>{{$t('lists.create-title')}}</atom-card-title>
+        <atom-card-title>{{ $t('lists.create-title') }}</atom-card-title>
         <edit-list-form
             @save-list="saveList"
             @close-list="closeList"

@@ -7,7 +7,7 @@
     },
     "lists": {
         "choose-list": "Liste auswählen, um Elemente anzuzeigen",
-        "folders":  "Folders",
+        "folders": "Folders",
         "folder": "Folder",
         "list": "Liste",
         "moved": "Erfolgreich verschoben",
@@ -70,6 +70,29 @@
         "create-title": "Neuen Artikel erstellen",
         "copy-header": "Artikel in andere Liste kopieren",
         "copy-title": "Element in andere Liste verschieben"
+    },
+    "account": {
+        "account-info": "Konto-Infos",
+        "name-email": "Name und E-Mail",
+        "id": "ID",
+        "name": "Name",
+        "email": "Email",
+        "change-password": "Passwort ändern",
+        "change-name": "Name und E-Mail ändern",
+        "edit-title": "Name oder E-Mail bearbeiten",
+        "edit-subtitle": "Geben Sie Ihre neue E-Mail oder Ihr Name ein",
+        "name-required": "Name is erforderlich.",
+        "name-limit": "Der Name muss weniger als 30 Zeichen lang sein.",
+        "email-required": "E-Mail ist erforderlich.",
+        "email-valid": "E-Mail muss gültig sein.",
+        "success-update": "Benutzer erfolgreich aktualisiert",
+        "password-required": "Passwort ist erforderlich",
+        "password-length": "Passwort sollte mehr als 8 Zeichen enthalten",
+        "confirm-error": "Passwörter sollten übereinstimmen",
+        "password": "Kennwort",
+        "password-confirm": "Passwort bestätigen",
+        "edit-password-title": "Bearbeiten Sie Ihr Passwort",
+        "edit-password-subtitle": "Geben Sie Ihr neues Passwort ein"
     },
     "general": {
         "load-more": "Load More",
