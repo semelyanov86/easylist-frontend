@@ -19,7 +19,7 @@
         </router-link>
 
         <atom-btn
-            href="https://community.vuetifyjs.com/"
+            @click="$emit('signOut')"
             rel="noopener noreferrer"
             target="_blank"
             variant="text"
@@ -37,6 +37,7 @@ import LanguageSwitcher from '@/components/molecules/LanguageSwitcher.vue'
 
 export default {
     name: 'AppBarMenu',
+    emits: ['signOut'],
     components: {
         AtomBtn,
         AtomIcon,

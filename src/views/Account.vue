@@ -19,10 +19,13 @@
 
 <script>
 import AccountCard from '@/components/organisms/AccountCard.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import AccountEditCard from '@/components/organisms/AccountEditCard.vue'
 import MessagesBlock from '@/components/molecules/MessagesBlock.vue'
 import AccountPasswordCard from '@/components/organisms/AccountPasswordCard.vue'
+import { useAppStore } from '@/store/app'
+import { doUserInfo } from '@/services/Api'
+import { mapUserDataFromResponse } from '@/services/ResponseDataMapper'
 
 export default {
     name: 'Account',
@@ -34,6 +37,20 @@ export default {
     },
     setup() {
         const mode = ref('main')
+        const storage = useAppStore()
+        onMounted(() => {
+            if (!storage.user || !storage.user.id) {
+                doUserInfo()
+                    .then((response) => {
+                        const user = mapUserDataFromResponse(response)
+                        storage.setUser(user)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        storage.setErrorFromAxios(error)
+                    })
+            }
+        })
         return { mode }
     },
 }

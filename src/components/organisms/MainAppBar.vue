@@ -11,10 +11,11 @@
         <atom-toolbar-title
             @click="$router.push('/')"
             class="hidden-sm-and-down font-weight-light"
-            >{{ $t('nav.easylist') }}</atom-toolbar-title
         >
+            {{ $t('nav.easylist') }}
+        </atom-toolbar-title>
 
-        <app-bar-menu></app-bar-menu>
+        <app-bar-menu @sign-out="onSignOut"></app-bar-menu>
     </v-app-bar>
 </template>
 
@@ -22,20 +23,33 @@
 import AppBarMenu from '@/components/molecules/AppBarMenu.vue'
 import AtomToolbarTitle from '@/components/atoms/AtomToolbarTitle.vue'
 import AtomSpacer from '@/components/atoms/AtomSpacer.vue'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+import { useAppStore } from '@/store/app'
+import { VueCookies } from 'vue-cookies'
+import router from '@/router'
 
 export default {
     name: 'MainAppBar',
     components: {
         AppBarMenu,
         AtomToolbarTitle,
-        AtomSpacer,
     },
     setup() {
+        const storage = useAppStore()
+        const $cookies = inject<VueCookies>('$cookies')
+
         const logo = computed(
             () => import.meta.env.VITE_BASIC_URL + '/static/img/logo-light.svg'
         )
-        return { logo }
+
+        function onSignOut() {
+            storage.setToken('')
+            $cookies?.remove('_site_data', '/')
+            storage.setDefaultsForData()
+            storage.setDefaultItems()
+            router.push('/login')
+        }
+        return { logo, onSignOut }
     },
 }
 </script>
