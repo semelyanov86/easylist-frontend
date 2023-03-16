@@ -48,7 +48,7 @@
     </v-btn>
 </template>
 
-<script>
+<script lang="ts">
 import AtomIconBtn from '@/components/atoms/AtomIconBtn.vue'
 import { useAppStore } from '@/store/app'
 import { defineComponent } from 'vue'

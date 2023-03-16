@@ -2,7 +2,7 @@
     <v-icon v-bind="$attrs" />
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AtomIcon',
 }

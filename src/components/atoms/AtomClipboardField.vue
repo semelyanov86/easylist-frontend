@@ -7,7 +7,7 @@
     <a :href="initialValue" target="_blank">{{ initialValue }}</a>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 
 export default defineComponent({

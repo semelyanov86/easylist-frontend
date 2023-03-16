@@ -17,7 +17,7 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 import AccountCard from '@/components/organisms/AccountCard.vue'
 import { onMounted, ref } from 'vue'
 import AccountEditCard from '@/components/organisms/AccountEditCard.vue'

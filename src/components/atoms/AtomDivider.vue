@@ -2,7 +2,7 @@
     <v-divider v-bind="$attrs"></v-divider>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AtomDivider',
 }

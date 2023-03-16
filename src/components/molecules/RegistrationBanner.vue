@@ -14,7 +14,7 @@
     </v-row>
 </template>
 
-<script>
+<script lang="ts">
 import AtomBtn from '@/components/atoms/AtomBtn.vue'
 import AtomTextSix from '@/components/atoms/AtomTextSix.vue'
 

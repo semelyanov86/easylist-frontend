@@ -4,7 +4,7 @@
     </v-card-title>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AtomCardTitle',
 }

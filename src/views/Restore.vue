@@ -4,7 +4,7 @@
     </AuthLayout>
 </template>
 
-<script>
+<script lang="ts">
 import AuthLayout from '@/templates/AuthLayout.vue'
 import RestoreBlock from '@/components/organisms/RestoreBlock.vue'
 
