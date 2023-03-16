@@ -103,7 +103,9 @@
         "about-me": "Обо мне",
         "fields-required": "*эти поля обязательны для заполнения",
         "close": "Закрыть",
-        "save": "Сохранить"
+        "save": "Сохранить",
+        "send": "Send",
+        "back": "Back"
     },
     "help": {
         "header": "Помощь",
@@ -118,6 +120,8 @@
         "start-using": "Перед началом, пожалуйста, авторизируйтесь",
         "forgot-password": "Забыли пароль?",
         "submit": "Авторизоваться",
-        "clear": "Очистить форму"
+        "clear": "Очистить форму",
+        "restore": "Restore Password",
+        "restore-text": "Please enter your email to get a message with token link"
     }
 }

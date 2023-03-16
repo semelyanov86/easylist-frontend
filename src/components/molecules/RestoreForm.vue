@@ -6,14 +6,6 @@
                 :error-messages="email.errorMessage.value"
                 :label="$t('account.email')"
             ></atom-text-field>
-            <atom-text-field
-                id="password"
-                type="password"
-                v-model="password.value.value"
-                :counter="7"
-                :error-messages="password.errorMessage.value"
-                :label="$t('account.password')"
-            ></atom-text-field>
             <atom-btn color="primary" class="me-4" type="submit">
                 {{ $t('login.submit') }}
             </atom-btn>
@@ -26,24 +18,16 @@
 <script lang="ts">
 import AtomTextField from '@/components/atoms/AtomTextField.vue'
 import AtomBtn from '@/components/atoms/AtomBtn.vue'
-import { useField, useForm } from 'vee-validate'
 import { defineComponent } from 'vue'
+import { useField, useForm } from 'vee-validate'
 
 export default defineComponent({
-    name: 'SignInForm',
-    emits: ['submit', 'do'],
-    components: {
-        AtomTextField,
-        AtomBtn,
-    },
+    name: 'RestoreForm',
+    components: { AtomBtn, AtomTextField },
+    emits: ['doRestore'],
     setup(_, { emit }) {
         const { handleSubmit, handleReset } = useForm({
             validationSchema: {
-                password(value: string) {
-                    if (value?.length > 7) return true
-
-                    return 'Password must be at least 7 digits.'
-                },
                 email(value: string) {
                     if (
                         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
@@ -56,15 +40,13 @@ export default defineComponent({
                 },
             },
         })
-        const password = useField('password')
         const email = useField('email')
 
         const submit = handleSubmit((values) => {
-            emit('do', values)
+            emit('doRestore', values)
         })
 
         return {
-            password,
             email,
             submit,
             handleReset,

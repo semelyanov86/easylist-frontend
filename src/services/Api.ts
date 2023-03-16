@@ -424,6 +424,24 @@ export function updateUserPassword(
     )
 }
 
+export function passwordReset(email: string): Promise<AxiosResponse<any>> {
+    const http = axios.create({
+        baseURL: import.meta.env.VITE_API_URL,
+        headers: {
+            'content-type': 'application/vnd.api+json',
+            accept: 'application/vnd.api+json',
+        },
+    })
+    return http.post(import.meta.env.VITE_API_URL + '/tokens/password-reset', {
+        data: {
+            type: 'tokens',
+            attributes: {
+                email: email,
+            },
+        },
+    })
+}
+
 function createHttp(): AxiosInstance {
     const storage = useAppStore()
     return axios.create({

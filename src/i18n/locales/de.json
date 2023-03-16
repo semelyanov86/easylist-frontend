@@ -103,7 +103,9 @@
         "about-me": "Über mich",
         "fields-required": "*erforderliches Feld",
         "close": "Schließen",
-        "save": "Speichern"
+        "save": "Speichern",
+        "send": "Send",
+        "back": "Back"
     },
     "help": {
         "header": "Hilfe und Support",
@@ -118,6 +120,8 @@
         "start-using": "Um den easylist-Dienst zu nutzen, müssen Sie sich zuerst anmelden",
         "forgot-password": "Passwort vergessen?",
         "submit": "Abschicken",
-        "clear": "Löschen"
+        "clear": "Löschen",
+        "restore": "Restore Password",
+        "restore-text": "Please enter your email to get a message with token link"
     }
 }

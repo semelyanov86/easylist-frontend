@@ -12,6 +12,9 @@
                     v-model="alert"
                 />
             </v-container>
+            <v-container>
+                <message-alert></message-alert>
+            </v-container>
             <v-col
                 lg="7"
                 xl="6"
@@ -43,10 +46,12 @@ import ErrorAlert from '@/components/molecules/ErrorAlert.vue'
 import { useWindowSize } from '@vueuse/core'
 import RegistrationBanner from '@/components/molecules/RegistrationBanner.vue'
 import { useAppStore } from '@/store/app'
+import MessageAlert from '@/components/molecules/MessageAlert.vue'
 
 export default {
     name: 'AuthLayout',
     components: {
+        MessageAlert,
         RegistrationBanner,
         ErrorAlert,
     },

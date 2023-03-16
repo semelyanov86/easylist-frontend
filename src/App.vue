@@ -23,19 +23,6 @@ export default {
                 }
             }
         })
-        onMounted(() => {
-            if (!storage.user || !storage.user.id) {
-                doUserInfo()
-                    .then((response) => {
-                        const user = mapUserDataFromResponse(response)
-                        storage.setUser(user)
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        storage.setErrorFromAxios(error)
-                    })
-            }
-        })
     },
 }
 </script>

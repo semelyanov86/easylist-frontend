@@ -5,6 +5,7 @@ import security from '@/services/Security'
 import { inject } from 'vue'
 import { VueCookies } from 'vue-cookies'
 import Trans from '@/i18n/translation'
+import Restore from '@/views/Restore.vue'
 
 const routes = [
     {
@@ -44,6 +45,11 @@ const routes = [
         name: 'Login',
         component: Login,
     },
+    {
+        path: '/restore',
+        name: 'Restore',
+        component: Restore,
+    },
 ]
 
 const router = createRouter({
@@ -52,6 +58,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+    if (to.name === 'Restore') {
+        next()
+    }
     if (to.name !== 'Login' && !security.isAuthenticated())
         next({ name: 'Login' })
     else next()

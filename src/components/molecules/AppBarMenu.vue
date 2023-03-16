@@ -1,17 +1,17 @@
 <template>
     <div>
         <language-switcher></language-switcher>
-      <router-link to="/help">
-        <atom-btn
-          class="hidden-sm-and-down font-weight-light"
-          rel="noopener noreferrer"
-          target="_blank"
-          variant="text"
-        >
-          <atom-icon icon="mdi-view-dashboard" size="large" start />
-          {{ $t('nav.help') }}
-        </atom-btn>
-      </router-link>
+        <router-link to="/help">
+            <atom-btn
+                class="hidden-sm-and-down font-weight-light"
+                rel="noopener noreferrer"
+                target="_blank"
+                variant="text"
+            >
+                <atom-icon icon="mdi-view-dashboard" size="large" start />
+                {{ $t('nav.help') }}
+            </atom-btn>
+        </router-link>
         <router-link to="/account">
             <atom-btn rel="noopener noreferrer" variant="text">
                 <atom-icon icon="mdi-account" size="large" start />
