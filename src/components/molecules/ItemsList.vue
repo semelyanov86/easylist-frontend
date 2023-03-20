@@ -11,6 +11,7 @@
         >
             <template #item="{ element }">
                 <v-list-item
+                    density="compact"
                     :key="element.id"
                     :subtitle="element.description"
                     :class="{ 'bg-blue-lighten-4': element.is_starred }"
