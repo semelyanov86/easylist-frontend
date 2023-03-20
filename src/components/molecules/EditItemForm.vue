@@ -1,63 +1,72 @@
 <template>
-    <v-card-text>
-        <v-container>
-            <v-row>
-                <v-col cols="12">
-                    <v-text-field
-                        :label="$t('items.name')"
-                        required
-                        v-model="itemModel.name"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                        :label="$t('items.description')"
-                        v-model="itemModel.description"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                        :label="$t('items.quantity')"
-                        v-model.number="itemModel.quantity"
-                        type="number"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                        :label="$t('items.quantity-type')"
-                        v-model="itemModel.quantity_type"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-text-field
-                        :label="$t('items.price')"
-                        v-model.number="itemModel.price"
-                        :rules="[
-                            (v) => !isNaN(v) || $t('items.price-validation'),
-                        ]"
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                    <v-file-input
-                        accept="image/png, image/jpeg"
-                        clearable
-                        :label="$t('items.file')"
-                        v-model="file"
-                    ></v-file-input>
-                </v-col>
-            </v-row>
-        </v-container>
-        <small>{{ $t('general.fields-required') }}</small>
-    </v-card-text>
-    <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue-darken-1" variant="text" @click="closeItem">
-            {{ $t('general.close') }}
-        </v-btn>
-        <v-btn color="blue-darken-1" variant="text" @click="saveItem">
-            {{ $t('general.save') }}
-        </v-btn>
-    </v-card-actions>
+    <v-form v-on:submit.prevent="saveItem">
+        <v-card-text>
+            <v-container>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            :label="$t('items.name')"
+                            required
+                            autofocus
+                            @keyup.enter="saveItem"
+                            v-model="itemModel.name"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field
+                            :label="$t('items.description')"
+                            v-model="itemModel.description"
+                            @keyup.enter="saveItem"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field
+                            :label="$t('items.quantity')"
+                            v-model.number="itemModel.quantity"
+                            type="number"
+                            @keyup.enter="saveItem"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field
+                            :label="$t('items.quantity-type')"
+                            v-model="itemModel.quantity_type"
+                            @keyup.enter="saveItem"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field
+                            :label="$t('items.price')"
+                            v-model.number="itemModel.price"
+                            @keyup.enter="saveItem"
+                            :rules="[
+                                (v) =>
+                                    !isNaN(v) || $t('items.price-validation'),
+                            ]"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-file-input
+                            accept="image/png, image/jpeg"
+                            clearable
+                            :label="$t('items.file')"
+                            v-model="file"
+                        ></v-file-input>
+                    </v-col>
+                </v-row>
+            </v-container>
+            <small>{{ $t('general.fields-required') }}</small>
+        </v-card-text>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue-darken-1" variant="text" @click="closeItem">
+                {{ $t('general.close') }}
+            </v-btn>
+            <v-btn color="blue-darken-1" variant="text" @click="saveItem">
+                {{ $t('general.save') }}
+            </v-btn>
+        </v-card-actions>
+    </v-form>
 </template>
 
 <script lang="ts">

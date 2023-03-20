@@ -6,6 +6,8 @@
                     <v-text-field
                         :label="$t('lists.name')"
                         required
+                        autofocus
+                        @keyup.enter="saveList"
                         v-model="listModel.name"
                     ></v-text-field>
                 </v-col>
@@ -67,7 +69,7 @@ export default defineComponent({
             order: 1,
             created_at: new Date(),
             updated_at: new Date(),
-            folder_id: 1,
+            folder_id: storage.selectedFolder,
             link: null,
             items_count: 0,
         })

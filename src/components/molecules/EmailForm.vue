@@ -6,6 +6,7 @@
                     <v-text-field
                         :label="$t('items.email') + '*'"
                         required
+                        autofocus
                         v-model="email"
                     ></v-text-field>
                 </v-col>

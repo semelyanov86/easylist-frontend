@@ -6,6 +6,7 @@
                     <v-text-field
                         :label="$t('lists.name')"
                         required
+                        autofocus
                         v-model="folderModel.name"
                     ></v-text-field>
                 </v-col>
