@@ -1,6 +1,6 @@
 <template>
     <confirm ref="veeConfirmRef"></confirm>
-    <v-list item-title="name" item-props lines="three">
+    <v-list item-title="name" item-props lines="one">
         <draggable
             item-key="id"
             v-model="storage.getItems"
