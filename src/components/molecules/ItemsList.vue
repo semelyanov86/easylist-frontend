@@ -12,10 +12,19 @@
             <template #item="{ element }">
                 <v-list-item
                     :key="element.id"
-                    :title="getItemName(element)"
                     :subtitle="element.description"
                     :class="{ 'bg-blue-lighten-4': element.is_starred }"
                 >
+                    <template v-slot:title>
+                        <v-list-item-title class="text-wrap">{{
+                            getItemName(element)
+                        }}</v-list-item-title>
+                    </template>
+                    <template v-slot:subtitle>
+                        <v-list-item-subtitle class="text-wrap">{{
+                            element.description
+                        }}</v-list-item-subtitle>
+                    </template>
                     <template v-slot:prepend>
                         <v-list-item-action start>
                             <v-checkbox-btn

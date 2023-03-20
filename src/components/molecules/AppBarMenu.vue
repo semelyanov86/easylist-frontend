@@ -13,7 +13,18 @@
             </atom-btn>
         </router-link>
         <router-link to="/account">
-            <atom-btn rel="noopener noreferrer" variant="text">
+            <atom-btn
+                rel="noopener noreferrer"
+                variant="text"
+                class="hidden-sm-and-up"
+            >
+                <atom-icon icon="mdi-account" size="large" start />
+            </atom-btn>
+            <atom-btn
+                rel="noopener noreferrer"
+                variant="text"
+                class="hidden-sm-and-down"
+            >
                 <atom-icon icon="mdi-account" size="large" start />
                 {{ $t('nav.account') }}
             </atom-btn>
@@ -22,8 +33,16 @@
         <atom-btn
             @click="$emit('signOut')"
             rel="noopener noreferrer"
-            target="_blank"
             variant="text"
+            class="hidden-sm-and-up"
+        >
+            <atom-icon icon="mdi-lock" size="large" start />
+        </atom-btn>
+        <atom-btn
+            @click="$emit('signOut')"
+            rel="noopener noreferrer"
+            variant="text"
+            class="hidden-sm-and-down"
         >
             <atom-icon icon="mdi-lock" size="large" start />
             {{ $t('nav.sign-out') }}

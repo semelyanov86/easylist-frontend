@@ -17,10 +17,14 @@
             <template #item="{ element }">
                 <v-list-item
                     :key="element.id"
-                    :title="element.name"
                     :subtitle="element.created_at.toDateString()"
                     @click="folderSelected(element)"
                 >
+                    <template v-slot:title>
+                        <v-list-item-title class="text-wrap">{{
+                            element.name
+                        }}</v-list-item-title>
+                    </template>
                     <template v-slot:prepend>
                         <v-avatar color="grey-lighten-1" class="handle">
                             <atom-icon
@@ -61,6 +65,11 @@
                     @click="listSelected(element)"
                     :active="storage.selectedList?.id === element.id"
                 >
+                    <template v-slot:title>
+                        <v-list-item-title class="text-wrap">{{
+                            element.name
+                        }}</v-list-item-title>
+                    </template>
                     <template v-slot:prepend>
                         <v-avatar color="default" class="handle">
                             <atom-icon
