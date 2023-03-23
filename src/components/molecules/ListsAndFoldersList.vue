@@ -207,12 +207,12 @@ export default defineComponent({
         }
 
         function folderSelected(folder: FolderInterface) {
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0)
             emit('folderSelected', folder)
         }
 
         function listSelected(list: ListInterface) {
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0)
             storage.selectedList = list
             emit('listSelected')
         }

@@ -83,6 +83,7 @@ export default defineComponent({
                     )
                     newList.items_count = list.items_count
                     storage.addList(newList)
+                    storage.selectedList = newList
                     storage.loading = false
                     closeList()
                 })

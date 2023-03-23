@@ -78,10 +78,7 @@ export default {
         CreateItem,
         ListsAndFoldersIndex,
         ItemsIndex,
-        ErrorAlert,
-        AtomLoadingIndicator,
         CreateListOrFolder,
-        MessageAlert,
     },
     setup() {
         const storage = useAppStore()
