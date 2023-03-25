@@ -121,6 +121,7 @@ export default {
         }
 
         function onCloseItemDialog(value: boolean) {
+            itemId.value = 0
             createItemMode.value = false
         }
 

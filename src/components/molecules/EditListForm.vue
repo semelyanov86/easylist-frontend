@@ -62,17 +62,21 @@ export default defineComponent({
     setup(props, { emit }) {
         const storage = useAppStore()
 
-        const listModel = ref<ListInterface>({
-            id: 0,
-            name: '',
-            icon: 'mdi-view-list',
-            order: 1,
-            created_at: new Date(),
-            updated_at: new Date(),
-            folder_id: storage.selectedFolder,
-            link: null,
-            items_count: 0,
-        })
+        const listModel = ref<ListInterface>(getEmptyListModel())
+
+        function getEmptyListModel(): ListInterface {
+            return {
+                id: 0,
+                name: '',
+                icon: 'mdi-view-list',
+                order: 1,
+                created_at: new Date(),
+                updated_at: new Date(),
+                folder_id: storage.selectedFolder,
+                link: null,
+                items_count: 0,
+            }
+        }
 
         onMounted(function () {
             if (!props.listId || props.listId < 1) {
@@ -99,6 +103,7 @@ export default defineComponent({
             emit('saveList', listModel.value)
         }
         function closeList() {
+            listModel.value = getEmptyListModel()
             emit('closeList')
         }
 

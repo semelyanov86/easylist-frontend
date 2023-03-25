@@ -23,10 +23,15 @@ import EditFolderCard from '@/components/organisms/EditFolderCard.vue'
 import EditListCard from '@/components/organisms/EditListCard.vue'
 import FolderInterface from '@/types/FolderInterface'
 import { useAppStore } from '@/store/app'
-import { createOrUpdateFolder, createOrUpdateList } from '@/services/Api'
+import {
+    createOrUpdateFolder,
+    createOrUpdateList,
+    itemsFromList,
+} from '@/services/Api'
 import ListInterface from '@/types/ListInterface'
 import {
     mapFolderDataFromResponseAttributes,
+    mapItemsDataFromResponse,
     mapListDataFromResponse,
 } from '@/services/ResponseDataMapper'
 
@@ -84,6 +89,7 @@ export default defineComponent({
                     newList.items_count = list.items_count
                     storage.addList(newList)
                     storage.selectedList = newList
+                    receiveItems(newList)
                     storage.loading = false
                     closeList()
                 })
@@ -91,6 +97,25 @@ export default defineComponent({
                     console.log(error)
                     storage.setErrorFromAxios(error)
                     closeList()
+                    storage.loading = false
+                })
+        }
+
+        function receiveItems(list: ListInterface) {
+            let id = list.id
+            if (typeof id === 'string') {
+                id = parseInt(id)
+            }
+            itemsFromList(id, storage.itemsPage, storage.itemsSearch)
+                .then((response) => {
+                    const items = mapItemsDataFromResponse(response.data)
+                    storage.setItems(items)
+                    storage.itemsTotal = response.data.meta.total
+                    storage.loading = false
+                })
+                .catch((error) => {
+                    console.log(error)
+                    storage.setErrorFromAxios(error)
                     storage.loading = false
                 })
         }
