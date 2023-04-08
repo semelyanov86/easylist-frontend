@@ -92,7 +92,11 @@
         "password": "Password",
         "password-confirm": "Confirm Password",
         "edit-password-title": "Edit your password",
-        "edit-password-subtitle": "Enter your new password"
+        "edit-password-subtitle": "Enter your new password",
+        "get-token-title": "Generate new token",
+        "get-token-subtitle": "If you need to connect new software to this service, you may need to get a token. Here you can generate it",
+        "copy-token-title": "Your access token",
+        "copy-token-subtitle": "Copy generated access token to access from third party apps"
     },
     "general": {
         "load-more": "Load More",

@@ -14,6 +14,7 @@
             v-if="mode === 'password'"
             @cancel="mode = 'main'"
         ></account-password-card>
+        <token-receiver></token-receiver>
     </v-container>
 </template>
 
@@ -26,10 +27,12 @@ import AccountPasswordCard from '@/components/organisms/AccountPasswordCard.vue'
 import { useAppStore } from '@/store/app'
 import { doUserInfo } from '@/services/Api'
 import { mapUserDataFromResponse } from '@/services/ResponseDataMapper'
+import TokenReceiver from '@/components/organisms/TokenReceiver.vue'
 
 export default {
     name: 'Account',
     components: {
+        TokenReceiver,
         AccountPasswordCard,
         MessagesBlock,
         AccountEditCard,
