@@ -38,6 +38,11 @@
                         {{ $t('items.send-by-email') }}
                     </v-list-item-title>
                 </v-list-item>
+                <v-list-item @click="$emit('sendTg')">
+                    <v-list-item-title>
+                        {{ $t('items.send-tg') }}
+                    </v-list-item-title>
+                </v-list-item>
                 <v-list-item @click="$emit('makePublicForm')">
                     <v-list-item-title>
                         {{ $t('items.make-public') }}
@@ -62,6 +67,7 @@ export default defineComponent({
         'deleteAll',
         'sendEmailForm',
         'makePublicForm',
+        'sendTg',
     ],
     setup(_, { emit }) {
         const storage = useAppStore()

@@ -384,6 +384,18 @@ export function sendEmailRequest(
     )
 }
 
+export function sendToAssist(
+    listModel: ListInterface,
+    userId: number
+): Promise<AxiosResponse<any>> {
+    const http = createHttp()
+    return http.post(import.meta.env.VITE_BOT_URL + '/list', {
+        name: listModel.name,
+        user_id: userId,
+        list_id: listModel.id,
+    })
+}
+
 export function updateUserName(
     name: string,
     email: string

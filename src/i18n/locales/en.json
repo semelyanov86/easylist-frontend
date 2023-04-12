@@ -57,6 +57,8 @@
         "price-validation": "Only decimal number allowed",
         "file": "File Input",
         "send": "Send",
+        "send-tg": "Send to Telegram",
+        "send-tg-done": "Data sent to Telegram!",
         "email": "Email",
         "select-folder": "Select Folder",
         "select-list": "Select List",

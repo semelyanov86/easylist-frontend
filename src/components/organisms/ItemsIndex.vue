@@ -25,6 +25,7 @@
                     @delete-crossed="onDeleteCrossed"
                     @delete-all="onDeleteAllItems"
                     @send-email-form="$emit('sendEmailForm')"
+                    @send-tg="handleSendTg"
                     @make-public-form="$emit('makePublicForm')"
                 ></items-toolbar-submenu>
             </template>
@@ -52,9 +53,12 @@ import ItemsToolbarSubmenu from '@/components/molecules/ItemsToolbarSubmenu.vue'
 import {
     deleteAllItems,
     deleteCrossedItems,
+    sendToAssist,
     uncrossItems,
 } from '@/services/Api'
 import { AxiosError } from 'axios'
+import { mapItemsDataFromResponse } from '@/services/ResponseDataMapper'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
     name: 'ItemsIndex',
@@ -77,6 +81,7 @@ export default defineComponent({
         const storage = useAppStore()
         const movingItem = ref<ItemInterface | null>(null)
         const copyMode = ref(false)
+        const { t } = useI18n()
 
         function onUncrossItems() {
             storage.uncrossItemsInList()
@@ -110,6 +115,28 @@ export default defineComponent({
                     }
                 )
             }
+        }
+
+        function handleSendTg() {
+            const listmodel = storage.selectedList
+            if (!listmodel) {
+                return
+            }
+            storage.loading = true
+            let userId = storage.user.id
+            if (typeof userId === 'string') {
+                userId = BigInt(parseInt(userId))
+            }
+            sendToAssist(listmodel, Number(userId))
+                .then((response) => {
+                    storage.loading = false
+                    storage.message = t('items.send-tg-done')
+                })
+                .catch((error) => {
+                    console.log(error)
+                    storage.setErrorFromAxios(error)
+                    storage.loading = false
+                })
         }
 
         function onLoadMoreItems() {
@@ -154,6 +181,7 @@ export default defineComponent({
             onUncrossItems,
             onDeleteCrossed,
             onDeleteAllItems,
+            handleSendTg,
         }
     },
 })
